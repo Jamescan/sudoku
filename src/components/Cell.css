@@ -6,18 +6,16 @@
 }
 
 .hoverArea {
-    border: 1px solid blue;
-
     /* is it better to do this, or to conditionally render only when necessary? */
     color: white;
+    display: flex;
+    justify-content: center;
 }
 
 .lightPencilMark {
-    display: inline;
     color: grey;
 }
 
 .darkPencilMark {
-    display: inline;
     color: magenta;
 }
