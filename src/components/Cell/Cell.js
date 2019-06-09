@@ -46,7 +46,7 @@ class Cell extends React.PureComponent {
     render() {
         const { entryMethod, value } = this.props
 
-        if (value != '') {
+        if (value !== '') {
             return (
                 // TODO: at some point we'll need to distinguish between fixed values (given from puzzle) and user-inputted values that can be deleted.
                 <div className="cell">
@@ -55,7 +55,6 @@ class Cell extends React.PureComponent {
             )
         }
 
-        const canInputPencilMarks = entryMethod === 'pencilMarks'
         return (
             <div className="cell">
                 <HoverGrid
