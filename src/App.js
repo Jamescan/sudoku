@@ -1,5 +1,5 @@
 import React from 'react'
-import Grid from './components/Grid/Grid'
+import SudokuGrid from './components/SudokuGrid/SudokuGrid'
 import './App.css'
 
 class App extends React.PureComponent {
@@ -31,7 +31,7 @@ class App extends React.PureComponent {
                         Little
                     </button>
                 </div>
-                <Grid entryMethod={currentEntryMethod} />
+                <SudokuGrid entryMethod={currentEntryMethod} />
             </div>
         )
     }
