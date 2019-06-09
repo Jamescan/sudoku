@@ -1,5 +1,5 @@
 import React from 'react'
-import Grid from './components/Grid'
+import Grid from './components/Grid/Grid'
 import './App.css'
 
 class App extends React.PureComponent {
@@ -9,7 +9,7 @@ class App extends React.PureComponent {
         this.handleClick = this.handleClick.bind(this)
 
         this.state = {
-            currentEntryMethod: 'pencilMarks', // or "pencilMarks"
+            currentEntryMethod: 'pencilMarks', // or something else
         }
     }
 

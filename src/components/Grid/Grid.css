@@ -1,0 +1,10 @@
+.grid {
+    width: 900px;
+    height: 900px;
+    border: 4px solid black;
+    border-right: none;
+    border-bottom: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}

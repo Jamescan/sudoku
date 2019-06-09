@@ -9,6 +9,8 @@ class Cell extends React.PureComponent {
 
         this.handleMouseClick = this.handleMouseClick.bind(this)
         this.handleMouseHover = this.handleMouseHover.bind(this)
+        this.updateCellValue = this.updateCellValue.bind(this)
+        this.updatePencilMarks = this.updatePencilMarks.bind(this)
 
         this.state = {
             hover: {
@@ -24,38 +26,35 @@ class Cell extends React.PureComponent {
     /*
      * If the user has already pencil-marked in a number, remove it. Otherwise, add it.
      */
+    updatePencilMarks(number) {
+        const { pencilMarks } = this.state
+        const updatedPencilMarks = pencilMarks.includes(number)
+            ? pencilMarks.filter(pencilMark => pencilMark !== number)
+            : [...pencilMarks, number]
+
+        this.setState({
+            pencilMarks: updatedPencilMarks,
+        })
+    }
+
+    // Update the "big number" in the cell. TODO: finish implementing this.
+    updateCellValue(number) {
+        const { value: cellValue } = this.state
+        const newCellValue = cellValue === number ? null : number
+        this.setState({
+            value: newCellValue,
+        })
+    }
+
+    /*
+     * Handle the user's mouse click depending on the currently selected entry method.
+     */
     handleMouseClick(number) {
         const { entryMethod } = this.props
-        debugger
         if (entryMethod === 'pencilMarks') {
-            // todo: break this into addPencilMark function
-            if (this.state.pencilMarks.includes(number)) {
-                this.setState({
-                    pencilMarks: this.state.pencilMarks.filter(
-                        pencilMark => pencilMark !== number
-                    ),
-
-                    // Fixes issue where user pencil marks a number and removes it and the number still appears
-                    hover: {
-                        isHovering: false,
-                    },
-                })
-            } else {
-                this.setState({
-                    pencilMarks: [...this.state.pencilMarks, number],
-                })
-            }
+            this.updatePencilMarks(number)
         } else {
-            // todo: break this into a function and use ternary
-            if (this.state.value === number) {
-                this.setState({
-                    value: null,
-                })
-            } else {
-                this.setState({
-                    value: number,
-                })
-            }
+            this.updateCellValue(number)
         }
     }
 
