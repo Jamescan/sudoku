@@ -92,9 +92,15 @@ function SudokuGrid({ entryMethod }) {
     ]
     return (
         <div className="grid">
-            {cellData.map(cellDatum => {
+            {cellData.map((cellDatum, index) => {
                 // todo: actually use this prop in Cell.
-                return <Cell value={cellDatum} entryMethod={entryMethod} />
+                return (
+                    <Cell
+                        key={index}
+                        value={cellDatum}
+                        entryMethod={entryMethod}
+                    />
+                )
             })}
         </div>
     )

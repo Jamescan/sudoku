@@ -1,11 +1,30 @@
 import React from 'react'
 import './Cell.css'
-import PencilMarkGrid from '../PencilMarkGrid/PencilMarkGrid'
+import HoverGrid from '../HoverGrid/HoverGrid'
 
 // todo: finish implementing non-pencil-mark entry method
 class Cell extends React.PureComponent {
     constructor(props) {
         super(props)
+
+        this.handleMouseClick = this.handleMouseClick.bind(this)
+        this.updateCellValue = this.updateCellValue.bind(this)
+        this.updatePencilMarks = this.updatePencilMarks.bind(this)
+
+        this.state = {
+            pencilMarks: [],
+        }
+    }
+
+    updatePencilMarks(number) {
+        const { pencilMarks } = this.state
+        const updatedPencilMarks = pencilMarks.includes(number)
+            ? pencilMarks.filter(pencilMark => pencilMark !== number)
+            : [...pencilMarks, number]
+
+        this.setState({
+            pencilMarks: updatedPencilMarks,
+        })
     }
 
     // Update the "big number" in the cell. TODO: finish implementing this.
@@ -15,6 +34,14 @@ class Cell extends React.PureComponent {
         this.setState({
             value: newCellValue,
         })
+    }
+
+    handleMouseClick(number) {
+        if (this.props.entryMethod === 'pencilMarks') {
+            this.updatePencilMarks(number)
+        } else {
+            this.updateCellValue(number)
+        }
     }
 
     render() {
@@ -32,7 +59,11 @@ class Cell extends React.PureComponent {
         const canInputPencilMarks = entryMethod === 'pencilMarks'
         return (
             <div className="cell">
-                <PencilMarkGrid />
+                <HoverGrid
+                    handleClick={value => this.handleMouseClick(value)}
+                    pencilMarks={this.state.pencilMarks}
+                    shouldShowBigNumberOnHover={entryMethod === 'numbers'}
+                />
             </div>
         )
     }
