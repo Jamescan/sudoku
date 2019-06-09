@@ -1,58 +1,58 @@
-import React from 'react'
-import './Cell.css'
-import HoverGrid from '../HoverGrid/HoverGrid'
+import React from "react";
+import "./Cell.css";
+import HoverGrid from "../HoverGrid/HoverGrid";
 
 class Cell extends React.PureComponent {
     constructor(props) {
-        super(props)
+        super(props);
 
-        this.handleMouseClick = this.handleMouseClick.bind(this)
-        this.updateCellValue = this.updateCellValue.bind(this)
-        this.updatePencilMarks = this.updatePencilMarks.bind(this)
+        this.handleMouseClick = this.handleMouseClick.bind(this);
+        this.updateCellValue = this.updateCellValue.bind(this);
+        this.updatePencilMarks = this.updatePencilMarks.bind(this);
 
         this.state = {
-            pencilMarks: [],
-        }
+            pencilMarks: []
+        };
     }
 
     updatePencilMarks(number) {
-        const { pencilMarks } = this.state
+        const { pencilMarks } = this.state;
         const updatedPencilMarks = pencilMarks.includes(number)
             ? pencilMarks.filter(pencilMark => pencilMark !== number)
-            : [...pencilMarks, number]
+            : [...pencilMarks, number];
 
         this.setState({
-            pencilMarks: updatedPencilMarks,
-        })
+            pencilMarks: updatedPencilMarks
+        });
     }
 
     // Update the "big number" in the cell. TODO: finish implementing this.
     updateCellValue(number) {
-        const { value: cellValue } = this.state
-        const newCellValue = cellValue === number ? null : number
+        const { value: cellValue } = this.state;
+        const newCellValue = cellValue === number ? null : number;
         this.setState({
-            value: newCellValue,
-        })
+            value: newCellValue
+        });
     }
 
     handleMouseClick(number) {
-        if (this.props.entryMethod === 'pencilMarks') {
-            this.updatePencilMarks(number)
+        if (this.props.entryMethod === "pencilMarks") {
+            this.updatePencilMarks(number);
         } else {
-            this.updateCellValue(number)
+            this.updateCellValue(number);
         }
     }
 
     render() {
-        const { entryMethod, value } = this.props
+        const { entryMethod, value } = this.props;
 
-        if (value !== '') {
+        if (value !== "") {
             return (
                 // TODO: at some point we'll need to distinguish between fixed values (given from puzzle) and user-inputted values that can be deleted.
                 <div className="cell">
                     <div className="valueWrapper">{value}</div>
                 </div>
-            )
+            );
         }
 
         return (
@@ -60,11 +60,11 @@ class Cell extends React.PureComponent {
                 <HoverGrid
                     handleClick={value => this.handleMouseClick(value)}
                     pencilMarks={this.state.pencilMarks}
-                    shouldShowBigNumberOnHover={entryMethod === 'numbers'}
+                    shouldShowBigNumberOnHover={entryMethod === "numbers"}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default Cell
+export default Cell;
