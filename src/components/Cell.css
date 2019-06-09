@@ -1,0 +1,23 @@
+.cell {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 2px solid green;
+}
+
+.hoverArea {
+    border: 1px solid blue;
+
+    /* is it better to do this, or to conditionally render only when necessary? */
+    color: white;
+}
+
+.lightPencilMark {
+    display: inline;
+    color: grey;
+}
+
+.darkPencilMark {
+    display: inline;
+    color: magenta;
+}

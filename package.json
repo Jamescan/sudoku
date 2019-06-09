@@ -29,6 +29,7 @@
     ]
   },
   "devDependencies": {
+    "clsx": "^1.0.4",
     "prettier": "1.18.2"
   },
   "husky": {

@@ -1,0 +1,8 @@
+.grid {
+    width: 900px;
+    height: 900px;
+    border: 5px solid red;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
