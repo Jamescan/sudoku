@@ -18,7 +18,6 @@ class HoverGrid extends React.PureComponent {
     }
 
     handleMouseHover(number, isHovering) {
-        //debugger;
         this.setState({
             hover: {
                 isHovering,
@@ -48,10 +47,6 @@ class HoverGrid extends React.PureComponent {
             hover: { isHovering, value },
         } = this.state
 
-        // if (shouldShowBigNumberOnHover && isHovering) {
-        //     return <div>{value}</div>
-        // }
-
         return (
             <div className="wrapper">
                 {shouldShowBigNumberOnHover && isHovering && (
@@ -67,24 +62,21 @@ class HoverGrid extends React.PureComponent {
                             darkPencilMark:
                                 !(shouldShowBigNumberOnHover && isHovering) &&
                                 pencilMarks.includes(pencilMark),
-                            //bigNumber: shouldShowBigNumberOnHover && isHovering
                         })
                         return (
-                            <>
-                                <div
-                                    className={hoverAreaClasses}
-                                    key={pencilMark}
-                                    onClick={() => handleClick(pencilMark)}
-                                    onMouseEnter={() =>
-                                        this.handleMouseHover(pencilMark, true)
-                                    }
-                                    onMouseLeave={() =>
-                                        this.handleMouseHover(pencilMark, false)
-                                    }
-                                >
-                                    {pencilMark}
-                                </div>
-                            </>
+                            <div
+                                className={hoverAreaClasses}
+                                key={pencilMark}
+                                onClick={() => handleClick(pencilMark)}
+                                onMouseEnter={() =>
+                                    this.handleMouseHover(pencilMark, true)
+                                }
+                                onMouseLeave={() =>
+                                    this.handleMouseHover(pencilMark, false)
+                                }
+                            >
+                                {pencilMark}
+                            </div>
                         )
                     })}
                 </div>

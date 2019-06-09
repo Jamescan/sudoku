@@ -2,7 +2,6 @@ import React from 'react'
 import './Cell.css'
 import HoverGrid from '../HoverGrid/HoverGrid'
 
-// todo: finish implementing non-pencil-mark entry method
 class Cell extends React.PureComponent {
     constructor(props) {
         super(props)
