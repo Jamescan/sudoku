@@ -2,6 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import './Cell.css'
 
+// todo: finish implementing non-pencil-mark entry method
 class Cell extends React.PureComponent {
     constructor(props) {
         super(props)
@@ -24,21 +25,37 @@ class Cell extends React.PureComponent {
      * If the user has already pencil-marked in a number, remove it. Otherwise, add it.
      */
     handleMouseClick(number) {
-        if (this.state.pencilMarks.includes(number)) {
-            this.setState({
-                pencilMarks: this.state.pencilMarks.filter(
-                    pencilMark => pencilMark !== number
-                ),
+        const { entryMethod } = this.props
+        debugger
+        if (entryMethod === 'pencilMarks') {
+            // todo: break this into addPencilMark function
+            if (this.state.pencilMarks.includes(number)) {
+                this.setState({
+                    pencilMarks: this.state.pencilMarks.filter(
+                        pencilMark => pencilMark !== number
+                    ),
 
-                // Fixes issue where user pencil marks a number and removes it and the number still appears
-                hover: {
-                    isHovering: false,
-                },
-            })
+                    // Fixes issue where user pencil marks a number and removes it and the number still appears
+                    hover: {
+                        isHovering: false,
+                    },
+                })
+            } else {
+                this.setState({
+                    pencilMarks: [...this.state.pencilMarks, number],
+                })
+            }
         } else {
-            this.setState({
-                pencilMarks: [...this.state.pencilMarks, number],
-            })
+            // todo: break this into a function and use ternary
+            if (this.state.value === number) {
+                this.setState({
+                    value: null,
+                })
+            } else {
+                this.setState({
+                    value: number,
+                })
+            }
         }
     }
 

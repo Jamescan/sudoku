@@ -2,18 +2,18 @@ import React from 'react'
 import Cell from './Cell'
 import './Block.css'
 
-function Block() {
+function Block({ entryMethod }) {
     return (
         <div className="block">
-            <Cell />
-            <Cell />
-            <Cell />
-            <Cell />
-            <Cell />
-            <Cell />
-            <Cell />
-            <Cell />
-            <Cell />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
+            <Cell entryMethod={entryMethod} />
         </div>
     )
 }

@@ -3,18 +3,20 @@ import './Grid.css'
 import Block from './Block'
 
 // TODO: Overflow issues when grid's size is reduced.
-function Grid() {
+
+// TODO: Block component is unnecessary, render each cell here and use css for styling.
+function Grid({ entryMethod }) {
     return (
         <div className="grid">
-            <Block />
-            <Block />
-            <Block />
-            <Block />
-            <Block />
-            <Block />
-            <Block />
-            <Block />
-            <Block />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
+            <Block entryMethod={entryMethod} />
         </div>
     )
 }
