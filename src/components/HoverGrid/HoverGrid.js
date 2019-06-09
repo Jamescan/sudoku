@@ -53,7 +53,10 @@ class HoverGrid extends React.PureComponent {
         // }
 
         return (
-            <div className="foo">
+            <div className="wrapper">
+                {shouldShowBigNumberOnHover && isHovering && (
+                    <div className={'bigNumber'}>{value}</div>
+                )}
                 <div className="pencilMarkGrid">
                     {availablePencilMarks.map(pencilMark => {
                         const hoverAreaClasses = clsx('hoverArea', {
@@ -84,9 +87,6 @@ class HoverGrid extends React.PureComponent {
                             </>
                         )
                     })}
-                    {shouldShowBigNumberOnHover && isHovering && (
-                        <span className={'bigNumber'}>{value}</span>
-                    )}
                 </div>
             </div>
         )

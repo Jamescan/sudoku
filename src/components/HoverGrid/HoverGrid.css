@@ -3,6 +3,7 @@
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     height: 100%;
+    position: relative;
 }
 
 .hoverArea {
@@ -37,17 +38,17 @@
 
 .bigNumber {
     border: 1px solid grey;
-    color: green;
+    color: black;
     font-size: 40px;
     position: absolute;
-    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
-    /* width: 100%;
-    top: 0;
-    right: 0; */
+    width: 100%;
 }
 
-.foo {
+.wrapper {
     position: relative;
     height: 100%;
 }
