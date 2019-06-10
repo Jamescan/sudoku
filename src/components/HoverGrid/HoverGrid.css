@@ -7,9 +7,11 @@
 }
 
 .hoverArea {
-    /* is it better to do this, or to conditionally render only when necessary? */
-    color: white;
-    border: 1px solid white;
+    /* Hack to hide the grid numbers and avoid user selecting them. Conditionally rendering is having issues */
+    border: 1px solid transparent;
+    color: transparent;
+    user-select: none;
+    /* End hack to hide the grid numbers and avoid user selecting them */
 
     display: flex;
     justify-content: center;
