@@ -5,100 +5,15 @@ import Cell from "../Cell/Cell";
 // TODO: Investigate using css table instead of css grid for easier styling.
 // TODO: Overflow issues when grid's size is reduced.
 
-// TODO: grid should take a prop "contents" which defaults to an empty array of 81 strings.
-function SudokuGrid({ entryMethod }) {
-    const cellData = [
-        "1",
-        "2",
-        "3",
-        "4",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-    ];
-
+function SudokuGrid({ contents, entryMethod }) {
     return (
         <div className="grid">
-            {cellData.map((cellDatum, index) => {
-                const isFixedValue = cellDatum !== ""; // initial cell values are fixed.
+            {contents.map((cellValue, index) => {
+                const isFixedValue = cellValue !== ""; // initial cell values are fixed.
                 return (
                     <Cell
                         key={index}
-                        value={cellDatum}
+                        value={cellValue}
                         isFixedValue={isFixedValue}
                         entryMethod={entryMethod}
                     />

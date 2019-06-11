@@ -20,6 +20,89 @@ class App extends React.PureComponent {
     }
 
     render() {
+        const sudokuContents = [
+            "1",
+            "2",
+            "3",
+            "4",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ];
         const { currentEntryMethod } = this.state;
         return (
             <div className="app">
@@ -27,7 +110,7 @@ class App extends React.PureComponent {
                     <button onClick={() => this.handleClick("numbers")}>Big</button>
                     <button onClick={() => this.handleClick("pencilMarks")}>Little</button>
                 </div>
-                <SudokuGrid entryMethod={currentEntryMethod} />
+                <SudokuGrid contents={sudokuContents} entryMethod={currentEntryMethod} />
             </div>
         );
     }
