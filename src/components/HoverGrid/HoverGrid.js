@@ -41,7 +41,7 @@ class HoverGrid extends React.PureComponent {
                 {shouldShowBigNumber && (
                     <div
                         className={"bigNumber"}
-                        // onMouseLeave={() => this.handleMouseHover(null, false)}
+                        onMouseLeave={() => this.handleMouseHover(null, false)}
                     >
                         {value}
                     </div>
@@ -56,7 +56,9 @@ class HoverGrid extends React.PureComponent {
                         });
                         return (
                             // TODO: Not sure why this + "onMouseLeave={() => this.handleMouseHover(null, false)}" on bigNumber breaks things.
-                            /*shouldShowPencilMarks &&*/ <div
+                            /*shouldShowPencilMarks &&*/
+
+                            <div
                                 className={hoverAreaClasses}
                                 key={pencilMark}
                                 onClick={() => handleClick(pencilMark)}

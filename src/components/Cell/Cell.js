@@ -10,8 +10,11 @@ class Cell extends React.PureComponent {
         this.updateCellValue = this.updateCellValue.bind(this);
         this.updatePencilMarks = this.updatePencilMarks.bind(this);
 
+        const { value } = this.props;
+
         this.state = {
-            pencilMarks: []
+            pencilMarks: [],
+            value: value || "" // the "big number" in the cell, if any
         };
     }
 
@@ -26,10 +29,11 @@ class Cell extends React.PureComponent {
         });
     }
 
-    // Update the "big number" in the cell. TODO: finish implementing this.
+    // Update the "big number" in the cell
     updateCellValue(number) {
         const { value: cellValue } = this.state;
         const newCellValue = cellValue === number ? null : number;
+
         this.setState({
             value: newCellValue
         });
@@ -44,7 +48,10 @@ class Cell extends React.PureComponent {
     }
 
     render() {
-        const { entryMethod, value } = this.props;
+        const { entryMethod } = this.props;
+        const { pencilMarks, value } = this.state;
+
+        const shouldShowBigNumberOnHover = entryMethod === "numbers";
 
         if (value !== "") {
             return (
@@ -59,8 +66,8 @@ class Cell extends React.PureComponent {
             <div className="cell">
                 <HoverGrid
                     handleClick={value => this.handleMouseClick(value)}
-                    pencilMarks={this.state.pencilMarks}
-                    shouldShowBigNumberOnHover={entryMethod === "numbers"}
+                    pencilMarks={pencilMarks}
+                    shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
                 />
             </div>
         );
