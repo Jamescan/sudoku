@@ -55,8 +55,10 @@ class HoverGrid extends React.PureComponent {
                                 shouldShowPencilMarks && pencilMarks.includes(pencilMark)
                         });
                         return (
-                            // TODO: Not sure why this + "onMouseLeave={() => this.handleMouseHover(null, false)}" on bigNumber breaks things.
-                            /*shouldShowPencilMarks &&*/
+                            // TODO: Not sure why this +
+                            // "onMouseLeave={() => this.handleMouseHover(null, false)}"
+                            // on bigNumber breaks things.
+                            /* shouldShowPencilMarks && */
 
                             <div
                                 className={hoverAreaClasses}

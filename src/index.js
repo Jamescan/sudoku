@@ -4,6 +4,12 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+// Accessibility checking via react-axe
+// if (process.env.NODE_ENV === 'development') {
+//     const axe = require('react-axe')
+//     axe(React, ReactDOM, 1000)
+//   }
+
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

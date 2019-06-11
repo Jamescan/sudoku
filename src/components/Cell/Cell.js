@@ -76,7 +76,7 @@ class Cell extends React.PureComponent {
                     <div className="valueWrapper">{value}</div>
                 ) : (
                     <HoverGrid
-                        handleClick={value => this.handleMouseClick(value)}
+                        handleClick={clickedCellValue => this.handleMouseClick(clickedCellValue)}
                         pencilMarks={pencilMarks}
                         shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
                     />
