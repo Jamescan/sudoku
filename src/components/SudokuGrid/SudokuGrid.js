@@ -90,10 +90,19 @@ function SudokuGrid({ entryMethod }) {
         "",
         ""
     ];
+
     return (
         <div className="grid">
             {cellData.map((cellDatum, index) => {
-                return <Cell key={index} value={cellDatum} entryMethod={entryMethod} />;
+                const isFixedValue = cellDatum !== ""; // initial cell values are fixed.
+                return (
+                    <Cell
+                        key={index}
+                        value={cellDatum}
+                        isFixedValue={isFixedValue}
+                        entryMethod={entryMethod}
+                    />
+                );
             })}
         </div>
     );

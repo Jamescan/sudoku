@@ -2,10 +2,16 @@ import React from "react";
 import "./Cell.css";
 import HoverGrid from "../HoverGrid/HoverGrid";
 
+// TODO: Can we refactor using the fact that the only time we're giving this class
+// a prop of "value" is when the value should be fixed? i.e. whenever we see a value
+// prop, assume the cell has a fixed value - don't need a separate prop to tell us that.
+
+// TODO: Accessibility concerns with onClicks on divs, etc.
 class Cell extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleMouseClick = this.handleMouseClick.bind(this);
         this.updateCellValue = this.updateCellValue.bind(this);
         this.updatePencilMarks = this.updatePencilMarks.bind(this);
@@ -39,6 +45,16 @@ class Cell extends React.PureComponent {
         });
     }
 
+    handleKeyDown(event) {
+        const { isFixedValue } = this.props;
+
+        if (event.key === "Delete" && !isFixedValue) {
+            this.setState({
+                value: ""
+            });
+        }
+    }
+
     handleMouseClick(number) {
         if (this.props.entryMethod === "pencilMarks") {
             this.updatePencilMarks(number);
@@ -52,23 +68,19 @@ class Cell extends React.PureComponent {
         const { pencilMarks, value } = this.state;
 
         const shouldShowBigNumberOnHover = entryMethod === "numbers";
-
-        if (value !== "") {
-            return (
-                // TODO: at some point we'll need to distinguish between fixed values (given from puzzle) and user-inputted values that can be deleted.
-                <div className="cell">
-                    <div className="valueWrapper">{value}</div>
-                </div>
-            );
-        }
+        const cellHasValue = value !== "";
 
         return (
-            <div className="cell">
-                <HoverGrid
-                    handleClick={value => this.handleMouseClick(value)}
-                    pencilMarks={pencilMarks}
-                    shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
-                />
+            <div className="cell" onKeyDown={this.handleKeyDown} tabIndex="0">
+                {cellHasValue ? (
+                    <div className="valueWrapper">{value}</div>
+                ) : (
+                    <HoverGrid
+                        handleClick={value => this.handleMouseClick(value)}
+                        pencilMarks={pencilMarks}
+                        shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
+                    />
+                )}
             </div>
         );
     }
