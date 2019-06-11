@@ -27,8 +27,7 @@
 }
 
 .bigNumber {
-    border: 1px solid grey;
-    color: black;
+    color: grey;
     font-size: 40px;
     position: absolute;
     display: flex;
@@ -36,6 +35,8 @@
     justify-content: center;
     height: 100%;
     width: 100%;
+    outline: 1px solid blue;
+    outline-offset: -5px;
 }
 
 .wrapper {

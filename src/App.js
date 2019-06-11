@@ -21,10 +21,10 @@ class App extends React.PureComponent {
 
     render() {
         const sudokuContents = [
-            "1",
-            "2",
-            "3",
-            "4",
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             "",
