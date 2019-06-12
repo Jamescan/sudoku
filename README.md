@@ -2,6 +2,8 @@ This project renders an interactive Sudoku grid for solving puzzles.
 
 ## Features
 
+### Current
+
 -   Easily input numbers by moving your mouse inside of each cell
     -   The numbers 1 through 9 will appear as you move your mouse from the upper left to the lower right of a cell
 -   Pencil-marking notation (little numbers in cells)
@@ -23,7 +25,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Linting
 
-We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file).
+We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file). Our eslint setup is run as a precommit hook [using](https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351) `husky` and `lint-staged`
 
 ## Testing
 
