@@ -17,7 +17,6 @@ describe("SudokuGrid", () => {
 
     it("renders pre-defined values in cells if provided", () => {
         const props = getProps({ contents: ["1", "5", "9", "2", "", "", ""] });
-        console.log(props);
 
         const { getByText, queryByText } = render(<SudokuGrid {...props} />);
 

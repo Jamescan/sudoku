@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./SudokuGrid.css";
 import Cell from "../Cell/Cell";
 
@@ -8,19 +9,24 @@ import Cell from "../Cell/Cell";
 function SudokuGrid({ contents, entryMethod }) {
     return (
         <div className="grid">
-            {contents.map((cellValue, index) => {
-                const isFixedValue = cellValue !== ""; // initial cell values are fixed.
-                return (
-                    <Cell
-                        key={index}
-                        value={cellValue}
-                        isFixedValue={isFixedValue}
-                        entryMethod={entryMethod}
-                    />
-                );
-            })}
+            {/* Cells are never re-ordered and don't have a reasonable unique ID */}
+            {/* eslint-disable react/no-array-index-key */}
+            {contents.map((cellValue, index) => (
+                <Cell key={index} value={cellValue} entryMethod={entryMethod} />
+            ))}
+            {/* eslint-enable */}
         </div>
     );
 }
+
+SudokuGrid.defaultProps = {
+    contents: [],
+    entryMethod: "pencilMarks"
+};
+
+SudokuGrid.propTypes = {
+    contents: PropTypes.arrayOf(PropTypes.string),
+    entryMethod: PropTypes.oneOf(["pencilMarks", "numbers"])
+};
 
 export default SudokuGrid;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./Cell.css";
 import HoverGrid from "../HoverGrid/HoverGrid";
 
@@ -17,8 +18,10 @@ class Cell extends React.PureComponent {
         this.updatePencilMarks = this.updatePencilMarks.bind(this);
 
         const { value } = this.props;
+        const isFixedValue = !!value;
 
         this.state = {
+            isFixedValue,
             pencilMarks: [],
             value: value || "" // the "big number" in the cell, if any
         };
@@ -46,7 +49,7 @@ class Cell extends React.PureComponent {
     }
 
     handleKeyDown(event) {
-        const { isFixedValue } = this.props;
+        const { isFixedValue } = this.state;
 
         if (event.key === "Delete" && !isFixedValue) {
             this.setState({
@@ -56,7 +59,8 @@ class Cell extends React.PureComponent {
     }
 
     handleMouseClick(number) {
-        if (this.props.entryMethod === "pencilMarks") {
+        const { entryMethod } = this.props;
+        if (entryMethod === "pencilMarks") {
             this.updatePencilMarks(number);
         } else {
             this.updateCellValue(number);
@@ -71,7 +75,7 @@ class Cell extends React.PureComponent {
         const cellHasValue = value !== "";
 
         return (
-            <div className="cell" onKeyDown={this.handleKeyDown} tabIndex="0">
+            <div className="cell" onKeyDown={this.handleKeyDown} role="button" tabIndex="0">
                 {cellHasValue ? (
                     <div className="valueWrapper">{value}</div>
                 ) : (
@@ -85,5 +89,15 @@ class Cell extends React.PureComponent {
         );
     }
 }
+
+Cell.defaultProps = {
+    entryMethod: "pencilMarks",
+    value: null
+};
+
+Cell.propTypes = {
+    entryMethod: PropTypes.oneOf(["pencilMarks", "numbers"]),
+    value: PropTypes.string
+};
 
 export default Cell;

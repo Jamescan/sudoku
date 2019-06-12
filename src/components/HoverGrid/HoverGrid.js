@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import clsx from "clsx";
 
 import "./HoverGrid.css";
@@ -40,7 +41,7 @@ class HoverGrid extends React.PureComponent {
             <div className="wrapper">
                 {shouldShowBigNumber && (
                     <div
-                        className={"bigNumber"}
+                        className="bigNumber"
                         onMouseLeave={() => this.handleMouseHover(null, false)}
                     >
                         {value}
@@ -59,16 +60,20 @@ class HoverGrid extends React.PureComponent {
                             // "onMouseLeave={() => this.handleMouseHover(null, false)}"
                             // on bigNumber breaks things.
                             /* shouldShowPencilMarks && */
-
+                            /* TODO: accessibility concerns */
+                            /* eslint-disable jsx-a11y/click-events-have-key-events */
                             <div
                                 className={hoverAreaClasses}
                                 key={pencilMark}
                                 onClick={() => handleClick(pencilMark)}
                                 onMouseEnter={() => this.handleMouseHover(pencilMark, true)}
                                 onMouseLeave={() => this.handleMouseHover(pencilMark, false)}
+                                role="button"
+                                tabIndex={0}
                             >
                                 {pencilMark}
                             </div>
+                            /* eslint-enable */
                         );
                     })}
                 </div>
@@ -76,5 +81,16 @@ class HoverGrid extends React.PureComponent {
         );
     }
 }
+
+HoverGrid.defaultProps = {
+    pencilMarks: [],
+    shouldShowBigNumberOnHover: false
+};
+
+HoverGrid.propTypes = {
+    handleClick: PropTypes.func.isRequired,
+    pencilMarks: PropTypes.arrayOf(PropTypes.string),
+    shouldShowBigNumberOnHover: PropTypes.bool
+};
 
 export default HoverGrid;

@@ -17,6 +17,11 @@
     justify-content: center;
 }
 
+/* TODO: Consider the impact this has on accessibility, if any */
+.hoverArea:focus {
+    outline: none;
+}
+
 .lightPencilMark {
     color: grey;
     border: 1px solid grey;

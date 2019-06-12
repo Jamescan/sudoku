@@ -106,9 +106,13 @@ class App extends React.PureComponent {
         const { currentEntryMethod } = this.state;
         return (
             <div className="app">
-                <div className="header">
-                    <button onClick={() => this.handleClick("numbers")}>Big</button>
-                    <button onClick={() => this.handleClick("pencilMarks")}>Little</button>
+                <div className="sidebar">
+                    <button type="button" onClick={() => this.handleClick("numbers")}>
+                        Big
+                    </button>
+                    <button type="button" onClick={() => this.handleClick("pencilMarks")}>
+                        Little
+                    </button>
                 </div>
                 <SudokuGrid contents={sudokuContents} entryMethod={currentEntryMethod} />
             </div>
