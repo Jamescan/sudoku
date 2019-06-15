@@ -8,7 +8,7 @@ import HoverGrid from "../HoverGrid/HoverGrid";
 // prop, assume the cell has a fixed value - don't need a separate prop to tell us that.
 
 // TODO: Accessibility concerns with onClicks on divs, etc.
-class Cell extends React.PureComponent {
+export class Cell extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -99,5 +99,3 @@ Cell.propTypes = {
     entryMethod: PropTypes.oneOf(["pencilMarks", "numbers"]),
     value: PropTypes.string
 };
-
-export default Cell;
