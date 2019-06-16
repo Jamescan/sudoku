@@ -3,7 +3,7 @@ import EntryMethodButtonGroup from "./components/EntryMethodButtonGroup/EntryMet
 import SudokuGrid from "./components/SudokuGrid/SudokuGrid";
 import "./App.css";
 
-export function App() {
+export function App({ cells }) {
     const sudokuContents = [
         "",
         "",
@@ -92,7 +92,7 @@ export function App() {
             <div className="header">
                 <EntryMethodButtonGroup />
             </div>
-            <SudokuGrid contents={sudokuContents} />
+            <SudokuGrid contents={cells} />
         </div>
     );
 }

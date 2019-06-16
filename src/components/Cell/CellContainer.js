@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { Cell } from "./Cell";
+import { updateCell } from "../../ducks/sudoku";
 
 // mapStateToProps has root state as argument, we destructure it
 function mapStateToProps({ config }) {
@@ -9,9 +10,13 @@ function mapStateToProps({ config }) {
     };
 }
 
+const mapDispatchToProps = {
+    updateCell
+};
+
 const ConnectedCell = connect(
     mapStateToProps,
-    null,
+    mapDispatchToProps,
     null
 )(Cell);
 

@@ -12,7 +12,7 @@ function SudokuGrid({ contents }) {
             {/* Cells are never re-ordered and don't have a reasonable unique ID */}
             {/* eslint-disable react/no-array-index-key */}
             {contents.map((cellValue, index) => (
-                <Cell key={index} value={cellValue} />
+                <Cell key={index} index={index} value={cellValue} />
             ))}
             {/* eslint-enable */}
         </div>

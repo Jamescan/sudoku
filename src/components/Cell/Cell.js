@@ -18,8 +18,7 @@ export class Cell extends React.PureComponent {
 
         this.state = {
             isFixedValue,
-            pencilMarks: [],
-            value: value || "" // the "big number" in the cell, if any
+            pencilMarks: []
         };
     }
 
@@ -35,22 +34,17 @@ export class Cell extends React.PureComponent {
     }
 
     // Update the "big number" in the cell
-    updateCellValue(number) {
-        const { value: cellValue } = this.state;
-        const newCellValue = cellValue === number ? null : number;
-
-        this.setState({
-            value: newCellValue
-        });
+    updateCellValue(value) {
+        const { index, updateCell } = this.props;
+        updateCell(index, value);
     }
 
     handleKeyDown(event) {
         const { isFixedValue } = this.state;
 
         if (event.key === "Delete" && !isFixedValue) {
-            this.setState({
-                value: ""
-            });
+            const { index, updateCell } = this.props;
+            updateCell(index, "");
         }
     }
 
@@ -64,8 +58,8 @@ export class Cell extends React.PureComponent {
     }
 
     render() {
-        const { isUsingPencilMarks } = this.props;
-        const { pencilMarks, value } = this.state;
+        const { isUsingPencilMarks, value } = this.props;
+        const { pencilMarks } = this.state;
 
         const shouldShowBigNumberOnHover = !isUsingPencilMarks;
         const cellHasValue = value !== "";
