@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import { Cell } from "./Cell";
 
-function mapStateToProps(state) {
-    const { usingPencilMarks } = state.config;
+// mapStateToProps has root state as argument, we destructure it
+function mapStateToProps({ config }) {
+    const { isUsingPencilMarks } = config;
     return {
-        // usingPencilMarks: state.config.usingPencilMarks
-        entryMethod: usingPencilMarks ? "pencilMarks" : "numbers"
+        isUsingPencilMarks
     };
 }
 

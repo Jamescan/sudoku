@@ -1,10 +1,7 @@
 import { connect } from "react-redux";
-import { toggleInputType } from "./ducks/config";
 import { App } from "./App";
 
-const mapDispatchToProps = {
-    toggleInputType
-};
+const mapDispatchToProps = {};
 
 const ConnectedApp = connect(
     null,

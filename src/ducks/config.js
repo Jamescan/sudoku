@@ -1,31 +1,28 @@
 /*
  * action types
  */
-
-export const TOGGLE_INPUT_TYPE = "TOGGLE_INPUT_TYPE";
+export const TOGGLE_ENTRY_METHOD = "TOGGLE_ENTRY_METHOD";
 
 /*
  * action creators
  */
-
-export function toggleInputType() {
-    return { type: TOGGLE_INPUT_TYPE };
+export function toggleEntryMethod() {
+    return { type: TOGGLE_ENTRY_METHOD };
 }
 
 const initialState = {
-    usingPencilMarks: true
+    isUsingPencilMarks: true
 };
 
 /*
  * reducer
  */
-
 export function config(state = initialState, action) {
     switch (action.type) {
-        case TOGGLE_INPUT_TYPE: {
+        case TOGGLE_ENTRY_METHOD: {
             return {
                 ...state,
-                usingPencilMarks: !state.usingPencilMarks
+                isUsingPencilMarks: !state.isUsingPencilMarks
             };
         }
         default: {

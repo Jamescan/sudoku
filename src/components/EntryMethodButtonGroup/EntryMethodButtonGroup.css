@@ -1,0 +1,13 @@
+.buttonGroup {
+    background-color: darkgray;
+    padding: 0.5rem;
+}
+
+.entryMethodButton {
+    height: 2rem;
+    font-size: 1rem;
+}
+
+.selected {
+    border: 2px solid red;
+}

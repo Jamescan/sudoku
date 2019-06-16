@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 import "./Cell.css";
 import HoverGrid from "../HoverGrid/HoverGrid";
 
-// TODO: Can we refactor using the fact that the only time we're giving this class
-// a prop of "value" is when the value should be fixed? i.e. whenever we see a value
-// prop, assume the cell has a fixed value - don't need a separate prop to tell us that.
-
 // TODO: Accessibility concerns with onClicks on divs, etc.
 export class Cell extends React.PureComponent {
     constructor(props) {
@@ -59,8 +55,8 @@ export class Cell extends React.PureComponent {
     }
 
     handleMouseClick(number) {
-        const { entryMethod } = this.props;
-        if (entryMethod === "pencilMarks") {
+        const { isUsingPencilMarks } = this.props;
+        if (isUsingPencilMarks) {
             this.updatePencilMarks(number);
         } else {
             this.updateCellValue(number);
@@ -68,10 +64,10 @@ export class Cell extends React.PureComponent {
     }
 
     render() {
-        const { entryMethod } = this.props;
+        const { isUsingPencilMarks } = this.props;
         const { pencilMarks, value } = this.state;
 
-        const shouldShowBigNumberOnHover = entryMethod === "numbers";
+        const shouldShowBigNumberOnHover = !isUsingPencilMarks;
         const cellHasValue = value !== "";
 
         return (
@@ -91,11 +87,11 @@ export class Cell extends React.PureComponent {
 }
 
 Cell.defaultProps = {
-    entryMethod: "pencilMarks",
+    isUsingPencilMarks: true,
     value: null
 };
 
 Cell.propTypes = {
-    entryMethod: PropTypes.oneOf(["pencilMarks", "numbers"]),
+    isUsingPencilMarks: PropTypes.bool,
     value: PropTypes.string
 };
