@@ -20,7 +20,7 @@ export function SudokuGrid({ cells }) {
 }
 
 SudokuGrid.defaultProps = {
-    cells: []
+    cells: Array(81).fill("")
 };
 
 SudokuGrid.propTypes = {

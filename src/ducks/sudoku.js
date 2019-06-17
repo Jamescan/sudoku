@@ -11,7 +11,7 @@ export function updateCell(index, value) {
 }
 
 const initialState = {
-    //cells: Array(81).fill("")
+    // cells: Array(81).fill("")
     cells: [
         "",
         "4",
