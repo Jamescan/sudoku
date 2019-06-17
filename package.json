@@ -55,7 +55,14 @@
                     ]
                 }
             ],
-            "import/prefer-default-export": "off"
+            "import/prefer-default-export": "off",
+            "indent": [
+                "error",
+                4,
+                {
+                    "SwitchCase": 1
+                }
+            ]
         }
     },
     "browserslist": {

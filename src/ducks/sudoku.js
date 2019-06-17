@@ -103,15 +103,14 @@ const initialState = {
 export function sudoku(state = initialState, action) {
     switch (action.type) {
         case UPDATE_CELL: {
-            const { index: actionIndex, value } = action;
-            const updatedCells = state.cells.map((cell, index) => {
-                if (index === actionIndex) {
-                    if (cell === value) {
-                        return "";
-                    }
-                    return value;
+            const { index: indexToUpdate, value: newValue } = action;
+            const updatedCells = state.cells.map((cellValue, index) => {
+                const isCellToUpdate = index === indexToUpdate;
+                if (isCellToUpdate) {
+                    const isSameValue = cellValue === newValue;
+                    return isSameValue ? "" : newValue;
                 }
-                return cell;
+                return cellValue;
             });
             return {
                 ...state,
