@@ -93,7 +93,7 @@
             "git add"
         ],
         "*.js": [
-            "eslint --fix"
+            "npm run eslint -- --fix"
         ]
     }
 }
