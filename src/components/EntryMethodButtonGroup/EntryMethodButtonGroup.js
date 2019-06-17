@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import "./EntryMethodButtonGroup.css";
 
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+// Above pending open issue for accessibility improvements.
+
 // TODO: Component should be abstracted into a reusable "ButtonGroup"
 export function EntryMethodButtonGroup({ isUsingPencilMarks, toggleEntryMethod }) {
     const bigButtonClasses = clsx("entryMethodButton", { selected: !isUsingPencilMarks });

@@ -86,6 +86,8 @@ Cell.defaultProps = {
 };
 
 Cell.propTypes = {
+    index: PropTypes.number.isRequired,
     isUsingPencilMarks: PropTypes.bool,
+    updateCell: PropTypes.func.isRequired,
     value: PropTypes.string
 };
