@@ -10,10 +10,12 @@ This project renders an interactive Sudoku grid for solving puzzles.
 
 ### Planned
 
+-   Input Validation
+    -   For Obvious Mistakes
+    -   For Any Mistakes (using the puzzle's solution)
+-   Clear all pencil marks via a button
 -   Accessibility improvements
     -   Navigation and input using only a keyboard
--   Clear all pencil marks via a button
--   Option for simple input validation (e.g. a warning if an obviously incorrect value is input into a cell)
 
 ## Installation and Use
 
