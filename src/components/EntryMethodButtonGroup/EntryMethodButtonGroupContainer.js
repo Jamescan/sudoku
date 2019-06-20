@@ -2,8 +2,7 @@ import { connect } from "react-redux";
 import { toggleEntryMethod } from "../../ducks/config";
 import { EntryMethodButtonGroup } from "./EntryMethodButtonGroup";
 
-function mapStateToProps({ config }) {
-    const { isUsingPencilMarks } = config;
+function mapStateToProps({ config: { isUsingPencilMarks } }) {
     return {
         isUsingPencilMarks
     };

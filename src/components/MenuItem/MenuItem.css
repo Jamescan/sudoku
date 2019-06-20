@@ -1,0 +1,15 @@
+.menuItem {
+    border: 1px solid black;
+    background-color: rgb(195, 181, 181);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.menuItemTitle {
+    flex: 0 0 30%;
+}
+
+.menuItemChildren {
+    justify-content: space-evenly;
+}

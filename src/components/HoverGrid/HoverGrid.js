@@ -47,7 +47,7 @@ class HoverGrid extends React.PureComponent {
                     </div>
                 )}
                 <div className="pencilMarkGrid">
-                    {availablePencilMarks.map(pencilMark => {
+                    {availablePencilMarks.map((pencilMark) => {
                         const hoverAreaClasses = clsx("hoverArea", {
                             lightPencilMark:
                                 shouldShowPencilMarks && isHovering && value === pencilMark,

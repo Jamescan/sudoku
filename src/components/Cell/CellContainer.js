@@ -3,8 +3,7 @@ import { Cell } from "./Cell";
 import { updateCell } from "../../ducks/sudoku";
 
 // mapStateToProps has root state as argument, we destructure it
-function mapStateToProps({ config }) {
-    const { isUsingPencilMarks } = config;
+function mapStateToProps({ config: { isUsingPencilMarks } }) {
     return {
         isUsingPencilMarks
     };
