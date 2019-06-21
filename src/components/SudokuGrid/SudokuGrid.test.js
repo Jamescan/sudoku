@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import SudokuGrid from "./SudokuGrid";
+import { SudokuGrid } from "./SudokuGrid";
 
 function getProps(overrides) {
     return {

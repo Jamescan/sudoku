@@ -2,7 +2,7 @@ import { createStore, combineReducers } from "redux";
 import { config } from "./ducks/config";
 import { sudoku } from "./ducks/sudoku";
 
-const sudokuApp = combineReducers({
+export const sudokuApp = combineReducers({
     config,
     sudoku
 });
