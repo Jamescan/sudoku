@@ -15,28 +15,45 @@ export class SettingsSelection extends React.PureComponent {
         const { isUsingPencilMarks, toggleEntryMethod } = this.props;
         return (
             <div className={styles.settingsSelection}>
-                <MenuItem title="Highlight Mistakes?" />
-
-                <SolutionCheckingGroup />
-                <ButtonGroup
-                    label="Entry Method"
-                    buttons={[
-                        {
-                            additionalClassNames: styles.entryMethodButton,
-                            handleClick: toggleEntryMethod,
-                            isCurrentlySelected: !isUsingPencilMarks,
-                            title: "Big"
-                        },
-                        {
-                            additionalClassNames: styles.entryMethodButton,
-                            handleClick: toggleEntryMethod,
-                            isCurrentlySelected: isUsingPencilMarks,
-                            title: "Little"
-                        }
-                    ]}
-                />
-                {/* TODO: "Pencil Marks" group with buttons for
-                "Clear All" and "Highlight Incorrect" */}
+                <MenuItem title="Highlight Mistakes?">
+                    <SolutionCheckingGroup />
+                </MenuItem>
+                <MenuItem title="Entry Method">
+                    <ButtonGroup
+                        buttons={[
+                            {
+                                additionalClassNames: styles.entryMethodButton,
+                                handleClick: toggleEntryMethod,
+                                isSelected: !isUsingPencilMarks,
+                                title: "Big"
+                            },
+                            {
+                                additionalClassNames: styles.entryMethodButton,
+                                handleClick: toggleEntryMethod,
+                                isSelected: isUsingPencilMarks,
+                                title: "Little"
+                            }
+                        ]}
+                    />
+                </MenuItem>
+                <MenuItem title="Pencil Marks">
+                    <ButtonGroup
+                        buttons={[
+                            {
+                                // additionalClassNames: styles.entryMethodButton,
+                                // handleClick: toggleEntryMethod,
+                                isSelected: false, // "Clear All" can always be selected again (never disabled)
+                                title: "Clear All"
+                            },
+                            {
+                                // additionalClassNames: styles.entryMethodButton,
+                                // handleClick: toggleEntryMethod,
+                                //isSelected: shouldHighlightIncorrectPencilMarks, // todo
+                                title: "Highlight Incorrect"
+                            }
+                        ]}
+                    />
+                </MenuItem>
             </div>
         );
     }

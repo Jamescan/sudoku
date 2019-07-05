@@ -12,15 +12,11 @@ export function ButtonGroup({ buttons, label }) {
         <div className={styles.buttonGroupWrapper}>
             <label>{label}</label>
             <div className={styles.buttonGroup}>
-                {buttons.map((button) => {
-                    const {
-                        additionalClassNames,
-                        handleClick,
-                        isCurrentlySelected,
-                        title
-                    } = button;
+                {buttons.map(button => {
+                    const { additionalClassNames, handleClick, isSelected, title } = button;
                     const buttonClasses = clsx(
-                        { [styles.selected]: isCurrentlySelected },
+                        styles.button,
+                        { [styles.selected]: isSelected },
                         additionalClassNames
                     );
 
@@ -30,6 +26,7 @@ export function ButtonGroup({ buttons, label }) {
                             onClick={() => handleClick()}
                             key={title}
                             className={buttonClasses}
+                            disabled={isSelected}
                         >
                             {title}
                         </button>
@@ -40,13 +37,11 @@ export function ButtonGroup({ buttons, label }) {
     );
 }
 
-// todo: should take a isCurrentlySelected prop
-
 ButtonGroup.defaultProps = {
     buttons: [
         {
             additionalClassNames: [],
-            isCurrentlySelected: false,
+            isSelected: false,
             title: "Button"
         }
     ],
@@ -62,7 +57,7 @@ ButtonGroup.propTypes = {
                 PropTypes.object
             ]),
             handleClick: PropTypes.func.isRequired,
-            isCurrentlySelected: PropTypes.bool,
+            isSelected: PropTypes.bool,
             title: PropTypes.string
         })
     ),

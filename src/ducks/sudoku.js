@@ -1,11 +1,17 @@
 /*
  * action types
  */
+export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const UPDATE_CELL = "UPDATE_CELL";
 
 /*
  * action creators
  */
+// todo: Will need pencil marks in redux state to implement
+export function clearAllPencilMarks() {
+    return { type: CLEAR_ALL_PENCIL_MARKS };
+}
+
 export function updateCell(index, value) {
     return { type: UPDATE_CELL, index, value };
 }
@@ -13,87 +19,411 @@ export function updateCell(index, value) {
 const initialState = {
     // cells: Array(81).fill("")
     cells: [
-        "",
-        "4",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "1",
-        "",
-        "",
-        "7",
-        "",
-        "",
-        "3",
-        "",
-        "5",
-        "",
-        "",
-        "",
-        "",
-        "1",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "9",
-        "",
-        "8",
-        "",
-        "",
-        "5",
-        "",
-        "",
-        "",
-        "5",
-        "",
-        "",
-        "1",
-        "",
-        "6",
-        "",
-        "",
-        "",
-        "",
-        "4",
-        "2",
-        "",
-        "",
-        "",
-        "7",
-        "9",
-        "",
-        "",
-        "",
-        "6",
-        "",
-        "",
-        "",
-        "",
-        "2",
-        "",
-        "",
-        "",
-        "",
-        "8",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "5",
-        "",
-        "",
-        "9",
-        "7",
-        "8"
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "4"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "1"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "7"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "3"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "5"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "1"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "9"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "8"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "5"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "5"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "1"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "6"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "4"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "2"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "7"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "9"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "6"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "2"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "8"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "5"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: ""
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "9"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "7"
+        },
+        {
+            hasError: false,
+            hasObviousError: false,
+            value: "8"
+        }
     ]
 };
 
@@ -102,15 +432,22 @@ const initialState = {
  */
 export function sudoku(state = initialState, action) {
     switch (action.type) {
+        case CLEAR_ALL_PENCIL_MARKS: {
+            // todo: Will need pencil marks in redux state to implement
+        }
         case UPDATE_CELL: {
             const { index: indexToUpdate, value: newValue } = action;
-            const updatedCells = state.cells.map((cellValue, index) => {
+            const updatedCells = state.cells.map((cell, index) => {
                 const isCellToUpdate = index === indexToUpdate;
                 if (isCellToUpdate) {
-                    const isSameValue = cellValue === newValue;
-                    return isSameValue ? "" : newValue;
+                    const isSameValue = cell.value === newValue;
+                    const newCell = {
+                        ...cell,
+                        value: isSameValue ? "" : newValue
+                    };
+                    return newCell;
                 }
-                return cellValue;
+                return cell;
             });
             return {
                 ...state,
@@ -121,4 +458,16 @@ export function sudoku(state = initialState, action) {
             return state;
         }
     }
+}
+
+/*
+ * selectors
+ */
+
+export function selectHasError(state, index) {
+    return state.cells[index].hasError;
+}
+
+export function selectHasObviousError(state, index) {
+    return state.cells[index].hasObviousError;
 }

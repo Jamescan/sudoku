@@ -11,9 +11,10 @@ export function SudokuGrid({ cells }) {
         <div className={styles.grid}>
             {/* Cells are never re-ordered and don't have a reasonable unique ID */}
             {/* eslint-disable react/no-array-index-key */}
-            {cells.map((cellValue, index) => (
-                <Cell key={index} index={index} value={cellValue} />
-            ))}
+            {cells.map((cell, index) => {
+                const { value } = cell;
+                return <Cell key={index} index={index} value={value} />;
+            })}
             {/* eslint-enable */}
         </div>
     );

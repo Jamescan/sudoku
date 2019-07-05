@@ -1,11 +1,11 @@
 /* todo: will styling be easier with a table and not a grid? */
 
 .cell {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .cell:nth-child(3n) {
-    border-right: 4px solid black;
+  border-right: 4px solid black;
 }
 
 .cell:nth-child(27n + 19),
@@ -17,13 +17,17 @@
 .cell:nth-child(27n + 25),
 .cell:nth-child(27n + 26),
 .cell:nth-child(27n + 27) {
-    border-bottom: 4px solid black;
+  border-bottom: 4px solid black;
+}
+
+.error {
+  background-color: red;
 }
 
 .valueWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 60px;
 }

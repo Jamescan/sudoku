@@ -10,7 +10,7 @@ export function MenuItem({ children, title }) {
     return (
         <div className={styles.menuItem}>
             <span className={styles.menuItemTitle}>{title}</span>
-            <div className={styles.menuItemChildren}>{children}</div>
+            {children}
         </div>
     );
 }

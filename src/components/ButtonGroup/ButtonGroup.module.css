@@ -1,9 +1,14 @@
-.buttonGroupWrapper {
+/* todo: is there a better way to disable the default :disabled styles? */
+.button:disabled {
+  color: black;
+}
+
+/* .buttonGroupWrapper {
     border: 1px solid black;
     background-color: rgb(195, 181, 181);
     padding: 0.5rem;
-}
+} */
 
 .selected {
-    border: 2px solid blue;
+  border: 2px solid blue;
 }
