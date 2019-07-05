@@ -1,0 +1,16 @@
+.settingsSelection {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.entryMethodButton {
+    height: 4rem;
+    width: 5rem;
+    font-size: 1.5rem;
+}
+
+.selected {
+    border: 2px solid blue;
+}

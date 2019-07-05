@@ -1,27 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import styles from "./ButtonGroup.module.css";
 
-export function ButtonGroup({ label, buttons }) {
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+// Above pending open issue for accessibility improvements.
+
+export function ButtonGroup({ buttons, label }) {
     return (
         <div className={styles.buttonGroupWrapper}>
-            {/* eslint-disable-next-line */}
             <label>{label}</label>
             <div className={styles.buttonGroup}>
-                {buttons.map(button => (
-                    <button type="button" onClick={() => button.handleClick()} key={button.title}>
-                        {button.title}
-                    </button>
-                ))}
+                {buttons.map((button) => {
+                    const {
+                        additionalClassNames,
+                        handleClick,
+                        isCurrentlySelected,
+                        title
+                    } = button;
+                    const buttonClasses = clsx(
+                        { [styles.selected]: isCurrentlySelected },
+                        additionalClassNames
+                    );
+
+                    return (
+                        <button
+                            type="button"
+                            onClick={() => handleClick()}
+                            key={title}
+                            className={buttonClasses}
+                        >
+                            {title}
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );
 }
 
+// todo: should take a isCurrentlySelected prop
+
 ButtonGroup.defaultProps = {
     buttons: [
         {
-            handleClick: () => console.log("Clicked"),
+            additionalClassNames: [],
+            isCurrentlySelected: false,
             title: "Button"
         }
     ],
@@ -31,8 +56,13 @@ ButtonGroup.defaultProps = {
 ButtonGroup.propTypes = {
     buttons: PropTypes.arrayOf(
         PropTypes.shape({
-            // TOOD: styles
-            handleClick: PropTypes.func,
+            additionalClassNames: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.array,
+                PropTypes.object
+            ]),
+            handleClick: PropTypes.func.isRequired,
+            isCurrentlySelected: PropTypes.bool,
             title: PropTypes.string
         })
     ),
