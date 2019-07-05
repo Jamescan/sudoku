@@ -29,6 +29,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file). Our eslint setup is run as a precommit hook [using](https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351) `husky` and `lint-staged`
 
+## Styling
+
+We make use of Create React App's [built-in support](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) for CSS Modules by naming our stylesheets as `stylesheetName.module.css`.
+
+**TODO**: Sass :)
+
 ## Testing
 
 We use `react-testing-library` to test the app since RTL [encourages](https://github.com/testing-library/react-testing-library#the-problem) good quality, maintainable tests that don't focus on implementation details.

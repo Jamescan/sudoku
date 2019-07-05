@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import "./EntryMethodButtonGroup.css";
+import styles from "./EntryMethodButtonGroup.module.css";
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
@@ -9,12 +9,12 @@ import "./EntryMethodButtonGroup.css";
 
 // TODO: Component should be abstracted into a reusable "ButtonGroup"
 export function EntryMethodButtonGroup({ isUsingPencilMarks, toggleEntryMethod }) {
-    const bigButtonClasses = clsx("entryMethodButton", { selected: !isUsingPencilMarks });
-    const littleButtonClasses = clsx("entryMethodButton", { selected: isUsingPencilMarks });
+    const bigButtonClasses = clsx(styles.entryMethodButton, { selected: !isUsingPencilMarks });
+    const littleButtonClasses = clsx(styles.entryMethodButton, { selected: isUsingPencilMarks });
     return (
-        <div className="buttonGroupWrapper">
+        <div className={styles.buttonGroupWrapper}>
             <label>Entry Method</label>
-            <div className="buttonGroup">
+            <div className={styles.buttonGroup}>
                 <button
                     className={bigButtonClasses}
                     type="button"
