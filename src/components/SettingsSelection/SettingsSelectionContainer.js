@@ -1,14 +1,18 @@
 import { connect } from "react-redux";
 import { SettingsSelection } from "./SettingsSelection";
-import { toggleEntryMethod } from "../../ducks/config";
+import { toggleAppMode, toggleEntryMethod } from "../../ducks/config";
+import { clearAllCellValues } from "../../ducks/sudoku"; 
 
-function mapStateToProps({ config: { isUsingPencilMarks } }) {
+function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks }}) {
     return {
+        isInSolveMode,
         isUsingPencilMarks
     };
 }
 
 const mapDispatchToProps = {
+    clearAllCellValues,
+    toggleAppMode,
     toggleEntryMethod
 };
 

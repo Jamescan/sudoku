@@ -15,10 +15,8 @@ export class Cell extends React.PureComponent {
         this.updatePencilMarks = this.updatePencilMarks.bind(this);
 
         const { value } = this.props;
-        const isFixedValue = !!value;
 
         this.state = {
-            isFixedValue,
             pencilMarks: []
         };
     }
@@ -41,9 +39,9 @@ export class Cell extends React.PureComponent {
     }
 
     handleKeyDown(event) {
-        const { isFixedValue } = this.state;
+        const { isFixed } = this.props;
 
-        if (event.key === "Delete" && !isFixedValue) {
+        if (event.key === "Delete" && !isFixed) {
             const { index, updateCell } = this.props;
             updateCell(index, "");
         }
@@ -59,7 +57,7 @@ export class Cell extends React.PureComponent {
     }
 
     render() {
-        const { isUsingPencilMarks, shouldHighlightError, value } = this.props;
+        const { isUsingPencilMarks, shouldHighlightError, shouldShowPencilMarks, value } = this.props;
         const { pencilMarks } = this.state;
 
         const shouldShowBigNumberOnHover = !isUsingPencilMarks;
@@ -74,8 +72,9 @@ export class Cell extends React.PureComponent {
                 ) : (
                     <HoverGrid
                         handleClick={clickedCellValue => this.handleMouseClick(clickedCellValue)}
-                        pencilMarks={pencilMarks}
+                        pencilMarks={shouldShowPencilMarks ? pencilMarks : []}
                         shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
+                        shouldShowPencilMarks={shouldShowPencilMarks}
                     />
                 )}
             </div>
@@ -84,15 +83,19 @@ export class Cell extends React.PureComponent {
 }
 
 Cell.defaultProps = {
+    isFixed: false, // false if cell value can be deleted
     isUsingPencilMarks: true,
     shouldHighlightError: false,
+    shouldShowPencilMarks: true,
     value: null
 };
 
 Cell.propTypes = {
     index: PropTypes.number.isRequired,
+    isFixed: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
     shouldHighlightError: PropTypes.bool,
+    shouldShowPencilMarks: PropTypes.bool,
     updateCell: PropTypes.func.isRequired,
     value: PropTypes.string
 };

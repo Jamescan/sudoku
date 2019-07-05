@@ -1,12 +1,18 @@
 /*
  * action types
  */
+export const CLEAR_ALL_CELL_VALUES = "CLEAR_ALL_CELL_VALUES";
 export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const UPDATE_CELL = "UPDATE_CELL";
 
 /*
  * action creators
  */
+
+export function clearAllCellValues() {
+    return { type: CLEAR_ALL_CELL_VALUES };
+}
+
 // todo: Will need pencil marks in redux state to implement
 export function clearAllPencilMarks() {
     return { type: CLEAR_ALL_PENCIL_MARKS };
@@ -432,8 +438,21 @@ const initialState = {
  */
 export function sudoku(state = initialState, action) {
     switch (action.type) {
+        case CLEAR_ALL_CELL_VALUES: {
+            const newCells = state.cells.map(cell => ({
+                hasError: false,
+                hasObviousError: false,
+                value: ""
+            }));
+
+            return {
+                ...state,
+                cells: newCells
+            }
+        }
         case CLEAR_ALL_PENCIL_MARKS: {
             // todo: Will need pencil marks in redux state to implement
+            return null;
         }
         case UPDATE_CELL: {
             const { index: indexToUpdate, value: newValue } = action;

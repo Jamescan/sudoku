@@ -4,16 +4,18 @@ import { selectHasError, selectHasObviousError, updateCell } from "../../ducks/s
 
 // mapStateToProps has root state as first argument, we destructure it
 function mapStateToProps(
-    { config: { isUsingPencilMarks, shouldShowAllErrors, shouldShowObviousErrors }, sudoku },
+    { config: { isUsingPencilMarks, shouldShowAllErrors, shouldShowPencilMarks, shouldShowObviousErrors }, sudoku },
     ownProps
 ) {
-    const hasError = selectHasError(sudoku, ownProps.index);
-    const hasObviousError = selectHasObviousError(sudoku, ownProps.index);
+    const cellIndex = ownProps.index;
+    const hasError = selectHasError(sudoku, cellIndex);
+    const hasObviousError = selectHasObviousError(sudoku, cellIndex);
 
     return {
         isUsingPencilMarks,
         shouldHighlightError:
-            (hasError && shouldShowAllErrors) || (hasObviousError && shouldShowObviousErrors)
+            (hasError && shouldShowAllErrors) || (hasObviousError && shouldShowObviousErrors),
+        shouldShowPencilMarks
     };
 }
 

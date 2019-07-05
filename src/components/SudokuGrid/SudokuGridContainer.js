@@ -2,9 +2,10 @@ import { connect } from "react-redux";
 import { SudokuGrid } from "./SudokuGrid";
 
 // mapStateToProps has root state as argument, we destructure it
-function mapStateToProps({ sudoku: { cells } }) {
+function mapStateToProps({ config: { isInSolveMode }, sudoku: { cells } }) {
     return {
-        cells
+        cells,
+        isInSolveMode
     };
 }
 
