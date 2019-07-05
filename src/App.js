@@ -2,16 +2,16 @@ import React from "react";
 import EntryMethodButtonGroup from "./components/EntryMethodButtonGroup/EntryMethodButtonGroupContainer";
 import SolutionCheckingGroup from "./components/SolutionCheckingGroup/SolutionCheckingGroupContainer";
 import SudokuGrid from "./components/SudokuGrid/SudokuGridContainer";
-import {MenuItem} from "./components/MenuItem/MenuItem";
+import { MenuItem } from "./components/MenuItem/MenuItem";
 import "./App.css";
 
 export function App() {
     return (
         <div className="app">
             <div className="header">
-                {/* Maybe a header component that is connected to grab all the mapDispatchToProps garbage? */}
-                <MenuItem title="Highlight Mistakes?">
-                </MenuItem>
+                {/* Maybe a header component that is connected to
+                grab all the mapDispatchToProps garbage? */}
+                <MenuItem title="Highlight Mistakes?" />
 
                 <SolutionCheckingGroup />
                 <EntryMethodButtonGroup />

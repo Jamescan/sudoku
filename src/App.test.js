@@ -5,6 +5,7 @@ import { render } from "@testing-library/react";
 import { sudokuApp } from "./redux";
 import { App } from "./App";
 
+// eslint-disable-next-line no-undef
 function renderWithRedux(ui, { initialState, store = createStore(reducer, initialState) } = {}) {
     return {
         ...render(<Provider store={store}>{ui}</Provider>),
