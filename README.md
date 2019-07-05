@@ -1,5 +1,16 @@
 This project renders an interactive Sudoku grid for solving puzzles.
 
+-   [Features](#Features)
+    -   [Current](#Current)
+    -   [Planned](#Planned)
+-   [Installation and Use](#Installation-and-Use)
+-   [Linting](#Linting)
+-   [Styling](#Styling)
+    -   [CSS Modules](#CSS-Modules)
+    -   [Sass](#Sass)
+-   [Testing](#Testing)
+-   [Acknowledgements](#Acknowledgements)
+
 ## Features
 
 ### Current
@@ -10,6 +21,7 @@ This project renders an interactive Sudoku grid for solving puzzles.
 
 ### Planned
 
+-   'Entry' and 'Solve' modes
 -   Input Validation
     -   For Obvious Mistakes
     -   For Any Mistakes (using the puzzle's solution)
@@ -35,7 +47,7 @@ We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/
 
 ### CSS Modules
 
-We make use of Create React App's [built-in support](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) (as of v2) for CSS Modules to avoid `className` collisions. This requires importing and using our stylesheets like so:
+We make use of Create React App's [built-in support](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) (as of v2) for CSS Modules which scopes styles to avoid `className` collisions. This requires importing and using our stylesheets like so:
 
 ```js
 import styles from "styleSheetName.module.css"
@@ -66,3 +78,7 @@ render() {
 We use `react-testing-library` to test the app since RTL [encourages](https://github.com/testing-library/react-testing-library#the-problem) good quality, maintainable tests that don't focus on implementation details.
 
 The standard `npm test` will run the app's test suite. To get a coverage report, you can run `npm test -- --coverage` or use the coverage script via `npm run coverage` (defined in the `package.json` file).
+
+## Acknowledgements
+
+The UI and features for this app take heavy inspiration from Duncan's SuDoku Solver, an execellent Sudoku solver available for Windows [here](http://www.littlegogs.com/).
