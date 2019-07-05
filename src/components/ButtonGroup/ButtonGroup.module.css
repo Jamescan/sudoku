@@ -1,1 +1,9 @@
-/* stylelint-disable */
+.buttonGroupWrapper {
+    border: 1px solid black;
+    background-color: rgb(195, 181, 181);
+    padding: 0.5rem;
+}
+
+.selected {
+    border: 2px solid blue;
+}

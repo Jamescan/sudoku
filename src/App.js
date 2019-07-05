@@ -4,6 +4,7 @@ import SolutionCheckingGroup from "./components/SolutionCheckingGroup/SolutionCh
 import SudokuGrid from "./components/SudokuGrid/SudokuGridContainer";
 import { MenuItem } from "./components/MenuItem/MenuItem";
 import "./App.css";
+import { ButtonGroup } from "./components/ButtonGroup/ButtonGroup";
 
 export function App() {
     return (
@@ -15,6 +16,7 @@ export function App() {
 
                 <SolutionCheckingGroup />
                 <EntryMethodButtonGroup />
+                <ButtonGroup />
                 {/* TODO: "Pencil Marks" group with buttons for
                 "Clear All" and "Highlight Incorrect" */}
             </div>
