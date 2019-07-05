@@ -13,7 +13,7 @@ export class SettingsSelection extends React.PureComponent {
 
     // TODO: Conditionally render menu items depending on Mode?
     render() {
-        const { clearAllCellValues, isInSolveMode, isUsingPencilMarks, toggleAppMode, toggleEntryMethod } = this.props;
+        const { clearAllCellValues, isInSolveMode, isUsingPencilMarks, resetToOriginalCells, toggleAppMode, toggleEntryMethod } = this.props;
         return (
             <div className={styles.settingsSelection}>
                 <MenuItem title="Mode">
@@ -34,15 +34,16 @@ export class SettingsSelection extends React.PureComponent {
                         ]}
                     />
                     {
-                        !isInSolveMode &&
-                        <button onClick={() => clearAllCellValues()}>Clear All Cells</button>
+                        isInSolveMode ? <button onClick={() => resetToOriginalCells()}>Reset to Original Cells</button>
+                        : <button onClick={() => clearAllCellValues()}>Clear All Cells</button>
                     }
                 </MenuItem>
-                <MenuItem title="Highlight Mistakes?">
-                    <SolutionCheckingGroup />
-                </MenuItem>
+
                 {isInSolveMode && 
                 <>
+                    <MenuItem title="Highlight Mistakes?">
+                        <SolutionCheckingGroup />
+                    </MenuItem>
                     <MenuItem title="Entry Method">
                         <ButtonGroup
                             buttons={[
@@ -94,6 +95,7 @@ SettingsSelection.propTypes = {
     clearAllCellValues: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
+    resetToOriginalCells: PropTypes.func.isRequired,
     toggleAppMode: PropTypes.func.isRequired,
     toggleEntryMethod: PropTypes.func.isRequired
 };
