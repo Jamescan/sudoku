@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./SolutionCheckingGroup.css";
+import styles from "./SolutionCheckingGroup.module.css";
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
@@ -10,7 +10,7 @@ import "./SolutionCheckingGroup.css";
 // consider combining with ButtonGroup into MenuGroupItem or something.
 export function SolutionCheckingGroup({ toggleShowAllErrors, toggleShowObviousErrors }) {
     return (
-        <div className="checkboxGroupWrapper">
+        <div className={styles.checkboxGroupWrapper}>
             <label>Highlight Mistakes?</label>
             <div>
                 <input

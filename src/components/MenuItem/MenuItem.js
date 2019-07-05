@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./MenuItem.css";
+import styles from "./MenuItem.module.css";
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
@@ -8,9 +8,9 @@ import "./MenuItem.css";
 
 export function MenuItem({ children, title }) {
     return (
-        <div className="menuItem">
-            <span className="menuItemTitle">{title}</span>
-            <div className="menuItemChildren">{children}</div>
+        <div className={styles.menuItem}>
+            <span className={styles.menuItemTitle}>{title}</span>
+            <div className={styles.menuItemChildren}>{children}</div>
         </div>
     );
 }

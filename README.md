@@ -27,13 +27,39 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Linting
 
-We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file). Our eslint setup is run as a precommit hook [using](https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351) `husky` and `lint-staged`
+We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file). Our eslint setup is run as a precommit hook [using](https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351) `husky` and `lint-staged`.
+
+**TODO**: Stylelint
 
 ## Styling
 
-We make use of Create React App's [built-in support](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) for CSS Modules by naming our stylesheets as `stylesheetName.module.css`.
+### CSS Modules
 
-**TODO**: Sass :)
+We make use of Create React App's [built-in support](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) (as of v2) for CSS Modules to avoid `className` collisions. This requires importing and using our stylesheets like so:
+
+```js
+import styles from "styleSheetName.module.css"
+
+// ...
+render() {
+    return <div className={styles.foo}></div>
+}
+```
+
+as opposed to:
+
+```js
+import "styleSheetName.css"
+
+// ...
+render() {
+    return <div className={"foo"}></div>
+}
+```
+
+### Sass
+
+**TODO** :)
 
 ## Testing
 

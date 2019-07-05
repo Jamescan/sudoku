@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./SudokuGrid.css";
+import styles from "./SudokuGrid.module.css";
 import Cell from "../Cell/CellContainer";
 
 // TODO: Investigate using css table instead of css grid for easier styling.
@@ -8,7 +8,7 @@ import Cell from "../Cell/CellContainer";
 
 export function SudokuGrid({ cells }) {
     return (
-        <div className="grid">
+        <div className={styles.grid}>
             {/* Cells are never re-ordered and don't have a reasonable unique ID */}
             {/* eslint-disable react/no-array-index-key */}
             {cells.map((cellValue, index) => (

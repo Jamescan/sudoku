@@ -2,7 +2,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import "./ButtonGroup.css";
+import styles from "./ButtonGroup.module.css";
 
 export function ButtonGroup({ children, title }) {
     return <div className="buttonGroup" />;

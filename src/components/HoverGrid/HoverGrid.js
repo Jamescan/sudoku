@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import "./HoverGrid.css";
+import styles from "./HoverGrid.module.css";
 
 class HoverGrid extends React.PureComponent {
     constructor(props) {
@@ -37,21 +37,21 @@ class HoverGrid extends React.PureComponent {
         const shouldShowPencilMarks = !shouldShowBigNumber;
 
         return (
-            <div className="wrapper">
+            <div className={styles.wrapper}>
                 {shouldShowBigNumber && (
                     <div
-                        className="bigNumber"
+                        className={styles.bigNumber}
                         onMouseLeave={() => this.handleMouseHover(null, false)}
                     >
                         {value}
                     </div>
                 )}
-                <div className="pencilMarkGrid">
-                    {availablePencilMarks.map((pencilMark) => {
-                        const hoverAreaClasses = clsx("hoverArea", {
-                            lightPencilMark:
+                <div className={styles.pencilMarkGrid}>
+                    {availablePencilMarks.map(pencilMark => {
+                        const hoverAreaClasses = clsx(styles.hoverArea, {
+                            [styles.lightPencilMark]:
                                 shouldShowPencilMarks && isHovering && value === pencilMark,
-                            darkPencilMark:
+                            [styles.darkPencilMark]:
                                 shouldShowPencilMarks && pencilMarks.includes(pencilMark)
                         });
                         return (

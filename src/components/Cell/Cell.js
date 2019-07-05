@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Cell.css";
+import styles from "./Cell.module.css";
 import HoverGrid from "../HoverGrid/HoverGrid";
 
 // TODO: Accessibility concerns with onClicks on divs, etc.
@@ -65,9 +65,9 @@ export class Cell extends React.PureComponent {
         const cellHasValue = value !== "";
 
         return (
-            <div className="cell" onKeyDown={this.handleKeyDown} role="button" tabIndex="0">
+            <div className={styles.cell} onKeyDown={this.handleKeyDown} role="button" tabIndex="0">
                 {cellHasValue ? (
-                    <div className="valueWrapper">{value}</div>
+                    <div className={styles.valueWrapper}>{value}</div>
                 ) : (
                     <HoverGrid
                         handleClick={clickedCellValue => this.handleMouseClick(clickedCellValue)}
