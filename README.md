@@ -39,9 +39,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Linting
 
-We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file). Our eslint setup is run as a precommit hook [using](https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351) `husky` and `lint-staged`.
-
-**TODO**: Stylelint
+We use the `airbnb` [eslint configuration](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) as our baseline linting setup, with some minor rule modifications (see the `package.json` file). We also use the [standard stylelint-config](https://github.com/stylelint/stylelint-config-standard) for linting our CSS. Our eslint + stylelint setup is run as a precommit hook [using](https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351) `husky` and `lint-staged`.
 
 ## Styling
 

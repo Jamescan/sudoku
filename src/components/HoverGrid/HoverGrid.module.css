@@ -11,6 +11,7 @@
     border: 1px solid transparent;
     color: transparent;
     user-select: none;
+
     /* End hack to hide the grid numbers and avoid user selecting them */
 
     display: flex;

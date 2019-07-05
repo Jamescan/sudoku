@@ -18,6 +18,7 @@
         "eject": "react-scripts eject",
         "prettier": "prettier --write \"src/**/*.js\"",
         "eslint": "eslint **/*.js --fix",
+        "stylelint": "stylelint \"src/**/*.css\" --fix",
         "coverage": "react-scripts test --coverage --watchAll=false"
     },
     "eslintConfig": {
@@ -28,7 +29,10 @@
         "rules": {
             "indent": [
                 "error",
-                4
+                4,
+                {
+                    "SwitchCase": 1
+                }
             ],
             "react/jsx-indent": [
                 "error",
@@ -55,14 +59,7 @@
                     ]
                 }
             ],
-            "import/prefer-default-export": "off",
-            "indent": [
-                "error",
-                4,
-                {
-                    "SwitchCase": 1
-                }
-            ]
+            "import/prefer-default-export": "off"
         }
     },
     "browserslist": {
@@ -87,7 +84,9 @@
         "lint-staged": "^8.2.0",
         "prettier": "1.18.2",
         "react-axe": "^3.1.0",
-        "redux-devtools": "^3.5.0"
+        "redux-devtools": "^3.5.0",
+        "stylelint": "^10.1.0",
+        "stylelint-config-standard": "^18.3.0"
     },
     "husky": {
         "hooks": {
@@ -101,6 +100,9 @@
         ],
         "*.js": [
             "eslint --fix"
+        ],
+        "*.css": [
+            "stylelint --fix"
         ]
     }
 }
