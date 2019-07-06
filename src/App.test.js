@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { render } from "@testing-library/react";
-import { sudokuApp } from "./redux";
+import { rootReducer } from "./redux";
 import { App } from "./App";
 
 // eslint-disable-next-line no-undef
@@ -18,7 +18,7 @@ function renderWithRedux(ui, { initialState, store = createStore(reducer, initia
 
 describe("App", () => {
     it("renders without crashing", () => {
-        const store = createStore(sudokuApp);
+        const store = createStore(rootReducer);
 
         expect(renderWithRedux(<App />, { store })).toBeDefined();
     });

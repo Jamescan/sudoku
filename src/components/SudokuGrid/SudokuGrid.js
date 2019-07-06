@@ -21,11 +21,21 @@ export function SudokuGrid({ cells }) {
 }
 
 SudokuGrid.defaultProps = {
-    cells: Array(81).fill(""),
-    isInSolveMode: false
+    cells: Array(81).fill({
+        hasError: false,
+        hasObviousError: false,
+        isOriginalValue: false,
+        value: ""
+    })
 };
 
 SudokuGrid.propTypes = {
-    cells: PropTypes.arrayOf(PropTypes.string),
-    isInSolveMode: PropTypes.bool
+    cells: PropTypes.arrayOf(
+        PropTypes.shape({
+            hasError: PropTypes.bool,
+            hasObviousError: PropTypes.bool,
+            isOriginalValue: PropTypes.bool,
+            value: PropTypes.string
+        })
+    )
 };

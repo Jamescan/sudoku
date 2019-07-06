@@ -1,10 +1,24 @@
 import { connect } from "react-redux";
 import { Cell } from "./Cell";
-import { selectHasError, selectHasObviousError, selectIsOriginalCell, updateCell } from "../../ducks/sudoku";
+import {
+    selectHasError,
+    selectHasObviousError,
+    selectIsOriginalCell,
+    updateCell
+} from "../../ducks/sudoku";
 
 // mapStateToProps has root state as first argument, we destructure it
 function mapStateToProps(
-    { config: { isInSolveMode, isUsingPencilMarks, shouldShowAllErrors, shouldShowPencilMarks, shouldShowObviousErrors }, sudoku },
+    {
+        config: {
+            isInSolveMode,
+            isUsingPencilMarks,
+            shouldShowAllErrors,
+            shouldShowPencilMarks,
+            shouldShowObviousErrors
+        },
+        sudoku
+    },
     ownProps
 ) {
     const cellIndex = ownProps.index;

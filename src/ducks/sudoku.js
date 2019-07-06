@@ -1,6 +1,12 @@
+import { ofType } from "redux-observable";
+import { mergeMap } from "rxjs/operators";
+import { of } from "rxjs";
+
 /*
  * action types
  */
+export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
+export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
 export const CLEAR_ALL_CELL_VALUES = "CLEAR_ALL_CELL_VALUES";
 export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const RESET_TO_ORIGINAL_CELLS = "RESET_TO_ORIGINAL_CELLS";
@@ -9,6 +15,14 @@ export const UPDATE_CELL = "UPDATE_CELL";
 /*
  * action creators
  */
+
+export function checkValidSolution() {
+    return { type: CHECK_VALID_SOLUTION };
+}
+
+export function checkValidSolutionSuccess() {
+    return { type: CHECK_VALID_SOLUTION_SUCCESS };
+}
 
 export function clearAllCellValues() {
     return { type: CLEAR_ALL_CELL_VALUES };
@@ -524,17 +538,20 @@ const initialState = {
  */
 export function sudoku(state = initialState, action) {
     switch (action.type) {
+        case CHECK_VALID_SOLUTION: {
+            break;
+        }
         case CLEAR_ALL_CELL_VALUES: {
-            const newCells = state.cells.map(cell => ({
+            const newCells = Array(81).fill({
                 hasError: false,
                 hasObviousError: false,
                 value: ""
-            }));
+            });
 
             return {
                 ...state,
                 cells: newCells
-            }
+            };
         }
         case CLEAR_ALL_PENCIL_MARKS: {
             // todo: Will need pencil marks in redux state to implement
@@ -546,15 +563,15 @@ export function sudoku(state = initialState, action) {
                     return {
                         ...cell,
                         value: ""
-                    }
+                    };
                 }
-                return cell
+                return cell;
             });
 
             return {
                 ...state,
                 cells: newCells
-            }
+            };
         }
         case UPDATE_CELL: {
             const { index: indexToUpdate, value: newValue } = action;
@@ -596,3 +613,11 @@ export function selectHasObviousError(state, index) {
 export function selectIsOriginalCell(state, index) {
     return state.cells[index].isOriginalValue;
 }
+
+export const checkValidSolutionEpic = action$ =>
+    action$.pipe(
+        ofType(CHECK_VALID_SOLUTION),
+        mergeMap(action => {
+            return of(checkValidSolutionSuccess());
+        })
+    );

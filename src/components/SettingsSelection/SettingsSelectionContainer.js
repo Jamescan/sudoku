@@ -1,9 +1,14 @@
 import { connect } from "react-redux";
 import { SettingsSelection } from "./SettingsSelection";
-import { toggleAppMode, toggleEntryMethod } from "../../ducks/config";
-import { clearAllCellValues, resetToOriginalCells } from "../../ducks/sudoku"; 
+import {
+    toggleAppMode,
+    toggleEntryMethod,
+    toggleShowAllErrors,
+    toggleShowObviousErrors
+} from "../../ducks/config";
+import { checkValidSolution, clearAllCellValues, resetToOriginalCells } from "../../ducks/sudoku";
 
-function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks }}) {
+function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks } }) {
     return {
         isInSolveMode,
         isUsingPencilMarks
@@ -11,10 +16,13 @@ function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks }}) {
 }
 
 const mapDispatchToProps = {
+    checkValidSolution,
     clearAllCellValues,
     resetToOriginalCells,
     toggleAppMode,
-    toggleEntryMethod
+    toggleEntryMethod,
+    toggleShowAllErrors,
+    toggleShowObviousErrors
 };
 
 const ConnectedSettingsSelection = connect(

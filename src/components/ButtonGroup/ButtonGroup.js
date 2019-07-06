@@ -3,19 +3,13 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import styles from "./ButtonGroup.module.css";
 
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
-// Above pending open issue for accessibility improvements.
-
-export function ButtonGroup({ buttons, label }) {
+export function ButtonGroup({ buttons, title }) {
     return (
         <div className={styles.buttonGroupWrapper}>
-            <label>{label}</label>
+            <span>{title}</span>
             <div className={styles.buttonGroup}>
-                {buttons.map((button) => {
-                    const {
-                        additionalClassNames, handleClick, isSelected, title
-                    } = button;
+                {buttons.map(button => {
+                    const { additionalClassNames, handleClick, isSelected, title } = button;
                     const buttonClasses = clsx(
                         styles.button,
                         { [styles.selected]: isSelected },
@@ -47,7 +41,7 @@ ButtonGroup.defaultProps = {
             title: "Button"
         }
     ],
-    label: ""
+    title: ""
 };
 
 ButtonGroup.propTypes = {
@@ -63,5 +57,5 @@ ButtonGroup.propTypes = {
             title: PropTypes.string
         })
     ),
-    label: PropTypes.string
+    title: PropTypes.string
 };

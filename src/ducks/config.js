@@ -40,13 +40,14 @@ export function config(state = initialState, action) {
     switch (action.type) {
         case TOGGLE_APP_MODE: {
             // TODO: Clean up this logic... idea is to force isUsingPencilMarks to false
-            // whenever we toggle from Solve to Capture mode, since Capture mode never uses pencilMarks.
+            // whenever we toggle from Solve to Capture mode,
+            // since Capture mode never uses pencilMarks.
             // Do similar for shouldShowPencilMarks.
             return {
                 ...state,
                 isInSolveMode: !state.isInSolveMode,
                 isUsingPencilMarks: state.isInSolveMode ? false : state.isUsingPencilMarks,
-                shouldShowPencilMarks: state.isInSolveMode ? false : true,
+                shouldShowPencilMarks: !state.isInSolveMode
             };
         }
         case TOGGLE_ENTRY_METHOD: {

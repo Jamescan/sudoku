@@ -14,8 +14,6 @@ export class Cell extends React.PureComponent {
         this.updateCellValue = this.updateCellValue.bind(this);
         this.updatePencilMarks = this.updatePencilMarks.bind(this);
 
-        const { value } = this.props;
-
         this.state = {
             pencilMarks: []
         };
@@ -57,7 +55,12 @@ export class Cell extends React.PureComponent {
     }
 
     render() {
-        const { isUsingPencilMarks, shouldHighlightError, shouldShowPencilMarks, value } = this.props;
+        const {
+            isUsingPencilMarks,
+            shouldHighlightError,
+            shouldShowPencilMarks,
+            value
+        } = this.props;
         const { pencilMarks } = this.state;
 
         const shouldShowBigNumberOnHover = !isUsingPencilMarks;
