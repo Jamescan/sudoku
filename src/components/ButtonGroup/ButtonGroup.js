@@ -3,15 +3,13 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import styles from "./ButtonGroup.module.css";
 
-export function ButtonGroup({ buttons, title }) {
+export function ButtonGroup({ buttons, title: label }) {
     return (
         <div className={styles.buttonGroupWrapper}>
-            <span>{title}</span>
+            <span>{label}</span>
             <div className={styles.buttonGroup}>
-                {buttons.map((button) => {
-                    const {
-                        additionalClassNames, handleClick, isSelected, title
-                    } = button;
+                {buttons.map(button => {
+                    const { additionalClassNames, handleClick, isSelected, title } = button;
                     const buttonClasses = clsx(
                         styles.button,
                         { [styles.selected]: isSelected },

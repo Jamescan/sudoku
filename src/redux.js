@@ -1,8 +1,5 @@
-import {
-    compose, createStore, combineReducers, applyMiddleware
-} from "redux";
-import { createEpicMiddleware } from "redux-observable";
-import { combineEpics } from "redux-observable";
+import { compose, createStore, combineReducers, applyMiddleware } from "redux";
+import { combineEpics, createEpicMiddleware } from "redux-observable";
 import { config } from "./ducks/config";
 import { checkValidSolutionEpic, sudoku } from "./ducks/sudoku";
 
@@ -15,16 +12,11 @@ export const rootEpic = combineEpics(checkValidSolutionEpic);
 
 const epicMiddleware = createEpicMiddleware();
 
+// eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-/* eslint-disable no-underscore-dangle */
-const store = createStore(
-    rootReducer,
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    composeEnhancers(applyMiddleware(epicMiddleware))
-);
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
 
 epicMiddleware.run(rootEpic);
 
 export default store;
-/* eslint-enable */

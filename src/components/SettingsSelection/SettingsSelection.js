@@ -115,6 +115,7 @@ SettingsSelection.defaultProps = {
 };
 
 SettingsSelection.propTypes = {
+    checkValidSolution: PropTypes.func.isRequired,
     clearAllCellValues: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
