@@ -43,6 +43,89 @@ export function updateCell(index, value) {
 
 const initialState = {
     // cells: Array(81).fill("")
+    solution: [
+        8,
+        4,
+        6,
+        2,
+        5,
+        3,
+        7,
+        1,
+        9,
+        1,
+        9,
+        2,
+        7,
+        4,
+        6,
+        3,
+        8,
+        5,
+        5,
+        3,
+        7,
+        8,
+        1,
+        9,
+        4,
+        2,
+        6,
+        4,
+        2,
+        9,
+        6,
+        8,
+        7,
+        1,
+        5,
+        3,
+        7,
+        8,
+        5,
+        3,
+        9,
+        1,
+        2,
+        6,
+        4,
+        3,
+        6,
+        1,
+        4,
+        2,
+        5,
+        8,
+        9,
+        7,
+        9,
+        7,
+        8,
+        1,
+        6,
+        4,
+        5,
+        3,
+        2,
+        2,
+        5,
+        3,
+        9,
+        7,
+        8,
+        6,
+        4,
+        1,
+        6,
+        1,
+        4,
+        5,
+        3,
+        2,
+        9,
+        7,
+        8
+    ].map(num => `${num}`),
     cells: [
         {
             hasError: false,
@@ -577,22 +660,25 @@ export function sudoku(state = initialState, action) {
             };
         }
         case UPDATE_CELL: {
-            const { index: indexToUpdate, value: newValue } = action;
-            const updatedCells = state.cells.map((cell, index) => {
-                const isCellToUpdate = index === indexToUpdate;
-                if (isCellToUpdate) {
-                    const isSameValue = cell.value === newValue;
-                    const newCell = {
-                        ...cell,
-                        value: isSameValue ? "" : newValue
-                    };
-                    return newCell;
-                }
-                return cell;
-            });
+            const { index, value: newValue } = action;
+
+            const cellToUpdate = state.cells[index];
+            const shouldClearCellValue = cellToUpdate.value === newValue;
+
+            // TODO: None of this error checking should be happening if we aren't in Solve mode...
+            const hasObviousError = checkForObviousErrorByIndex(state, index, newValue);
+            const hasError = checkForErrorByIndex(state, index, newValue);
+
+            const newCell = {
+                ...cellToUpdate,
+                value: shouldClearCellValue ? "" : newValue,
+                hasObviousError,
+                hasError
+            };
+
             return {
                 ...state,
-                cells: updatedCells
+                cells: [...state.cells.slice(0, index), newCell, ...state.cells.slice(index + 1)]
             };
         }
         default: {
@@ -623,3 +709,47 @@ export const checkValidSolutionEpic = action$ =>
         // eslint-disable-next-line no-unused-vars
         mergeMap(action => of(checkValidSolutionSuccess()))
     );
+
+/*
+ * Reducer Utils
+ */
+// Returns true if there is an error with the new cell value
+function checkForErrorByIndex(state, index, newValue) {
+    return state.solution[index] !== newValue;
+}
+
+function checkForObviousErrorByIndex(state, index, newValue) {
+    const obviousCells = [
+        ...getValuesInSameBlockByIndex(state.cells, index),
+        ...getValuesInSameColumnByIndex(state.cells, index),
+        ...getValuesInSameRowByIndex(state.cells, index)
+    ];
+
+    return !!obviousCells.find(cell => cell.value === newValue);
+}
+
+function getValuesInSameRowByIndex(cells, index) {
+    const row = Math.floor(index / 9);
+    const solutionValuesInRow = cells.slice(row * 9, row * 9 + 9);
+    return solutionValuesInRow;
+}
+
+function getValuesInSameColumnByIndex(cells, index) {
+    const column = index % 9;
+    const solutionValuesInColumn = [
+        cells[column],
+        cells[column + 9],
+        cells[column + 18],
+        cells[column + 27],
+        cells[column + 36],
+        cells[column + 45],
+        cells[column + 54],
+        cells[column + 63],
+        cells[column + 72]
+    ];
+    return solutionValuesInColumn;
+}
+
+function getValuesInSameBlockByIndex(cells, index) {
+    return [];
+}
