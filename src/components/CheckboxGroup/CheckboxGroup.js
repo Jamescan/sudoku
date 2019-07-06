@@ -7,7 +7,7 @@ export function CheckboxGroup({ checkboxes, title }) {
         <>
             <span>{title}</span>
             <div className={styles.checkboxGroupWrapper}>
-                {checkboxes.map(checkbox => {
+                {checkboxes.map((checkbox) => {
                     const { id, handleSelection, label } = checkbox;
                     return (
                         <div key={id}>

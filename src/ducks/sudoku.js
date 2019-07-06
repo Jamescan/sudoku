@@ -558,7 +558,7 @@ export function sudoku(state = initialState, action) {
             return null;
         }
         case RESET_TO_ORIGINAL_CELLS: {
-            const newCells = state.cells.map(cell => {
+            const newCells = state.cells.map((cell) => {
                 if (!cell.isOriginalValue) {
                     return {
                         ...cell,
@@ -614,10 +614,7 @@ export function selectIsOriginalCell(state, index) {
     return state.cells[index].isOriginalValue;
 }
 
-export const checkValidSolutionEpic = action$ =>
-    action$.pipe(
-        ofType(CHECK_VALID_SOLUTION),
-        mergeMap(action => {
-            return of(checkValidSolutionSuccess());
-        })
-    );
+export const checkValidSolutionEpic = action$ => action$.pipe(
+    ofType(CHECK_VALID_SOLUTION),
+    mergeMap(action => of(checkValidSolutionSuccess()))
+);

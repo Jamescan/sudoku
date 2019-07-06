@@ -1,4 +1,6 @@
-import { compose, createStore, combineReducers, applyMiddleware } from "redux";
+import {
+    compose, createStore, combineReducers, applyMiddleware
+} from "redux";
 import { createEpicMiddleware } from "redux-observable";
 import { combineEpics } from "redux-observable";
 import { config } from "./ducks/config";

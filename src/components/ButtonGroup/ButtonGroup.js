@@ -8,8 +8,10 @@ export function ButtonGroup({ buttons, title }) {
         <div className={styles.buttonGroupWrapper}>
             <span>{title}</span>
             <div className={styles.buttonGroup}>
-                {buttons.map(button => {
-                    const { additionalClassNames, handleClick, isSelected, title } = button;
+                {buttons.map((button) => {
+                    const {
+                        additionalClassNames, handleClick, isSelected, title
+                    } = button;
                     const buttonClasses = clsx(
                         styles.button,
                         { [styles.selected]: isSelected },
