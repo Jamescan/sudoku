@@ -32,8 +32,15 @@ export class Cell extends React.PureComponent {
 
     // Update the "big number" in the cell
     updateCellValue(value) {
-        const { index, updateCell } = this.props;
-        updateCell(index, value);
+        // TODO: This might be an ok use-case for redux-thunk conditional dispatching
+        // https://github.com/reduxjs/redux-thunk#motivation
+        const { addNewCellValue, index, isInSolveMode, updateCell } = this.props;
+
+        if (isInSolveMode) {
+            updateCell(index, value);
+        } else {
+            addNewCellValue(index, value);
+        }
     }
 
     handleKeyDown(event) {
@@ -87,6 +94,7 @@ export class Cell extends React.PureComponent {
 
 Cell.defaultProps = {
     isFixed: false, // false if cell value can be deleted
+    isInSolveMode: false,
     isUsingPencilMarks: true,
     shouldHighlightError: false,
     shouldShowPencilMarks: true,
@@ -94,8 +102,10 @@ Cell.defaultProps = {
 };
 
 Cell.propTypes = {
+    addNewCellValue: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     isFixed: PropTypes.bool,
+    isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
     shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,

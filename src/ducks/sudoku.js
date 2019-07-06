@@ -5,16 +5,23 @@ import { of } from "rxjs";
 /*
  * action types
  */
+export const ADD_NEW_CELL_VALUE = "ADD_NEW_CELL_VALUE";
 export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
 export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
 export const CLEAR_ALL_CELL_VALUES = "CLEAR_ALL_CELL_VALUES";
 export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const RESET_TO_ORIGINAL_CELLS = "RESET_TO_ORIGINAL_CELLS";
+
+// TODO: Rename to UPDATE_CELL_VALUE or something
 export const UPDATE_CELL = "UPDATE_CELL";
 
 /*
  * action creators
  */
+
+export function addNewCellValue(index, value) {
+    return { type: ADD_NEW_CELL_VALUE, index, value };
+}
 
 export function checkValidSolution() {
     return { type: CHECK_VALID_SOLUTION };
@@ -621,6 +628,24 @@ const initialState = {
  */
 export function sudoku(state = initialState, action) {
     switch (action.type) {
+        case ADD_NEW_CELL_VALUE: {
+            const { index, value: newValue } = action;
+
+            const cellToUpdate = state.cells[index];
+
+            const newCell = {
+                ...cellToUpdate,
+                value: newValue,
+                hasObviousError: false,
+                hasError: false
+            };
+
+            return {
+                ...state,
+                cells: [...state.cells.slice(0, index), newCell, ...state.cells.slice(index + 1)]
+            };
+        }
+
         case CHECK_VALID_SOLUTION: {
             // todo
             return {
@@ -666,6 +691,7 @@ export function sudoku(state = initialState, action) {
             const shouldClearCellValue = cellToUpdate.value === newValue;
 
             // TODO: None of this error checking should be happening if we aren't in Solve mode...
+            // maybe in Capture mode we do a different action...
             const hasObviousError = checkForObviousErrorByIndex(state, index, newValue);
             const hasError = checkForErrorByIndex(state, index, newValue);
 

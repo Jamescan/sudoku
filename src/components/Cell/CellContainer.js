@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { Cell } from "./Cell";
 import {
+    addNewCellValue,
     selectHasError,
     selectHasObviousError,
     selectIsOriginalCell,
@@ -28,6 +29,7 @@ function mapStateToProps(
 
     return {
         isFixed: isInSolveMode && isOriginalCell,
+        isInSolveMode,
         isUsingPencilMarks,
         shouldHighlightError:
             (hasError && shouldShowAllErrors) || (hasObviousError && shouldShowObviousErrors),
@@ -36,6 +38,7 @@ function mapStateToProps(
 }
 
 const mapDispatchToProps = {
+    addNewCellValue,
     updateCell
 };
 
