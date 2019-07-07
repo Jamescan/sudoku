@@ -1,8 +1,12 @@
 .settingsSelection {
+    grid-area: headerCenter;
     display: flex;
     justify-content: center;
     width: 100%;
     margin-bottom: 1rem;
+    margin-top: 1rem;
+    background-color: darkgrey;
+    border: 2px solid black;
 }
 
 .entryMethodButton {

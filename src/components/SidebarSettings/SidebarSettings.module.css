@@ -1,0 +1,12 @@
+.sidebarSettingsWrapper {
+    grid-area: mainRight;
+    /* width: 300px; */
+    background-color: darkgrey;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border: 2px solid black;
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./SettingsSelection.module.css";
 import { MenuItem } from "../MenuItem/MenuItem";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { CheckboxGroup } from "../CheckboxGroup/CheckboxGroup";
+import { Button } from "semantic-ui-react";
 
 export function SettingsSelection(props) {
     const {
@@ -19,92 +18,21 @@ export function SettingsSelection(props) {
     } = props;
     return (
         <div className={styles.settingsSelection}>
-            <MenuItem title="Mode">
-                <ButtonGroup
-                    buttons={[
-                        {
-                            // additionalClassNames: styles.entryMethodButton,
-                            handleClick: toggleAppMode,
-                            isSelected: !isInSolveMode,
-                            title: "Capture"
-                        },
-                        {
-                            // additionalClassNames: styles.entryMethodButton,
-                            handleClick: toggleAppMode,
-                            isSelected: isInSolveMode,
-                            title: "Solve"
-                        }
-                    ]}
-                />
+            <MenuItem title="Menu">
+                <Button.Group>
+                    <Button onClick={toggleAppMode} active={!isInSolveMode}>
+                        Capture
+                    </Button>
+                    <Button onClick={toggleAppMode} active={isInSolveMode}>
+                        Solve
+                    </Button>
+                </Button.Group>
                 {isInSolveMode ? (
-                    <button type="button" onClick={() => resetToOriginalCells()}>
-                        Reset to Original Cells
-                    </button>
+                    <Button onClick={() => resetToOriginalCells()}>Reset to Original Cells</Button>
                 ) : (
-                    <button type="button" onClick={() => clearAllCellValues()}>
-                        Clear All Cells
-                    </button>
+                    <Button onClick={() => clearAllCellValues()}>Clear All Cells</Button>
                 )}
             </MenuItem>
-
-            {isInSolveMode && (
-                <>
-                    <MenuItem title="Highlight Mistakes?">
-                        <CheckboxGroup
-                            checkboxes={[
-                                {
-                                    id: "obviousErrors",
-                                    handleSelection: toggleShowObviousErrors,
-                                    label: "Obvious Errors"
-                                },
-                                {
-                                    id: "allErrors",
-                                    handleSelection: toggleShowAllErrors,
-                                    label: "All Errors"
-                                }
-                            ]}
-                        />
-                    </MenuItem>
-                    <MenuItem title="Entry Method">
-                        <ButtonGroup
-                            buttons={[
-                                {
-                                    additionalClassNames: styles.entryMethodButton,
-                                    handleClick: toggleEntryMethod,
-                                    isSelected: !isUsingPencilMarks,
-                                    title: "Big"
-                                },
-                                {
-                                    additionalClassNames: styles.entryMethodButton,
-                                    handleClick: toggleEntryMethod,
-                                    isSelected: isUsingPencilMarks,
-                                    title: "Little"
-                                }
-                            ]}
-                        />
-                    </MenuItem>
-                    <MenuItem title="Misc">
-                        <ButtonGroup
-                            buttons={[
-                                {
-                                    // additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => alert("TODO!"),
-
-                                    // "Clear All" can always be selected again (never disabled)
-                                    isSelected: false,
-                                    title: "Clear All"
-                                },
-                                {
-                                    // additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => checkValidSolution(),
-                                    // isSelected: shouldHighlightIncorrectPencilMarks, // todo
-                                    title: "Check Solution"
-                                }
-                            ]}
-                        />
-                    </MenuItem>
-                </>
-            )}
         </div>
     );
 }

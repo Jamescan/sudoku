@@ -673,7 +673,9 @@ export function sudoku(state = initialState, action) {
                 if (!cell.isOriginalValue) {
                     return {
                         ...cell,
-                        value: ""
+                        value: "",
+                        hasObviousError: false,
+                        hasError: false
                     };
                 }
                 return cell;
