@@ -9,7 +9,7 @@ import styles from "./MenuItem.module.css";
 export function MenuItem({ children, title }) {
     return (
         <div className={styles.menuItem}>
-            <span className={styles.menuItemTitle}>{title}</span>
+            <h3 className={styles.menuItemTitle}>{title}</h3>
             {children}
         </div>
     );

@@ -624,6 +624,52 @@ const initialState = {
 };
 
 /*
+ * Reducer Utils
+ */
+// Returns true if there is an error with the new cell value
+function checkForErrorByIndex(state, index, newValue) {
+    return state.solution[index] !== newValue;
+}
+
+function getValuesInSameRowByIndex(cells, index) {
+    const row = Math.floor(index / 9);
+    const solutionValuesInRow = cells.slice(row * 9, row * 9 + 9);
+    return solutionValuesInRow;
+}
+
+function getValuesInSameColumnByIndex(cells, index) {
+    const column = index % 9;
+    const solutionValuesInColumn = [
+        cells[column],
+        cells[column + 9],
+        cells[column + 18],
+        cells[column + 27],
+        cells[column + 36],
+        cells[column + 45],
+        cells[column + 54],
+        cells[column + 63],
+        cells[column + 72]
+    ];
+    return solutionValuesInColumn;
+}
+
+/* eslint-disable */
+function getValuesInSameBlockByIndex(cells, index) {
+    return []; // TODO - Implementation
+}
+/* eslint-enable */
+
+function checkForObviousErrorByIndex(state, index, newValue) {
+    const obviousCells = [
+        ...getValuesInSameBlockByIndex(state.cells, index),
+        ...getValuesInSameColumnByIndex(state.cells, index),
+        ...getValuesInSameRowByIndex(state.cells, index)
+    ];
+
+    return !!obviousCells.find(cell => cell.value === newValue && newValue !== "");
+}
+
+/*
  * reducer
  */
 export function sudoku(state = initialState, action) {
@@ -692,16 +738,15 @@ export function sudoku(state = initialState, action) {
             const cellToUpdate = state.cells[index];
             const shouldClearCellValue = cellToUpdate.value === newValue;
 
-            // TODO: None of this error checking should be happening if we aren't in Solve mode...
-            // maybe in Capture mode we do a different action...
             const hasObviousError = checkForObviousErrorByIndex(state, index, newValue);
             const hasError = checkForErrorByIndex(state, index, newValue);
 
+            // TODO: Probably should have a separate DELETE_CELL or something
             const newCell = {
                 ...cellToUpdate,
                 value: shouldClearCellValue ? "" : newValue,
-                hasObviousError,
-                hasError
+                hasObviousError: shouldClearCellValue ? false : hasObviousError,
+                hasError: shouldClearCellValue ? false : hasError
             };
 
             return {
@@ -737,47 +782,3 @@ export const checkValidSolutionEpic = action$ =>
         // eslint-disable-next-line no-unused-vars
         mergeMap(action => of(checkValidSolutionSuccess()))
     );
-
-/*
- * Reducer Utils
- */
-// Returns true if there is an error with the new cell value
-function checkForErrorByIndex(state, index, newValue) {
-    return state.solution[index] !== newValue;
-}
-
-function checkForObviousErrorByIndex(state, index, newValue) {
-    const obviousCells = [
-        ...getValuesInSameBlockByIndex(state.cells, index),
-        ...getValuesInSameColumnByIndex(state.cells, index),
-        ...getValuesInSameRowByIndex(state.cells, index)
-    ];
-
-    return !!obviousCells.find(cell => cell.value === newValue);
-}
-
-function getValuesInSameRowByIndex(cells, index) {
-    const row = Math.floor(index / 9);
-    const solutionValuesInRow = cells.slice(row * 9, row * 9 + 9);
-    return solutionValuesInRow;
-}
-
-function getValuesInSameColumnByIndex(cells, index) {
-    const column = index % 9;
-    const solutionValuesInColumn = [
-        cells[column],
-        cells[column + 9],
-        cells[column + 18],
-        cells[column + 27],
-        cells[column + 36],
-        cells[column + 45],
-        cells[column + 54],
-        cells[column + 63],
-        cells[column + 72]
-    ];
-    return solutionValuesInColumn;
-}
-
-function getValuesInSameBlockByIndex(cells, index) {
-    return [];
-}

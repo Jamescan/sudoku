@@ -1,12 +1,11 @@
 import { connect } from "react-redux";
 import { SidebarSettings } from "./SidebarSettings";
 import {
-    toggleAppMode,
     toggleEntryMethod,
     toggleShowAllErrors,
     toggleShowObviousErrors
 } from "../../ducks/config";
-import { checkValidSolution, clearAllCellValues, resetToOriginalCells } from "../../ducks/sudoku";
+import { checkValidSolution } from "../../ducks/sudoku";
 
 function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks } }) {
     return {

@@ -63,6 +63,8 @@ export class Cell extends React.PureComponent {
 
     render() {
         const {
+            isFixed,
+            isInSolveMode,
             isUsingPencilMarks,
             shouldHighlightError,
             shouldShowPencilMarks,
@@ -73,7 +75,10 @@ export class Cell extends React.PureComponent {
         const shouldShowBigNumberOnHover = !isUsingPencilMarks;
         const cellHasValue = value !== "";
 
-        const cellStyles = clsx(styles.cell, { [styles.error]: shouldHighlightError });
+        const cellStyles = clsx(styles.cell, {
+            [styles.error]: shouldHighlightError,
+            [styles.new]: !isFixed && isInSolveMode
+        });
 
         return (
             <div className={cellStyles} onKeyDown={this.handleKeyDown} role="button" tabIndex="0">

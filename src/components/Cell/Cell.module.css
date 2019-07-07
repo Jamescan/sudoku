@@ -21,7 +21,11 @@
 }
 
 .error {
-    background-color: red;
+    background-color: #ff000070;
+}
+
+.new {
+    color: #4444f3e0;
 }
 
 .valueWrapper {

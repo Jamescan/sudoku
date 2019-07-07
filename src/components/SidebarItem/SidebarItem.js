@@ -5,7 +5,7 @@ import styles from "./SidebarItem.module.css";
 export function SidebarItem({ children, title }) {
     return (
         <div className={styles.sidebarItem}>
-            <span className={styles.sidebarItemTitle}>{title}</span>
+            <h3 className={styles.sidebarItemTitle}>{title}</h3>
             {children}
         </div>
     );

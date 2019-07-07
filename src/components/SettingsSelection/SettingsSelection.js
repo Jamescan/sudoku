@@ -1,24 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Button } from "semantic-ui-react";
 import styles from "./SettingsSelection.module.css";
 import { MenuItem } from "../MenuItem/MenuItem";
-import { Button } from "semantic-ui-react";
 
 export function SettingsSelection(props) {
-    const {
-        checkValidSolution,
-        clearAllCellValues,
-        isInSolveMode,
-        isUsingPencilMarks,
-        resetToOriginalCells,
-        toggleAppMode,
-        toggleEntryMethod,
-        toggleShowAllErrors,
-        toggleShowObviousErrors
-    } = props;
+    const { clearAllCellValues, isInSolveMode, resetToOriginalCells, toggleAppMode } = props;
     return (
         <div className={styles.settingsSelection}>
-            <MenuItem title="Menu">
+            <MenuItem title="Mode">
                 <Button.Group>
                     <Button onClick={toggleAppMode} active={!isInSolveMode}>
                         Capture
@@ -38,18 +28,12 @@ export function SettingsSelection(props) {
 }
 
 SettingsSelection.defaultProps = {
-    isInSolveMode: false,
-    isUsingPencilMarks: false
+    isInSolveMode: false
 };
 
 SettingsSelection.propTypes = {
-    checkValidSolution: PropTypes.func.isRequired,
     clearAllCellValues: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
-    isUsingPencilMarks: PropTypes.bool,
     resetToOriginalCells: PropTypes.func.isRequired,
-    toggleAppMode: PropTypes.func.isRequired,
-    toggleEntryMethod: PropTypes.func.isRequired,
-    toggleShowAllErrors: PropTypes.func.isRequired,
-    toggleShowObviousErrors: PropTypes.func.isRequired
+    toggleAppMode: PropTypes.func.isRequired
 };

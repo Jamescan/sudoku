@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./SidebarSettings.module.css";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-
 import { CheckboxGroup } from "../CheckboxGroup/CheckboxGroup";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
+import styles from "./SidebarSettings.module.css";
 
 export function SidebarSettings(props) {
     const {
@@ -25,12 +24,12 @@ export function SidebarSettings(props) {
                                 {
                                     id: "obviousErrors",
                                     handleSelection: toggleShowObviousErrors,
-                                    label: "Obvious Errors"
+                                    label: "Show Obvious Errors"
                                 },
                                 {
                                     id: "allErrors",
                                     handleSelection: toggleShowAllErrors,
-                                    label: "All Errors"
+                                    label: "Show All Errors"
                                 }
                             ]}
                         />
@@ -79,6 +78,16 @@ export function SidebarSettings(props) {
     );
 }
 
-SidebarSettings.defaultProps = {};
+SidebarSettings.defaultProps = {
+    isInSolveMode: false,
+    isUsingPencilMarks: false
+};
 
-SidebarSettings.propTypes = {};
+SidebarSettings.propTypes = {
+    checkValidSolution: PropTypes.func.isRequired,
+    isInSolveMode: PropTypes.bool,
+    isUsingPencilMarks: PropTypes.bool,
+    toggleEntryMethod: PropTypes.func.isRequired,
+    toggleShowAllErrors: PropTypes.func.isRequired,
+    toggleShowObviousErrors: PropTypes.func.isRequired
+};
