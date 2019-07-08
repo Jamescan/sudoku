@@ -1,6 +1,6 @@
 /* todo: is there a better way to disable the default :disabled styles? */
 .button:disabled {
-  color: black;
+    color: black;
 }
 
 /* .buttonGroupWrapper {
@@ -10,5 +10,5 @@
 } */
 
 .selected {
-  border: 2px solid blue;
+    border: 2px solid blue;
 }

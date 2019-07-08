@@ -1,5 +1,6 @@
 .sidebarSettingsWrapper {
     grid-area: mainRight;
+
     /* width: 300px; */
     background-color: darkgrey;
     margin-left: 1rem;
