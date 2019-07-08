@@ -71,6 +71,9 @@ export function SidebarSettings(props) {
                                 }
                             ]}
                         />
+                        {/* TODO: Maybe a use-case for a modal? */}
+                        <p>List of Keyboard Shortcuts</p>
+                        <p>q: Toggle Entry Method</p>
                     </SidebarItem>
                 </>
             )}

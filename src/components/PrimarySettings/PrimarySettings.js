@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "semantic-ui-react";
-import styles from "./SettingsSelection.module.css";
 import { MenuItem } from "../MenuItem/MenuItem";
+import styles from "./PrimarySettings.module.css";
 
-export function SettingsSelection(props) {
+export function PrimarySettings(props) {
     const { clearAllCellValues, isInSolveMode, resetToOriginalCells, toggleAppMode } = props;
     return (
         <div className={styles.settingsSelection}>
@@ -27,11 +27,11 @@ export function SettingsSelection(props) {
     );
 }
 
-SettingsSelection.defaultProps = {
+PrimarySettings.defaultProps = {
     isInSolveMode: false
 };
 
-SettingsSelection.propTypes = {
+PrimarySettings.propTypes = {
     clearAllCellValues: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
     resetToOriginalCells: PropTypes.func.isRequired,

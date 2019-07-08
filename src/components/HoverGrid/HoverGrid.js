@@ -67,8 +67,6 @@ class HoverGrid extends React.PureComponent {
                                 onClick={() => handleClick(pencilMark)}
                                 onMouseEnter={() => this.handleMouseHover(pencilMark, true)}
                                 onMouseLeave={() => this.handleMouseHover(pencilMark, false)}
-                                role="button"
-                                tabIndex={0}
                             >
                                 {pencilMark}
                             </div>

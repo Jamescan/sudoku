@@ -1,12 +1,13 @@
 import { connect } from "react-redux";
 import { Cell } from "./Cell";
 import {
-    addNewCellValue,
+    addCellValue,
     selectHasError,
     selectHasObviousError,
     selectIsOriginalCell,
-    updateCell
+    updateCellValue
 } from "../../ducks/sudoku";
+import { toggleEntryMethod } from "../../ducks/config";
 
 // mapStateToProps has root state as first argument, we destructure it
 function mapStateToProps(
@@ -38,8 +39,9 @@ function mapStateToProps(
 }
 
 const mapDispatchToProps = {
-    addNewCellValue,
-    updateCell
+    addCellValue,
+    toggleEntryMethod,
+    updateCellValue
 };
 
 const ConnectedCell = connect(

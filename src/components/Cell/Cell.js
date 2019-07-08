@@ -34,21 +34,103 @@ export class Cell extends React.PureComponent {
     updateCellValue(value) {
         // TODO: This might be an ok use-case for redux-thunk conditional dispatching
         // https://github.com/reduxjs/redux-thunk#motivation
-        const { addNewCellValue, index, isInSolveMode, updateCell } = this.props;
+        const { addCellValue, index, isInSolveMode, updateCellValue } = this.props;
 
         if (isInSolveMode) {
-            updateCell(index, value);
+            updateCellValue(index, value);
         } else {
-            addNewCellValue(index, value);
+            addCellValue(index, value);
         }
     }
 
     handleKeyDown(event) {
-        const { isFixed } = this.props;
+        const {
+            index,
+            isFixed,
+            isUsingPencilMarks,
+            toggleEntryMethod,
+            updateCellValue
+        } = this.props;
+        const { pencilMarks } = this.state;
+        const validDigitInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        const userInput = event.key;
 
-        if (event.key === "Delete" && !isFixed) {
-            const { index, updateCell } = this.props;
-            updateCell(index, "");
+        if (userInput === "Delete" && !isFixed) {
+            updateCellValue(index, "");
+        } else if (validDigitInputs.includes(userInput)) {
+            if (!isUsingPencilMarks) {
+                updateCellValue(index, userInput);
+            }
+
+            // TODO: clean this mess up
+            else {
+                const index = pencilMarks.indexOf(userInput);
+                if (index === -1) {
+                    this.setState({
+                        pencilMarks: [...pencilMarks, userInput]
+                    });
+                } else {
+                    this.setState({
+                        pencilMarks: [
+                            ...pencilMarks.slice(0, index),
+                            ...pencilMarks.slice(index + 1)
+                        ]
+                    });
+                }
+            }
+        }
+        // TODO: Probably should have a more elegant implementation of keyboard shortcuts
+        else if (userInput === "q") {
+            toggleEntryMethod();
+        }
+
+        // right arrow key
+        else if (event.keyCode === 39) {
+            // querySelectorAll will return matching element nodes in document order,
+            // so we can just use the index of the resulting list. We need not verify
+            // the sudokuIndex value.
+            // https://bit.ly/2Js4qMV
+            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cellToWhichToFocus = cells[index + 1];
+
+            // Don't wrap around the grid from column 9 to column 1.
+            if (index % 9 !== 8) {
+                cellToWhichToFocus && cellToWhichToFocus.focus();
+            }
+        }
+        // left arrow key
+        else if (event.keyCode === 37) {
+            // querySelectorAll will return matching element nodes in document order,
+            // so we can just use the index of the resulting list. We need not verify
+            // the sudokuIndex value.
+            // https://bit.ly/2Js4qMV
+            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cellToWhichToFocus = cells[index - 1];
+
+            // Don't wrap around the grid from column 1 to column 9.
+            if (index % 9 !== 0) {
+                cellToWhichToFocus && cellToWhichToFocus.focus();
+            }
+        }
+        // up arrow key
+        else if (event.keyCode === 38) {
+            // querySelectorAll will return matching element nodes in document order,
+            // so we can just use the index of the resulting list. We need not verify
+            // the sudokuIndex value.
+            // https://bit.ly/2Js4qMV
+            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cellToWhichToFocus = cells[index - 9];
+            cellToWhichToFocus && cellToWhichToFocus.focus();
+        }
+        // down arrow key
+        else if (event.keyCode === 40) {
+            // querySelectorAll will return matching element nodes in document order,
+            // so we can just use the index of the resulting list. We need not verify
+            // the sudokuIndex value.
+            // https://bit.ly/2Js4qMV
+            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cellToWhichToFocus = cells[index + 9];
+            cellToWhichToFocus && cellToWhichToFocus.focus();
         }
     }
 
@@ -63,6 +145,7 @@ export class Cell extends React.PureComponent {
 
     render() {
         const {
+            index,
             isFixed,
             isInSolveMode,
             isUsingPencilMarks,
@@ -81,7 +164,13 @@ export class Cell extends React.PureComponent {
         });
 
         return (
-            <div className={cellStyles} onKeyDown={this.handleKeyDown} role="button" tabIndex="0">
+            // Users should be able to tab to each cell and input its value from the keyboard
+            <div
+                className={cellStyles}
+                onKeyDown={this.handleKeyDown}
+                tabIndex="0"
+                sudokuIndex={index}
+            >
                 {cellHasValue ? (
                     <div className={styles.valueWrapper}>{value}</div>
                 ) : (
@@ -107,13 +196,13 @@ Cell.defaultProps = {
 };
 
 Cell.propTypes = {
-    addNewCellValue: PropTypes.func.isRequired,
+    addCellValue: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     isFixed: PropTypes.bool,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
     shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,
-    updateCell: PropTypes.func.isRequired,
+    updateCellValue: PropTypes.func.isRequired,
     value: PropTypes.string
 };

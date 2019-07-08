@@ -5,22 +5,25 @@ import { of } from "rxjs";
 /*
  * action types
  */
-export const ADD_NEW_CELL_VALUE = "ADD_NEW_CELL_VALUE";
+
+/* User enters a number into a cell for the first time, in Capture mode */
+export const ADD_CELL_VALUE = "ADD_CELL_VALUE";
+
+/* User enters a number into a cell in Solve mode */
+export const UPDATE_CELL_VALUE = "UPDATE_CELL_VALUE";
+
 export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
 export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
 export const CLEAR_ALL_CELL_VALUES = "CLEAR_ALL_CELL_VALUES";
 export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const RESET_TO_ORIGINAL_CELLS = "RESET_TO_ORIGINAL_CELLS";
 
-// TODO: Rename to UPDATE_CELL_VALUE or something
-export const UPDATE_CELL = "UPDATE_CELL";
-
 /*
  * action creators
  */
 
-export function addNewCellValue(index, value) {
-    return { type: ADD_NEW_CELL_VALUE, index, value };
+export function addCellValue(index, value) {
+    return { type: ADD_CELL_VALUE, index, value };
 }
 
 export function checkValidSolution() {
@@ -44,8 +47,8 @@ export function resetToOriginalCells() {
     return { type: RESET_TO_ORIGINAL_CELLS };
 }
 
-export function updateCell(index, value) {
-    return { type: UPDATE_CELL, index, value };
+export function updateCellValue(index, value) {
+    return { type: UPDATE_CELL_VALUE, index, value };
 }
 
 const initialState = {
@@ -674,7 +677,7 @@ function checkForObviousErrorByIndex(state, index, newValue) {
  */
 export function sudoku(state = initialState, action) {
     switch (action.type) {
-        case ADD_NEW_CELL_VALUE: {
+        case ADD_CELL_VALUE: {
             const { index, value: newValue } = action;
 
             const cellToUpdate = state.cells[index];
@@ -732,7 +735,7 @@ export function sudoku(state = initialState, action) {
                 cells: newCells
             };
         }
-        case UPDATE_CELL: {
+        case UPDATE_CELL_VALUE: {
             const { index, value: newValue } = action;
 
             const cellToUpdate = state.cells[index];

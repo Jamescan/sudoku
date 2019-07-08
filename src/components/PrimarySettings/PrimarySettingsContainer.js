@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { SettingsSelection } from "./SettingsSelection";
+import { PrimarySettings } from "./PrimarySettings";
 import {
     toggleAppMode,
     toggleEntryMethod,
@@ -25,10 +25,10 @@ const mapDispatchToProps = {
     toggleShowObviousErrors
 };
 
-const ConnectedSettingsSelection = connect(
+const ConnectedPrimarySettings = connect(
     mapStateToProps,
     mapDispatchToProps,
     null
-)(SettingsSelection);
+)(PrimarySettings);
 
-export default ConnectedSettingsSelection;
+export default ConnectedPrimarySettings;

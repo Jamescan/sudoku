@@ -4,6 +4,10 @@
     border: 1px solid black;
 }
 
+.cell:focus {
+    border: 2px solid blue;
+}
+
 .cell:nth-child(3n) {
     border-right: 4px solid black;
 }
