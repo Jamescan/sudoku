@@ -35,8 +35,19 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Clear all pencil marks via a button
     -   Move storage of pencil marks into redux store
 -   Accessibility improvements
+    -   Maybe a Skip Link to get to the Sidebar config settings
+    -   Keyboard shortcuts
+        -   Modal to view full list
+            -   Tabtrapping in the Modal
+    -   See Frontend Masters [course](https://frontendmasters.com/courses/web-accessibility/)
+-   Ability to color code cells?
+-   Ability to input _central_ pencil marks?
 -   Generate a puzzle / grab a puzzle from an API
     -   For different difficulty levels?
+    -   Build my own backend API? Does one exist already?
+-   Consistent UI styling
+    -   Use a prebuilt component library for styling (`react-bootstrap`, `material-ui`, `semantic-ui`, etc.) or my own?
+-   Deploy somewhere :)
 
 ## Installation and Use
 
