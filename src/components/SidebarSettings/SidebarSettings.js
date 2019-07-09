@@ -8,8 +8,10 @@ import styles from "./SidebarSettings.module.css";
 export function SidebarSettings(props) {
     const {
         checkValidSolution,
+        currentNotation,
         isInSolveMode,
         isUsingPencilMarks,
+        setCurrentNotation,
         toggleEntryMethod,
         toggleShowAllErrors,
         toggleShowObviousErrors
@@ -39,15 +41,27 @@ export function SidebarSettings(props) {
                             buttons={[
                                 {
                                     additionalClassNames: styles.entryMethodButton,
-                                    handleClick: toggleEntryMethod,
-                                    isSelected: !isUsingPencilMarks,
+                                    //handleClick: toggleEntryMethod,
+                                    //isSelected: !isUsingPencilMarks,
+                                    handleClick: () => setCurrentNotation("bigNumbers"),
+                                    isSelected: currentNotation === "bigNumbers",
                                     title: "Big"
                                 },
                                 {
                                     additionalClassNames: styles.entryMethodButton,
                                     handleClick: toggleEntryMethod,
-                                    isSelected: isUsingPencilMarks,
-                                    title: "Little"
+                                    //isSelected: isUsingPencilMarks,
+                                    handleClick: () => setCurrentNotation("cornerPencilMarks"),
+                                    isSelected: currentNotation === "cornerPencilMarks",
+                                    title: "Little: Corner"
+                                },
+                                {
+                                    additionalClassNames: styles.entryMethodButton,
+                                    handleClick: toggleEntryMethod,
+                                    //isSelected: isUsingPencilMarks,
+                                    handleClick: () => setCurrentNotation("centralPencilMarks"),
+                                    isSelected: currentNotation === "centralPencilMarks",
+                                    title: "Little: Central"
                                 }
                             ]}
                         />

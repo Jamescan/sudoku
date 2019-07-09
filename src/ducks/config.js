@@ -1,6 +1,7 @@
 /*
  * action types
  */
+export const SET_CURRENT_NOTATION = "SET_CURRENT_NOTATION";
 export const TOGGLE_APP_MODE = "TOGGLE_APP_MODE";
 export const TOGGLE_ENTRY_METHOD = "TOGGLE_ENTRY_METHOD";
 export const TOGGLE_SHOW_ALL_ERRORS = "TOGGLE_SHOW_ALL_ERRORS";
@@ -17,6 +18,10 @@ export function toggleEntryMethod() {
     return { type: TOGGLE_ENTRY_METHOD };
 }
 
+export function setCurrentNotation(notation) {
+    return { type: SET_CURRENT_NOTATION, notation };
+}
+
 export function toggleShowAllErrors() {
     return { type: TOGGLE_SHOW_ALL_ERRORS };
 }
@@ -26,6 +31,7 @@ export function toggleShowObviousErrors() {
 }
 
 const initialState = {
+    currentNotation: "bigNumbers", // or ""centralPencilMarks", "cornerPencilMarks"
     isInSolveMode: false, // false implies "Capture" Mode
     isUsingPencilMarks: false,
     shouldShowAllErrors: false,
@@ -38,6 +44,12 @@ const initialState = {
  */
 export function config(state = initialState, action) {
     switch (action.type) {
+        case SET_CURRENT_NOTATION: {
+            return {
+                ...state,
+                currentNotation: action.notation
+            };
+        }
         case TOGGLE_APP_MODE: {
             // TODO: Clean up this logic... idea is to force isUsingPencilMarks to false
             // whenever we toggle from Solve to Capture mode,
