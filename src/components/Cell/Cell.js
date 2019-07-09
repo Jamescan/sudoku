@@ -11,32 +11,37 @@ export class Cell extends React.PureComponent {
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleMouseClick = this.handleMouseClick.bind(this);
+        this.updateCellValue = this.updateCellValue.bind(this);
         this.updatePencilMarks = this.updatePencilMarks.bind(this);
 
         this.state = {
-            //pencilMarks: []
-            pencilMarks: {
-                central: [],
-                corner: []
-            }
+            pencilMarks: []
         };
     }
 
-    updatePencilMarks(number, type) {
-        const pencilMarks = this.state.pencilMarks[type];
+    updatePencilMarks(number) {
+        const { pencilMarks } = this.state;
         const updatedPencilMarks = pencilMarks.includes(number)
             ? pencilMarks.filter(pencilMark => pencilMark !== number)
             : [...pencilMarks, number];
 
         this.setState({
-            pencilMarks: {
-                ...this.state.pencilMarks,
-                [type]: updatedPencilMarks
-            }
+            pencilMarks: updatedPencilMarks
         });
     }
 
+    // Update the "big number" in the cell
+    updateCellValue(value) {
+        // TODO: This might be an ok use-case for redux-thunk conditional dispatching
+        // https://github.com/reduxjs/redux-thunk#motivation
+        const { addCellValue, index, isInSolveMode, updateCellValue } = this.props;
 
+        if (isInSolveMode) {
+            updateCellValue(index, value);
+        } else {
+            addCellValue(index, value);
+        }
+    }
 
     handleKeyDown(event) {
         const {
@@ -129,38 +134,27 @@ export class Cell extends React.PureComponent {
         }
     }
 
-    // TODO: Change isUsingPencilMarks to currentNotationMethod (oneOf("centralPencilMarks, cornerPencilMarks, bigNumbers"))
     handleMouseClick(number) {
-        const { addCellValue, currentNotation, index, isInSolveMode, isUsingPencilMarks, updateCellValue } = this.props;
-
-        if (currentNotation === "cornerPencilMarks") {
-            this.updatePencilMarks(number, "corner");
-        } 
-        else if (currentNotation === "centralPencilMarks") {
-            this.updatePencilMarks(number, "central");
-        }
-        // TODO: This might be an ok use-case for redux-thunk conditional dispatching
-        // https://github.com/reduxjs/redux-thunk#motivation
-        else if (isInSolveMode) {
-            updateCellValue(index, number);
+        const { isUsingPencilMarks } = this.props;
+        if (isUsingPencilMarks) {
+            this.updatePencilMarks(number);
         } else {
-            addCellValue(index, number);
+            this.updateCellValue(number);
         }
     }
 
     render() {
         const {
-            currentNotation,
             index,
             isFixed,
             isInSolveMode,
-            //isUsingPencilMarks,
+            isUsingPencilMarks,
             shouldHighlightError,
             shouldShowPencilMarks,
             value
         } = this.props;
         const { pencilMarks } = this.state;
-        const isUsingPencilMarks = currentNotation === "centralPencilMarks" || currentNotation === "cornerPencilMarks";
+
         const shouldShowBigNumberOnHover = !isUsingPencilMarks;
         const cellHasValue = value !== "";
 
@@ -168,9 +162,6 @@ export class Cell extends React.PureComponent {
             [styles.error]: shouldHighlightError,
             [styles.new]: !isFixed && isInSolveMode
         });
-
-        // TODO: types of entry methods should be constants, not hardcoded strings everywhere
-        // TODO: Where am I going to handle displaying centralPencilMarks?
 
         return (
             // Users should be able to tab to each cell and input its value from the keyboard
@@ -185,7 +176,7 @@ export class Cell extends React.PureComponent {
                 ) : (
                     <HoverGrid
                         handleClick={clickedCellValue => this.handleMouseClick(clickedCellValue)}
-                        pencilMarks={shouldShowPencilMarks ? pencilMarks.corner : []}
+                        pencilMarks={shouldShowPencilMarks ? pencilMarks : []}
                         shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
                         shouldShowPencilMarks={shouldShowPencilMarks}
                     />

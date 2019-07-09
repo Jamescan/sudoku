@@ -13,7 +13,6 @@ import { toggleEntryMethod } from "../../ducks/config";
 function mapStateToProps(
     {
         config: {
-            currentNotation,
             isInSolveMode,
             isUsingPencilMarks,
             shouldShowAllErrors,
@@ -30,7 +29,6 @@ function mapStateToProps(
     const isOriginalCell = selectIsOriginalCell(sudoku, cellIndex);
 
     return {
-        currentNotation,
         isFixed: isInSolveMode && isOriginalCell,
         isInSolveMode,
         isUsingPencilMarks,

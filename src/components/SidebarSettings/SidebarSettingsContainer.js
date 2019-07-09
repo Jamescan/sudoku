@@ -1,16 +1,14 @@
 import { connect } from "react-redux";
 import { SidebarSettings } from "./SidebarSettings";
 import {
-    setCurrentNotation,
     toggleEntryMethod,
     toggleShowAllErrors,
     toggleShowObviousErrors
 } from "../../ducks/config";
 import { checkValidSolution } from "../../ducks/sudoku";
 
-function mapStateToProps({ config: { currentNotation, isInSolveMode, isUsingPencilMarks } }) {
+function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks } }) {
     return {
-        currentNotation,
         isInSolveMode,
         isUsingPencilMarks
     };
@@ -18,7 +16,7 @@ function mapStateToProps({ config: { currentNotation, isInSolveMode, isUsingPenc
 
 const mapDispatchToProps = {
     checkValidSolution,
-    setCurrentNotation,
+
     toggleEntryMethod,
     toggleShowAllErrors,
     toggleShowObviousErrors
