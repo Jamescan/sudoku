@@ -42,6 +42,7 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
     -   See Frontend Masters [course](https://frontendmasters.com/courses/web-accessibility/)
 -   Ability to color code cells?
 -   Ability to input _central_ pencil marks?
+    -   Is this even feasible? Central pencil marks will overlap with the `4,5,6` pencil marks in standard Snyder notation.
 -   Generate a puzzle / grab a puzzle from an API
     -   For different difficulty levels?
     -   Build my own backend API? Does one exist already?
