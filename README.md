@@ -22,7 +22,7 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Pencil-marking notation (little numbers in cells)
     -   Clear all pencil marks via a button
 -   Input Validation
-    -   For Obvious Mistakes (same number in a row / column)
+    -   For Obvious Mistakes (same number in a row / column / 3x3 block)
     -   For All Mistakes (using the puzzle's solution.)
 -   Accessibility
     -   Input into Sudoku Grid using only a keyboard
@@ -31,8 +31,6 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 
 -   Better handling of puzzle solution in Entry mode
     -   When changing from default puzzle in Entry mode, solution in redux store should be invalidated.
--   Input Validation
-    -   For Obvious Mistakes - in 3x3 box
 -   Accessibility improvements
     -   Maybe a Skip Link to get to the Sidebar config settings
     -   Keyboard shortcuts

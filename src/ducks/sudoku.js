@@ -13,12 +13,14 @@ export const ADD_CELL_VALUE = "ADD_CELL_VALUE";
 export const UPDATE_CELL_VALUE = "UPDATE_CELL_VALUE";
 export const UPDATE_CELL_PENCIL_MARK = "UPDATE_CELL_PENCIL_MARK";
 
-
-export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
-export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
 export const CLEAR_ALL_CELL_VALUES = "CLEAR_ALL_CELL_VALUES";
 export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const RESET_TO_ORIGINAL_CELLS = "RESET_TO_ORIGINAL_CELLS";
+
+/* todo */
+export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
+export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
+
 
 /*
  * action creators
@@ -40,7 +42,6 @@ export function clearAllCellValues() {
     return { type: CLEAR_ALL_CELL_VALUES };
 }
 
-// todo: Will need pencil marks in redux state to implement
 export function clearAllPencilMarks() {
     return { type: CLEAR_ALL_PENCIL_MARKS };
 }
@@ -744,8 +745,41 @@ function getValuesInSameColumnByIndex(cells, index) {
 }
 
 /* eslint-disable */
+// TODO: Obviously a better algorithm exists for this...
 function getValuesInSameBlockByIndex(cells, index) {
-    return []; // TODO - Implementation
+    const row = Math.floor(index / 9);
+    const column = index % 9;
+
+    let rowIndicesToGet = [];
+    if (row === 0 || row === 1 || row === 2) {
+        rowIndicesToGet = [0, 1, 2];
+    }
+    else if (row === 3 || row === 4 || row === 5) {
+        rowIndicesToGet = [3, 4, 5];
+    }
+    else { // if (row === 6 || row === 7 || row === 8) {
+        rowIndicesToGet = [6, 7, 8]
+    }
+
+    let columnIndicesToGet = [];
+    if (column === 0 || column === 1 || column === 2) {
+        columnIndicesToGet = [0, 1, 2];
+    }
+    else if (column === 3 || column === 4 || column === 5) {
+        columnIndicesToGet = [3, 4, 5];
+    }
+    else { // if (column === 6 || column === 7 || column === 8) {
+        columnIndicesToGet = [6, 7, 8]
+    }
+
+    let values = [];
+    rowIndicesToGet.forEach(rowIndex => {
+        columnIndicesToGet.forEach(columnIndex => {
+            values.push(cells[rowIndex * 9 + columnIndex]);
+        });
+    });
+
+    return values;
 }
 /* eslint-enable */
 
