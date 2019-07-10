@@ -58,8 +58,8 @@ export function updateCellPencilMark(index, pencilMark) {
     return { type: UPDATE_CELL_PENCIL_MARK, index, pencilMark };
 }
 
+// TODO: Should be using getDefaultCellObject();
 const initialState = {
-    // cells: Array(81).fill("")
     solution: [
         8,
         4,
@@ -781,6 +781,16 @@ function getValuesInSameBlockByIndex(cells, index) {
     return values;
 }
 
+function checkForObviousErrorByIndex(state, index, newValue) {
+    const obviousCells = [
+        ...getValuesInSameBlockByIndex(state.cells, index),
+        ...getValuesInSameColumnByIndex(state.cells, index),
+        ...getValuesInSameRowByIndex(state.cells, index)
+    ];
+
+    return !!obviousCells.find(cell => cell.value === newValue && newValue !== "");
+}
+
 /**
  * Generates and returns a copy of an array with a newItem at a specified index.
  * (No mutation / side effects!)
@@ -794,16 +804,16 @@ function safelyUpdateArrayByIndex(array, index, newItem) {
     return [...array.slice(0, index), newItem, ...array.slice(index + 1)];
 }
 
-
-function checkForObviousErrorByIndex(state, index, newValue) {
-    const obviousCells = [
-        ...getValuesInSameBlockByIndex(state.cells, index),
-        ...getValuesInSameColumnByIndex(state.cells, index),
-        ...getValuesInSameRowByIndex(state.cells, index)
-    ];
-
-    return !!obviousCells.find(cell => cell.value === newValue && newValue !== "");
+function getDefaultCellObject() {
+    return {
+        hasError: false,
+        hasObviousError: false,
+        isOriginalValue: false,
+        pencilMarks: [],
+        value: ""
+    }
 }
+
 
 /*
  * reducer
@@ -815,8 +825,6 @@ export function sudoku(state = initialState, action) {
 
             const cellToUpdate = state.cells[index];
 
-            // TODO: Should have a utility like getDefaultCell() or something
-            // so we don't need to keep track of default values across many functions.
             const newCell = {
                 ...cellToUpdate,
                 value: newValue,
@@ -839,11 +847,7 @@ export function sudoku(state = initialState, action) {
             };
         }
         case CLEAR_ALL_CELL_VALUES: {
-            const newCells = Array(81).fill({
-                hasError: false,
-                hasObviousError: false,
-                value: ""
-            });
+            const newCells = Array(81).fill(getDefaultCellObject());
 
             return {
                 ...state,
@@ -906,17 +910,21 @@ export function sudoku(state = initialState, action) {
         case UPDATE_CELL_PENCIL_MARK: {
             const { index, pencilMark: pencilMarkToUpdate } = action;
 
-            // todo: utility for updating a cell from an array? This logic is repeated 
-            const updatedPencilMarks = state.cells[index].pencilMarks.includes(pencilMarkToUpdate)
-            ? state.cells[index].pencilMarks.filter(pencilMark => pencilMark !== pencilMarkToUpdate)
-            : [...state.cells[index].pencilMarks, pencilMarkToUpdate];
+            const cellToUpdate = state.cells[index];
+
+            // If the cellToUpdate contains the pencilMarkToUpdate, remove the pencilMarkToUpdate.
+            // Otherwise, add it to the cellToUpdate's pencilMarks.
+            const updatedPencilMarks = cellToUpdate.pencilMarks.includes(pencilMarkToUpdate)
+            ? cellToUpdate.pencilMarks.filter(pencilMark => pencilMark !== pencilMarkToUpdate)
+            : [...cellToUpdate.pencilMarks, pencilMarkToUpdate];
 
             const newCell = {
-                ...state.cells[index],
+                ...cellToUpdate,
                 pencilMarks: updatedPencilMarks
             };
             
             const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);
+
             return {
                 ...state,
                 cells: newCells
@@ -948,6 +956,7 @@ export function selectPencilMarks(state, index) {
     return state.cells[index].pencilMarks;
 }
 
+// TODO
 export const checkValidSolutionEpic = action$ =>
     action$.pipe(
         ofType(CHECK_VALID_SOLUTION),
