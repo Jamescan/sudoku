@@ -744,7 +744,6 @@ function getValuesInSameColumnByIndex(cells, index) {
     return solutionValuesInColumn;
 }
 
-/* eslint-disable */
 // TODO: Obviously a better algorithm exists for this...
 function getValuesInSameBlockByIndex(cells, index) {
     const row = Math.floor(index / 9);
@@ -781,7 +780,20 @@ function getValuesInSameBlockByIndex(cells, index) {
 
     return values;
 }
-/* eslint-enable */
+
+/**
+ * Generates and returns a copy of an array with a newItem at a specified index.
+ * (No mutation / side effects!)
+ * 
+ * @param array - array to which we wish to add the newItem
+ * @param index - index of the array at which we wish to add the newItem
+ * @param newItem - the new value to add to the array
+ * @returns arr - new array with newItem at index
+ */
+function safelyUpdateArrayByIndex(array, index, newItem) {
+    return [...array.slice(0, index), newItem, ...array.slice(index + 1)];
+}
+
 
 function checkForObviousErrorByIndex(state, index, newValue) {
     const obviousCells = [
@@ -803,6 +815,8 @@ export function sudoku(state = initialState, action) {
 
             const cellToUpdate = state.cells[index];
 
+            // TODO: Should have a utility like getDefaultCell() or something
+            // so we don't need to keep track of default values across many functions.
             const newCell = {
                 ...cellToUpdate,
                 value: newValue,
@@ -810,9 +824,11 @@ export function sudoku(state = initialState, action) {
                 hasError: false
             };
 
+            const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);
+
             return {
                 ...state,
-                cells: [...state.cells.slice(0, index), newCell, ...state.cells.slice(index + 1)]
+                cells: newCells
             };
         }
 
@@ -838,7 +854,8 @@ export function sudoku(state = initialState, action) {
             const newCells = state.cells.map(cell => ({
                 ...cell,
                 pencilMarks: []
-            }))
+            }));
+
             return {
                 ...state,
                 cells: newCells
@@ -879,9 +896,11 @@ export function sudoku(state = initialState, action) {
                 hasError: shouldClearCellValue ? false : hasError
             };
 
+            const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);
+
             return {
                 ...state,
-                cells: [...state.cells.slice(0, index), newCell, ...state.cells.slice(index + 1)]
+                cells: newCells
             };
         }
         case UPDATE_CELL_PENCIL_MARK: {
@@ -895,14 +914,12 @@ export function sudoku(state = initialState, action) {
             const newCell = {
                 ...state.cells[index],
                 pencilMarks: updatedPencilMarks
-            }
+            };
+            
+            const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);
             return {
                 ...state,
-                cells: [
-                    ...state.cells.slice(0, index),
-                    newCell,
-                    ...state.cells.slice(index+1)
-                ]
+                cells: newCells
             };
         }
         default: {
