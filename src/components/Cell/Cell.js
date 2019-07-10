@@ -12,22 +12,6 @@ export class Cell extends React.PureComponent {
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleMouseClick = this.handleMouseClick.bind(this);
         this.updateCellValue = this.updateCellValue.bind(this);
-        this.updatePencilMarks = this.updatePencilMarks.bind(this);
-
-        this.state = {
-            pencilMarks: []
-        };
-    }
-
-    updatePencilMarks(number) {
-        const { pencilMarks } = this.state;
-        const updatedPencilMarks = pencilMarks.includes(number)
-            ? pencilMarks.filter(pencilMark => pencilMark !== number)
-            : [...pencilMarks, number];
-
-        this.setState({
-            pencilMarks: updatedPencilMarks
-        });
     }
 
     // Update the "big number" in the cell
@@ -49,9 +33,9 @@ export class Cell extends React.PureComponent {
             isFixed,
             isUsingPencilMarks,
             toggleEntryMethod,
-            updateCellValue
+            updateCellValue,
+            updateCellPencilMark
         } = this.props;
-        const { pencilMarks } = this.state;
         const validDigitInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
         const userInput = event.key;
 
@@ -61,22 +45,8 @@ export class Cell extends React.PureComponent {
             if (!isUsingPencilMarks) {
                 updateCellValue(index, userInput);
             }
-
-            // TODO: clean this mess up
             else {
-                const index = pencilMarks.indexOf(userInput);
-                if (index === -1) {
-                    this.setState({
-                        pencilMarks: [...pencilMarks, userInput]
-                    });
-                } else {
-                    this.setState({
-                        pencilMarks: [
-                            ...pencilMarks.slice(0, index),
-                            ...pencilMarks.slice(index + 1)
-                        ]
-                    });
-                }
+                updateCellPencilMark(index, userInput)
             }
         }
         // TODO: Probably should have a more elegant implementation of keyboard shortcuts
@@ -88,9 +58,9 @@ export class Cell extends React.PureComponent {
         else if (event.keyCode === 39) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
-            // the sudokuIndex value.
+            // the sudokuindex value.
             // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cells = document.querySelectorAll("[sudokuindex]");
             const cellToWhichToFocus = cells[index + 1];
 
             // Don't wrap around the grid from column 9 to column 1.
@@ -102,9 +72,9 @@ export class Cell extends React.PureComponent {
         else if (event.keyCode === 37) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
-            // the sudokuIndex value.
+            // the sudokuindex value.
             // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cells = document.querySelectorAll("[sudokuindex]");
             const cellToWhichToFocus = cells[index - 1];
 
             // Don't wrap around the grid from column 1 to column 9.
@@ -116,9 +86,9 @@ export class Cell extends React.PureComponent {
         else if (event.keyCode === 38) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
-            // the sudokuIndex value.
+            // the sudokuindex value.
             // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cells = document.querySelectorAll("[sudokuindex]");
             const cellToWhichToFocus = cells[index - 9];
             cellToWhichToFocus && cellToWhichToFocus.focus();
         }
@@ -126,18 +96,19 @@ export class Cell extends React.PureComponent {
         else if (event.keyCode === 40) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
-            // the sudokuIndex value.
+            // the sudokuindex value.
             // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuIndex]");
+            const cells = document.querySelectorAll("[sudokuindex]");
             const cellToWhichToFocus = cells[index + 9];
             cellToWhichToFocus && cellToWhichToFocus.focus();
         }
     }
 
     handleMouseClick(number) {
-        const { isUsingPencilMarks } = this.props;
+        const { index, isUsingPencilMarks, updateCellPencilMark } = this.props;
         if (isUsingPencilMarks) {
-            this.updatePencilMarks(number);
+            //this.updatePencilMarks(number);
+            updateCellPencilMark(index, number);
         } else {
             this.updateCellValue(number);
         }
@@ -149,11 +120,11 @@ export class Cell extends React.PureComponent {
             isFixed,
             isInSolveMode,
             isUsingPencilMarks,
+            pencilMarks,
             shouldHighlightError,
             shouldShowPencilMarks,
             value
         } = this.props;
-        const { pencilMarks } = this.state;
 
         const shouldShowBigNumberOnHover = !isUsingPencilMarks;
         const cellHasValue = value !== "";
@@ -169,7 +140,7 @@ export class Cell extends React.PureComponent {
                 className={cellStyles}
                 onKeyDown={this.handleKeyDown}
                 tabIndex="0"
-                sudokuIndex={index}
+                sudokuindex={index}
             >
                 {cellHasValue ? (
                     <div className={styles.valueWrapper}>{value}</div>
@@ -190,6 +161,7 @@ Cell.defaultProps = {
     isFixed: false, // false if cell value can be deleted
     isInSolveMode: false,
     isUsingPencilMarks: true,
+    pencilMarks: [],
     shouldHighlightError: false,
     shouldShowPencilMarks: true,
     value: null
@@ -201,6 +173,7 @@ Cell.propTypes = {
     isFixed: PropTypes.bool,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
+    pencilMarks: PropTypes.arrayOf(PropTypes.string),
     shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,
     updateCellValue: PropTypes.func.isRequired,

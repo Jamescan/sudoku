@@ -5,7 +5,9 @@ import {
     selectHasError,
     selectHasObviousError,
     selectIsOriginalCell,
-    updateCellValue
+    selectPencilMarks,
+    updateCellValue,
+    updateCellPencilMark
 } from "../../ducks/sudoku";
 import { toggleEntryMethod } from "../../ducks/config";
 
@@ -27,11 +29,13 @@ function mapStateToProps(
     const hasError = selectHasError(sudoku, cellIndex);
     const hasObviousError = selectHasObviousError(sudoku, cellIndex);
     const isOriginalCell = selectIsOriginalCell(sudoku, cellIndex);
+    const pencilMarks = selectPencilMarks(sudoku, cellIndex);
 
     return {
         isFixed: isInSolveMode && isOriginalCell,
         isInSolveMode,
         isUsingPencilMarks,
+        pencilMarks,
         shouldHighlightError:
             (hasError && shouldShowAllErrors) || (hasObviousError && shouldShowObviousErrors),
         shouldShowPencilMarks
@@ -41,7 +45,8 @@ function mapStateToProps(
 const mapDispatchToProps = {
     addCellValue,
     toggleEntryMethod,
-    updateCellValue
+    updateCellValue,
+    updateCellPencilMark
 };
 
 const ConnectedCell = connect(

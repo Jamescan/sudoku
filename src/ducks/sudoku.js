@@ -11,6 +11,8 @@ export const ADD_CELL_VALUE = "ADD_CELL_VALUE";
 
 /* User enters a number into a cell in Solve mode */
 export const UPDATE_CELL_VALUE = "UPDATE_CELL_VALUE";
+export const UPDATE_CELL_PENCIL_MARK = "UPDATE_CELL_PENCIL_MARK";
+
 
 export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
 export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
@@ -49,6 +51,10 @@ export function resetToOriginalCells() {
 
 export function updateCellValue(index, value) {
     return { type: UPDATE_CELL_VALUE, index, value };
+}
+
+export function updateCellPencilMark(index, pencilMark) {
+    return { type: UPDATE_CELL_PENCIL_MARK, index, pencilMark };
 }
 
 const initialState = {
@@ -141,486 +147,567 @@ const initialState = {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "4"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "1"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "7"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "3"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "5"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],        
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "1"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "9"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "8"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "5"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "5"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "1"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "6"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "4"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "2"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "7"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "9"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "6"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "2"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "8"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "5"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: false,
+            pencilMarks: [],
             value: ""
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "9"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "7"
         },
         {
             hasError: false,
             hasObviousError: false,
             isOriginalValue: true,
+            pencilMarks: [],
             value: "8"
         }
     ]
@@ -757,6 +844,27 @@ export function sudoku(state = initialState, action) {
                 cells: [...state.cells.slice(0, index), newCell, ...state.cells.slice(index + 1)]
             };
         }
+        case UPDATE_CELL_PENCIL_MARK: {
+            const { index, pencilMark: pencilMarkToUpdate } = action;
+
+            // todo: utility for updating a cell from an array? This logic is repeated 
+            const updatedPencilMarks = state.cells[index].pencilMarks.includes(pencilMarkToUpdate)
+            ? state.cells[index].pencilMarks.filter(pencilMark => pencilMark !== pencilMarkToUpdate)
+            : [...state.cells[index].pencilMarks, pencilMarkToUpdate];
+
+            const newCell = {
+                ...state.cells[index],
+                pencilMarks: updatedPencilMarks
+            }
+            return {
+                ...state,
+                cells: [
+                    ...state.cells.slice(0, index),
+                    newCell,
+                    ...state.cells.slice(index+1)
+                ]
+            };
+        }
         default: {
             return state;
         }
@@ -777,6 +885,10 @@ export function selectHasObviousError(state, index) {
 
 export function selectIsOriginalCell(state, index) {
     return state.cells[index].isOriginalValue;
+}
+
+export function selectPencilMarks(state, index) {
+    return state.cells[index].pencilMarks;
 }
 
 export const checkValidSolutionEpic = action$ =>
