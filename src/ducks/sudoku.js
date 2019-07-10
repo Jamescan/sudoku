@@ -801,8 +801,14 @@ export function sudoku(state = initialState, action) {
             };
         }
         case CLEAR_ALL_PENCIL_MARKS: {
-            // todo: Will need pencil marks in redux state to implement
-            return null;
+            const newCells = state.cells.map(cell => ({
+                ...cell,
+                pencilMarks: []
+            }))
+            return {
+                ...state,
+                cells: newCells
+            };
         }
         case RESET_TO_ORIGINAL_CELLS: {
             const newCells = state.cells.map(cell => {

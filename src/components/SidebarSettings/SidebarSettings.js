@@ -8,6 +8,7 @@ import styles from "./SidebarSettings.module.css";
 export function SidebarSettings(props) {
     const {
         checkValidSolution,
+        clearAllPencilMarks,
         isInSolveMode,
         isUsingPencilMarks,
         toggleEntryMethod,
@@ -57,11 +58,11 @@ export function SidebarSettings(props) {
                             buttons={[
                                 {
                                     // additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => alert("TODO!"),
+                                    handleClick: () => clearAllPencilMarks(),
 
                                     // "Clear All" can always be selected again (never disabled)
                                     isSelected: false,
-                                    title: "Clear All"
+                                    title: "Clear All Pencil Marks"
                                 },
                                 {
                                     // additionalClassNames: styles.entryMethodButton,

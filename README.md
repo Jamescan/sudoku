@@ -1,16 +1,16 @@
 This project renders an interactive Sudoku grid UI for solving puzzles.
 
--   [Features](#Features)
-    -   [Current](#Current)
-    -   [Planned](#Planned)
--   [Installation and Use](#Installation-and-Use)
--   [Development Notes](#Development-Notes)
-    -   [Linting](#Linting)
-    -   [Styling](#Styling)
-        -   [CSS Modules](#CSS-Modules)
-        -   [Sass](#Sass)
-    -   [Testing](#Testing)
--   [Acknowledgements](#Acknowledgements)
+- [Features](#Features)
+  - [Current](#Current)
+  - [Planned](#Planned)
+- [Installation and Use](#Installation-and-Use)
+- [Development Notes](#Development-Notes)
+  - [Linting](#Linting)
+  - [Styling](#Styling)
+    - [CSS Modules](#CSS-Modules)
+    - [Sass](#Sass)
+  - [Testing](#Testing)
+- [Acknowledgements](#Acknowledgements)
 
 ## Features
 
@@ -20,6 +20,7 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Easily input numbers by moving your mouse inside of each cell
     -   The numbers 1 through 9 will appear as you move your mouse from the upper left to the lower right of a cell
 -   Pencil-marking notation (little numbers in cells)
+    -   Clear all pencil marks via a button
 -   Input Validation
     -   For Obvious Mistakes (same number in a row / column)
     -   For All Mistakes (using the puzzle's solution.)
@@ -32,8 +33,6 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
     -   When changing from default puzzle in Entry mode, solution in redux store should be invalidated.
 -   Input Validation
     -   For Obvious Mistakes - in 3x3 box
--   Clear all pencil marks via a button
-    -   Move storage of pencil marks into redux store
 -   Accessibility improvements
     -   Maybe a Skip Link to get to the Sidebar config settings
     -   Keyboard shortcuts
