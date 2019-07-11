@@ -12,7 +12,7 @@ export function ButtonGroup({ buttons, title: label }) {
                     const { additionalClassNames, handleClick, isSelected, title } = button;
                     const buttonClasses = clsx(
                         styles.button,
-                        { [styles.selected]: isSelected },
+                        { [styles.selected]: isSelected, [styles.notSelected]: !isSelected },
                         additionalClassNames
                     );
 

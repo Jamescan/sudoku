@@ -1,12 +1,14 @@
 .sidebarItem {
-    border: 2px solid black;
     margin: 1rem;
     display: flex;
     flex-direction: column;
-    background-color: rgb(195, 181, 181);
     flex-grow: 1;
     justify-content: center;
     align-items: center;
+}
+
+.sidebarItem + .sidebarItem {
+    border-top: 1px solid black;
 }
 
 /* .sidebarItemTitle {

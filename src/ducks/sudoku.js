@@ -829,7 +829,8 @@ export function sudoku(state = initialState, action) {
                 ...cellToUpdate,
                 value: newValue,
                 hasObviousError: false,
-                hasError: false
+                hasError: false,
+                isOriginalValue: true
             };
 
             const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);
