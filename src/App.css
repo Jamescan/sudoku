@@ -5,7 +5,7 @@
     display: grid;
     /* TODO: I want the left column to shrink priority, and have right column at initial size for as long as possible. 
        right now, both columns are shrinking evenly when window is resized */
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto 2fr;
     grid-template-rows: 1fr auto 1fr;
     grid-template-areas:
         "headerLeft headerCenter headerRight"

@@ -1,7 +1,15 @@
 .sidebarSettingsWrapper {
     grid-area: mainRight;
     border: 2px solid #393e46;
+
+    /* Take up 90% of the available space, but don't go wider
+    than 500px. Start aligned to the left, with a slight margin. */
     width: 90%;
+    max-width: 500px;
+    margin-left: 2rem;
+    justify-self: start;
+
+    /* Content of the sidebarSettingsWrapper */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
