@@ -48,6 +48,7 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
     -   Build my own backend API? Does one exist already?
 -   Consistent UI styling
     -   Use a prebuilt component library for styling (`react-bootstrap`, `material-ui`, `semantic-ui`, etc.) or my own?
+-   Interactive tutorial, like what they have on `https://coolors.co`
 -   Deploy somewhere :)
 
 ## Installation and Use
