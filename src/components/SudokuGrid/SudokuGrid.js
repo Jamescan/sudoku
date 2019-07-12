@@ -25,6 +25,7 @@ SudokuGrid.defaultProps = {
         hasError: false,
         hasObviousError: false,
         isOriginalValue: false,
+        pencilMarks: [],
         value: ""
     })
 };
@@ -35,6 +36,7 @@ SudokuGrid.propTypes = {
             hasError: PropTypes.bool,
             hasObviousError: PropTypes.bool,
             isOriginalValue: PropTypes.bool,
+            pencilMarks: PropTypes.arrayOf(PropTypes.string),
             value: PropTypes.string
         })
     )

@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import styles from "./Cell.module.css";
+import { ARROW_KEYS } from "../../constants/constants";
 import HoverGrid from "../HoverGrid/HoverGrid";
+import styles from "./Cell.module.css";
 
 // TODO: Accessibility concerns with onClicks on divs, etc.
 export class Cell extends React.PureComponent {
@@ -11,20 +12,6 @@ export class Cell extends React.PureComponent {
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleMouseClick = this.handleMouseClick.bind(this);
-        this.updateCellValue = this.updateCellValue.bind(this);
-    }
-
-    // Update the "big number" in the cell
-    updateCellValue(value) {
-        // TODO: This might be an ok use-case for redux-thunk conditional dispatching
-        // https://github.com/reduxjs/redux-thunk#motivation
-        const { addCellValue, index, isInSolveMode, updateCellValue } = this.props;
-
-        if (isInSolveMode) {
-            updateCellValue(index, value);
-        } else {
-            addCellValue(index, value);
-        }
     }
 
     handleKeyDown(event) {
@@ -38,79 +25,47 @@ export class Cell extends React.PureComponent {
         } = this.props;
         const validDigitInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
         const userInput = event.key;
+        const userHasPressedAnArrowKey = Object.keys(ARROW_KEYS).includes(event.keyCode.toString());
+        const userHasPressedADigit = validDigitInputs.includes(userInput);
 
         if (userInput === "Delete" && !isFixed) {
             updateCellValue(index, "");
-        } else if (validDigitInputs.includes(userInput)) {
-            if (!isUsingPencilMarks) {
-                updateCellValue(index, userInput);
-            }
-            else {
-                updateCellPencilMark(index, userInput)
-            }
+        } 
+        else if (userHasPressedADigit && !isUsingPencilMarks) {
+            updateCellValue(index, userInput);
+        }
+        else if (userHasPressedADigit && isUsingPencilMarks) {
+            updateCellPencilMark(index, userInput)
         }
         // TODO: Probably should have a more elegant implementation of keyboard shortcuts
         else if (userInput === "q") {
             toggleEntryMethod();
         }
 
-        // right arrow key
-        else if (event.keyCode === 39) {
+        else if (userHasPressedAnArrowKey) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
-            // the sudokuindex value.
-            // https://bit.ly/2Js4qMV
+            // the sudokuindex value (https://bit.ly/2Js4qMV)
+            const arrowKey = ARROW_KEYS[event.keyCode];
+            const indexAdjustment = arrowKey.indexAdjustment;
             const cells = document.querySelectorAll("[sudokuindex]");
-            const cellToWhichToFocus = cells[index + 1];
+            const cellToWhichToFocus = cells[index+indexAdjustment];
 
-            // Don't wrap around the grid from column 9 to column 1.
-            if (index % 9 !== 8) {
+            if (!arrowKey.specialCaseColumnNumber || index % 9 !== arrowKey.specialCaseColumnNumber) {
                 cellToWhichToFocus && cellToWhichToFocus.focus();
             }
-        }
-        // left arrow key
-        else if (event.keyCode === 37) {
-            // querySelectorAll will return matching element nodes in document order,
-            // so we can just use the index of the resulting list. We need not verify
-            // the sudokuindex value.
-            // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuindex]");
-            const cellToWhichToFocus = cells[index - 1];
-
-            // Don't wrap around the grid from column 1 to column 9.
-            if (index % 9 !== 0) {
-                cellToWhichToFocus && cellToWhichToFocus.focus();
-            }
-        }
-        // up arrow key
-        else if (event.keyCode === 38) {
-            // querySelectorAll will return matching element nodes in document order,
-            // so we can just use the index of the resulting list. We need not verify
-            // the sudokuindex value.
-            // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuindex]");
-            const cellToWhichToFocus = cells[index - 9];
-            cellToWhichToFocus && cellToWhichToFocus.focus();
-        }
-        // down arrow key
-        else if (event.keyCode === 40) {
-            // querySelectorAll will return matching element nodes in document order,
-            // so we can just use the index of the resulting list. We need not verify
-            // the sudokuindex value.
-            // https://bit.ly/2Js4qMV
-            const cells = document.querySelectorAll("[sudokuindex]");
-            const cellToWhichToFocus = cells[index + 9];
-            cellToWhichToFocus && cellToWhichToFocus.focus();
         }
     }
 
     handleMouseClick(number) {
-        const { index, isUsingPencilMarks, updateCellPencilMark } = this.props;
+        const { addCellValue, index, isInSolveMode, isUsingPencilMarks, updateCellPencilMark, updateCellValue } = this.props;
+
         if (isUsingPencilMarks) {
-            //this.updatePencilMarks(number);
             updateCellPencilMark(index, number);
+        } else if (isInSolveMode) {
+            updateCellValue(index, number);
         } else {
-            this.updateCellValue(number);
+            addCellValue(index, number);
         }
     }
 
