@@ -40,6 +40,9 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Ability to color code cells?
 -   Ability to input _central_ pencil marks?
     -   Is this even feasible? Central pencil marks will overlap with the `4,5,6` pencil marks in standard Snyder notation.
+-   Ability to highlight multiple cells and input values / pencil marks in them all at once
+    -   This isn't useful for traditional sudoku, but is an interesting challenge nonetheless.
+    -   Would need to check for the `CTRL` key in `handleKeyDown` and if found, "highlight" the cell. Probably need to track currently highlighted cells in redux. Highlighted cells can have special styling too.
 -   Generate a puzzle / grab a puzzle from an API
     -   For different difficulty levels?
     -   Build my own backend API? Does one exist already?
