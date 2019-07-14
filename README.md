@@ -1,22 +1,24 @@
 This project renders an interactive Sudoku grid UI for solving puzzles.
 
-- [Features](#Features)
-  - [Current](#Current)
-  - [Planned](#Planned)
-- [Installation and Use](#Installation-and-Use)
-- [Development Notes](#Development-Notes)
-  - [Linting](#Linting)
-  - [Styling](#Styling)
-    - [CSS Modules](#CSS-Modules)
-    - [Sass](#Sass)
-  - [Testing](#Testing)
-- [Acknowledgements](#Acknowledgements)
+-   [Features](#Features)
+    -   [Current](#Current)
+    -   [Planned](#Planned)
+-   [Installation and Use](#Installation-and-Use)
+-   [Development Notes](#Development-Notes)
+    -   [API Integration](#API-Integration)
+    -   [Linting](#Linting)
+    -   [Styling](#Styling)
+        -   [CSS Modules](#CSS-Modules)
+        -   [Sass](#Sass)
+    -   [Testing](#Testing)
+-   [Acknowledgements](#Acknowledgements)
 
 ## Features
 
 ### Current
 
--   'Entry' and 'Solve' modes
+-   'Entry' and 'Solve' modes with behind-the-scenes solution storage
+    -   Connects to `sudoku-api` for sudoku and solution generation
 -   Easily input numbers by moving your mouse inside of each cell
     -   The numbers 1 through 9 will appear as you move your mouse from the upper left to the lower right of a cell
 -   Pencil-marking notation (little numbers in cells)
@@ -29,9 +31,11 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 
 ### Planned
 
--   Better handling of puzzle solution in Entry mode
-    -   When changing from default puzzle in Entry mode, solution in redux store should be invalidated.
+-   Generate puzzles of _different difficulty levels_ (from API)
+-   Should invoke API call to try and solve a captured puzzle once clicked into Solve mode
+    -   If failed to find a unique solution, show an alert message.
 -   Accessibility improvements
+    -   Fix disabled `eslint` rules
     -   Maybe a Skip Link to get to the Sidebar config settings
     -   Keyboard shortcuts
         -   Modal to view full list
@@ -43,13 +47,11 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Ability to highlight multiple cells and input values / pencil marks in them all at once
     -   This isn't useful for traditional sudoku, but is an interesting challenge nonetheless.
     -   Would need to check for the `CTRL` key in `handleKeyDown` and if found, "highlight" the cell. Probably need to track currently highlighted cells in redux. Highlighted cells can have special styling too.
--   Generate a puzzle / grab a puzzle from an API
-    -   For different difficulty levels?
-    -   Build my own backend API? Does one exist already?
 -   Consistent UI styling
     -   Use a prebuilt component library for styling (`react-bootstrap`, `material-ui`, `semantic-ui`, etc.) or my own?
 -   Interactive tutorial, like what they have on `https://coolors.co`
 -   Deploy somewhere :)
+-   Bug: When changing from a generated puzzle in Entry mode, solution in redux store should be invalidated.
 
 ## Installation and Use
 
@@ -60,6 +62,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 `npm start`
 
 ## Development Notes
+
+### API Integration
+
+Currently (in development) the UI setups a CRA proxy to `localhost:4000`, where the `sudoku-api` is expected to be running, listening for requests. This means that while the UI runs on `localhost:3000`, API requests will appear to be coming from `localhost:4000` thanks to CRA. This avoids some CORS issues - more info [here](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development).
 
 ### Linting
 
