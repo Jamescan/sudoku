@@ -203,7 +203,7 @@ export function sudoku(state = initialState, action) {
                 }));
             return {
                 ...state,
-                sudoku,
+                sudoku: newSudoku,
                 cells: newCells
             };
         }
