@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable";
-import { map, mergeMap } from "rxjs/operators";
+import { catchError, map, mergeMap, pluck } from "rxjs/operators";
 import { of } from "rxjs";
 import { ajax } from "rxjs/ajax";
 
@@ -23,9 +23,9 @@ export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const RESET_TO_ORIGINAL_CELLS = "RESET_TO_ORIGINAL_CELLS";
 
 /* todo */
-export const CHECK_VALID_SOLUTION = "CHECK_VALID_SOLUTION";
-export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
-
+export const GET_SOLUTION = "GET_SOLUTION";
+export const GET_SOLUTION_SUCCESS = "GET_SOLUTION_SUCCESS";
+export const GET_SOLUTION_FAILURE = "GET_SOLUTION_FAILURE";
 
 /*
  * action creators
@@ -33,14 +33,6 @@ export const CHECK_VALID_SOLUTION_SUCCESS = "CHECK_VALID_SOLUTION_SUCCESS";
 
 export function addCellValue(index, value) {
     return { type: ADD_CELL_VALUE, index, value };
-}
-
-export function checkValidSolution() {
-    return { type: CHECK_VALID_SOLUTION };
-}
-
-export function checkValidSolutionSuccess() {
-    return { type: CHECK_VALID_SOLUTION_SUCCESS };
 }
 
 export function clearAllCellValues() {
@@ -55,12 +47,24 @@ export function getSudoku() {
     return { type: GET_SUDOKU };
 }
 
-export function getSudokuSuccess(sudoku) {
-    return { type: GET_SUDOKU_SUCCESS, sudoku };
+export function getSolution(unsolvedSudoku) {
+    return { type: GET_SOLUTION, sudoku: unsolvedSudoku };
 }
 
-export function getSudokuFailure() {
-    return { type: GET_SUDOKU_FAILURE };
+export function getSolutionSuccess(solution) {
+    return { type: GET_SOLUTION_SUCCESS, solution };
+}
+
+export function getSolutionFailure(error) {
+    return { type: GET_SOLUTION_FAILURE, error };
+}
+
+export function getSudokuSuccess(newSudoku) {
+    return { type: GET_SUDOKU_SUCCESS, sudoku: newSudoku };
+}
+
+export function getSudokuFailure(error) {
+    return { type: GET_SUDOKU_FAILURE, error };
 }
 
 export function resetToOriginalCells() {
@@ -75,660 +79,25 @@ export function updateCellPencilMark(index, pencilMark) {
     return { type: UPDATE_CELL_PENCIL_MARK, index, pencilMark };
 }
 
-// TODO: Should be using getDefaultCellObject();
+function getDefaultCellObject() {
+    return {
+        hasError: false,
+        hasObviousError: false,
+        isOriginalValue: false,
+        pencilMarks: [],
+        value: ""
+    };
+}
+
 const initialState = {
-    solution: [
-        8,
-        4,
-        6,
-        2,
-        5,
-        3,
-        7,
-        1,
-        9,
-        1,
-        9,
-        2,
-        7,
-        4,
-        6,
-        3,
-        8,
-        5,
-        5,
-        3,
-        7,
-        8,
-        1,
-        9,
-        4,
-        2,
-        6,
-        4,
-        2,
-        9,
-        6,
-        8,
-        7,
-        1,
-        5,
-        3,
-        7,
-        8,
-        5,
-        3,
-        9,
-        1,
-        2,
-        6,
-        4,
-        3,
-        6,
-        1,
-        4,
-        2,
-        5,
-        8,
-        9,
-        7,
-        9,
-        7,
-        8,
-        1,
-        6,
-        4,
-        5,
-        3,
-        2,
-        2,
-        5,
-        3,
-        9,
-        7,
-        8,
-        6,
-        4,
-        1,
-        6,
-        1,
-        4,
-        5,
-        3,
-        2,
-        9,
-        7,
-        8
-    ].map(num => `${num}`),
-    cells: [
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "4"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "1"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "7"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "3"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "5"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],        
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "1"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "9"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "8"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "5"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "5"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "1"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "6"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "4"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "2"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "7"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "9"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "6"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "2"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "8"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "5"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: false,
-            pencilMarks: [],
-            value: ""
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "9"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "7"
-        },
-        {
-            hasError: false,
-            hasObviousError: false,
-            isOriginalValue: true,
-            pencilMarks: [],
-            value: "8"
-        }
-    ]
+    /* The initial sudoku puzzle configuration */
+    sudoku: Array(81).fill(""),
+
+    /* The solution to the initial sudoku puzzle */
+    solution: Array(81).fill(""),
+
+    /* The current state of the board */
+    cells: Array(81).fill(getDefaultCellObject())
 };
 
 /*
@@ -769,26 +138,24 @@ function getValuesInSameBlockByIndex(cells, index) {
     let rowIndicesToGet = [];
     if (row === 0 || row === 1 || row === 2) {
         rowIndicesToGet = [0, 1, 2];
-    }
-    else if (row === 3 || row === 4 || row === 5) {
+    } else if (row === 3 || row === 4 || row === 5) {
         rowIndicesToGet = [3, 4, 5];
-    }
-    else { // if (row === 6 || row === 7 || row === 8) {
-        rowIndicesToGet = [6, 7, 8]
+    } else {
+        // if (row === 6 || row === 7 || row === 8) {
+        rowIndicesToGet = [6, 7, 8];
     }
 
     let columnIndicesToGet = [];
     if (column === 0 || column === 1 || column === 2) {
         columnIndicesToGet = [0, 1, 2];
-    }
-    else if (column === 3 || column === 4 || column === 5) {
+    } else if (column === 3 || column === 4 || column === 5) {
         columnIndicesToGet = [3, 4, 5];
-    }
-    else { // if (column === 6 || column === 7 || column === 8) {
-        columnIndicesToGet = [6, 7, 8]
+    } else {
+        // if (column === 6 || column === 7 || column === 8) {
+        columnIndicesToGet = [6, 7, 8];
     }
 
-    let values = [];
+    const values = [];
     rowIndicesToGet.forEach(rowIndex => {
         columnIndicesToGet.forEach(columnIndex => {
             values.push(cells[rowIndex * 9 + columnIndex]);
@@ -811,7 +178,7 @@ function checkForObviousErrorByIndex(state, index, newValue) {
 /**
  * Generates and returns a copy of an array with a newItem at a specified index.
  * (No mutation / side effects!)
- * 
+ *
  * @param array - array to which we wish to add the newItem
  * @param index - index of the array at which we wish to add the newItem
  * @param newItem - the new value to add to the array
@@ -821,22 +188,32 @@ function safelyUpdateArrayByIndex(array, index, newItem) {
     return [...array.slice(0, index), newItem, ...array.slice(index + 1)];
 }
 
-function getDefaultCellObject() {
-    return {
-        hasError: false,
-        hasObviousError: false,
-        isOriginalValue: false,
-        pencilMarks: [],
-        value: ""
-    }
-}
-
-
 /*
  * reducer
  */
 export function sudoku(state = initialState, action) {
     switch (action.type) {
+        case GET_SUDOKU_SUCCESS: {
+            const { sudoku: newSudoku } = action;
+            const newCells = Array(81)
+                .fill(getDefaultCellObject())
+                .map((cell, index) => ({
+                    ...cell,
+                    value: newSudoku[index]
+                }));
+            return {
+                ...state,
+                sudoku,
+                cells: newCells
+            };
+        }
+        case GET_SOLUTION_SUCCESS: {
+            const { solution } = action;
+            return {
+                ...state,
+                solution
+            };
+        }
         case ADD_CELL_VALUE: {
             const { index, value: newValue } = action;
 
@@ -855,13 +232,6 @@ export function sudoku(state = initialState, action) {
             return {
                 ...state,
                 cells: newCells
-            };
-        }
-
-        case CHECK_VALID_SOLUTION: {
-            // todo
-            return {
-                ...state
             };
         }
         case CLEAR_ALL_CELL_VALUES: {
@@ -933,14 +303,14 @@ export function sudoku(state = initialState, action) {
             // If the cellToUpdate contains the pencilMarkToUpdate, remove the pencilMarkToUpdate.
             // Otherwise, add it to the cellToUpdate's pencilMarks.
             const updatedPencilMarks = cellToUpdate.pencilMarks.includes(pencilMarkToUpdate)
-            ? cellToUpdate.pencilMarks.filter(pencilMark => pencilMark !== pencilMarkToUpdate)
-            : [...cellToUpdate.pencilMarks, pencilMarkToUpdate];
+                ? cellToUpdate.pencilMarks.filter(pencilMark => pencilMark !== pencilMarkToUpdate)
+                : [...cellToUpdate.pencilMarks, pencilMarkToUpdate];
 
             const newCell = {
                 ...cellToUpdate,
                 pencilMarks: updatedPencilMarks
             };
-            
+
             const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);
 
             return {
@@ -959,7 +329,7 @@ export function sudoku(state = initialState, action) {
  */
 
 export function selectHasError(state, index) {
-    return state.cells[index].hasError;
+    return state.cells[index].value !== state.solution[index];
 }
 
 export function selectHasObviousError(state, index) {
@@ -967,14 +337,19 @@ export function selectHasObviousError(state, index) {
 }
 
 export function selectIsOriginalCell(state, index) {
-    return state.cells[index].isOriginalValue;
+    return state.cells[index].value === state.sudoku[index];
 }
 
 export function selectPencilMarks(state, index) {
     return state.cells[index].pencilMarks;
 }
 
-// TODO
+/**
+ * Listen for GET_SUDOKU action. When found, perform
+ * an ajax request to get a sudoku.
+ *
+ * TODO: Implement difficulty functionality
+ */
 export const getSudokuEpic = action$ =>
     action$.pipe(
         ofType(GET_SUDOKU),
@@ -982,8 +357,47 @@ export const getSudokuEpic = action$ =>
         mergeMap(action =>
             // TODO: How does magic work? It recognizes this is not an absolute path automagically?
             ajax.getJSON("/sudoku?difficulty=easy").pipe(
-                map(response => getSudokuSuccess(response))
+                // use mergeMap to dispatch multiple actions.
+                // (otherwise, could just use map and return the action itself, i.e.
+                // map(response => getSudokuSuccess(response)))
+                mergeMap(response => of(getSudokuSuccess(response), getSolution(response))),
+                catchError(error => {
+                    // eslint-disable-next-line no-console
+                    console.log("Failed to GET sudoku, error: ", error);
+                    return of(getSudokuFailure(error));
+                })
             )
-            // return of(getSudokuSuccess());
+        )
+    );
+
+/**
+ * Listen for GET_SOLUTION action. When found, perform
+ * an ajax request to get the solution to the sudoku.
+ *
+ */
+export const getSolutionEpic = action$ =>
+    action$.pipe(
+        ofType(GET_SOLUTION),
+        // eslint-disable-next-line no-unused-vars
+        mergeMap(action =>
+            // TODO: How does magic work? It recognizes this is not an absolute path automagically?
+            ajax({
+                url: "/sudoku",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: {
+                    unsolvedSudoku: action.sudoku
+                }
+            }).pipe(
+                pluck("response"),
+                map(response => getSolutionSuccess(response)),
+                catchError(error => {
+                    // eslint-disable-next-line no-console
+                    console.log("Failed to POST sudoku to get solution, error: ", error);
+                    return of(getSolutionFailure(error));
+                })
+            )
         )
     );

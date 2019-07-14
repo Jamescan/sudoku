@@ -30,35 +30,43 @@ export class Cell extends React.PureComponent {
 
         if (userInput === "Delete" && !isFixed) {
             updateCellValue(index, "");
-        } 
-        else if (userHasPressedADigit && !isUsingPencilMarks) {
+        } else if (userHasPressedADigit && !isUsingPencilMarks) {
             updateCellValue(index, userInput);
-        }
-        else if (userHasPressedADigit && isUsingPencilMarks) {
-            updateCellPencilMark(index, userInput)
+        } else if (userHasPressedADigit && isUsingPencilMarks) {
+            updateCellPencilMark(index, userInput);
         }
         // TODO: Probably should have a more elegant implementation of keyboard shortcuts
+        // at the very least, maybe this should be listening above Cell? SudokuGrid level?
         else if (userInput === "q") {
             toggleEntryMethod();
-        }
-
-        else if (userHasPressedAnArrowKey) {
+        } else if (userHasPressedAnArrowKey) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
             // the sudokuindex value (https://bit.ly/2Js4qMV)
             const arrowKey = ARROW_KEYS[event.keyCode];
-            const indexAdjustment = arrowKey.indexAdjustment;
+            const { indexAdjustment } = arrowKey;
             const cells = document.querySelectorAll("[sudokuindex]");
-            const cellToWhichToFocus = cells[index+indexAdjustment];
+            const cellToWhichToFocus = cells[index + indexAdjustment];
 
-            if (!arrowKey.specialCaseColumnNumber || index % 9 !== arrowKey.specialCaseColumnNumber) {
+            if (
+                !arrowKey.specialCaseColumnNumber ||
+                index % 9 !== arrowKey.specialCaseColumnNumber
+            ) {
+                // eslint-disable-next-line no-unused-expressions
                 cellToWhichToFocus && cellToWhichToFocus.focus();
             }
         }
     }
 
     handleMouseClick(number) {
-        const { addCellValue, index, isInSolveMode, isUsingPencilMarks, updateCellPencilMark, updateCellValue } = this.props;
+        const {
+            addCellValue,
+            index,
+            isInSolveMode,
+            isUsingPencilMarks,
+            updateCellPencilMark,
+            updateCellValue
+        } = this.props;
 
         if (isUsingPencilMarks) {
             updateCellPencilMark(index, number);
@@ -91,6 +99,8 @@ export class Cell extends React.PureComponent {
 
         return (
             // Users should be able to tab to each cell and input its value from the keyboard
+            /* eslint-disable jsx-a11y/no-static-element-interactions */
+            /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
             <div
                 className={cellStyles}
                 onKeyDown={this.handleKeyDown}
@@ -131,6 +141,8 @@ Cell.propTypes = {
     pencilMarks: PropTypes.arrayOf(PropTypes.string),
     shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,
+    toggleEntryMethod: PropTypes.func.isRequired,
     updateCellValue: PropTypes.func.isRequired,
+    updateCellPencilMark: PropTypes.func.isRequired,
     value: PropTypes.string
 };

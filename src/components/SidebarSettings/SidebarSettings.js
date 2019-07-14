@@ -7,7 +7,6 @@ import styles from "./SidebarSettings.module.css";
 
 export function SidebarSettings(props) {
     const {
-        checkValidSolution,
         clearAllPencilMarks,
         getSudoku,
         isInSolveMode,
@@ -18,13 +17,13 @@ export function SidebarSettings(props) {
     } = props;
     return (
         <div className={styles.sidebarSettingsWrapper}>
-            {
-                !isInSolveMode && (
-                    <SidebarItem title="">
-                        <button onClick={getSudoku}>Generate a New Sudoku</button>
-                    </SidebarItem>
-                ) 
-            }
+            {!isInSolveMode && (
+                <SidebarItem title="">
+                    <button type="button" onClick={getSudoku}>
+                        Generate a New Sudoku
+                    </button>
+                </SidebarItem>
+            )}
             {isInSolveMode && (
                 <>
                     <SidebarItem title="Validation">
@@ -74,7 +73,7 @@ export function SidebarSettings(props) {
                                 },
                                 {
                                     // additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => checkValidSolution(),
+                                    handleClick: () => alert("TODO"),
                                     // isSelected: shouldHighlightIncorrectPencilMarks, // todo
                                     title: "Check Solution"
                                 }
@@ -96,7 +95,8 @@ SidebarSettings.defaultProps = {
 };
 
 SidebarSettings.propTypes = {
-    checkValidSolution: PropTypes.func.isRequired,
+    clearAllPencilMarks: PropTypes.func.isRequired,
+    getSudoku: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
     toggleEntryMethod: PropTypes.func.isRequired,

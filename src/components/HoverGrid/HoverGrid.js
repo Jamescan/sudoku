@@ -61,6 +61,7 @@ class HoverGrid extends React.PureComponent {
                             /* shouldShowPencilMarks && */
                             /* TODO: accessibility concerns */
                             /* eslint-disable jsx-a11y/click-events-have-key-events */
+                            /* eslint-disable jsx-a11y/no-static-element-interactions */
                             <div
                                 className={hoverAreaClasses}
                                 key={pencilMark}

@@ -11,12 +11,11 @@ export function PrimarySettings(props) {
         <div className={styles.settingsSelection}>
             <MenuItem title="Mode">
                 <ButtonGroup
-                    buttons = {[
+                    buttons={[
                         {
                             isSelected: !isInSolveMode,
                             title: "Capture",
                             handleClick: toggleAppMode
-
                         },
                         {
                             isSelected: isInSolveMode,

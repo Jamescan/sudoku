@@ -5,7 +5,7 @@ import {
     toggleShowAllErrors,
     toggleShowObviousErrors
 } from "../../ducks/config";
-import { checkValidSolution, clearAllPencilMarks, getSudoku } from "../../ducks/sudoku";
+import { clearAllPencilMarks, getSudoku } from "../../ducks/sudoku";
 
 function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks } }) {
     return {
@@ -15,7 +15,6 @@ function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks } }) {
 }
 
 const mapDispatchToProps = {
-    checkValidSolution,
     clearAllPencilMarks,
     getSudoku,
     toggleEntryMethod,
