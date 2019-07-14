@@ -1,7 +1,10 @@
 import { ofType } from "redux-observable";
 import { catchError, map, mergeMap, pluck } from "rxjs/operators";
-import { of } from "rxjs";
+import { empty, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
+import { TOGGLE_APP_MODE } from "./config";
+
+// TODO: Cleanup isOriginalValue.
 
 /*
  * action types
@@ -10,6 +13,9 @@ import { ajax } from "rxjs/ajax";
 export const GET_SUDOKU = "GET_SUDOKU";
 export const GET_SUDOKU_SUCCESS = "GET_SUDOKU_SUCCESS";
 export const GET_SUDOKU_FAILURE = "GET_SUDOKU_FAILURE";
+
+/* User has performed input in Capture mode and toggles over into Solve mode */
+export const SAVE_PUZZLE = "SAVE_PUZZLE";
 
 /* User enters a number into a cell for the first time, in Capture mode */
 export const ADD_CELL_VALUE = "ADD_CELL_VALUE";
@@ -47,8 +53,9 @@ export function getSudoku() {
     return { type: GET_SUDOKU };
 }
 
-export function getSolution(unsolvedSudoku) {
-    return { type: GET_SOLUTION, sudoku: unsolvedSudoku };
+// Uses the current sudoku object as the sudoku to find a solution to
+export function getSolution() {
+    return { type: GET_SOLUTION };
 }
 
 export function getSolutionSuccess(solution) {
@@ -69,6 +76,10 @@ export function getSudokuFailure(error) {
 
 export function resetToOriginalCells() {
     return { type: RESET_TO_ORIGINAL_CELLS };
+}
+
+export function savePuzzle() {
+    return { type: SAVE_PUZZLE };
 }
 
 export function updateCellValue(index, value) {
@@ -234,12 +245,18 @@ export function sudoku(state = initialState, action) {
                 cells: newCells
             };
         }
+
+        // TODO: This should perhaps have a better name. RESET_GRID?
         case CLEAR_ALL_CELL_VALUES: {
+            const newSudoku = Array(81).fill("");
+            const newSolution = Array(81).fill("");
             const newCells = Array(81).fill(getDefaultCellObject());
 
             return {
                 ...state,
-                cells: newCells
+                cells: newCells,
+                solution: newSolution,
+                sudoku: newSudoku
             };
         }
         case CLEAR_ALL_PENCIL_MARKS: {
@@ -254,8 +271,8 @@ export function sudoku(state = initialState, action) {
             };
         }
         case RESET_TO_ORIGINAL_CELLS: {
-            const newCells = state.cells.map(cell => {
-                if (!cell.isOriginalValue) {
+            const newCells = state.cells.map((cell, index) => {
+                if (state.sudoku[index] !== cell.value) {
                     return {
                         ...cell,
                         value: "",
@@ -269,6 +286,13 @@ export function sudoku(state = initialState, action) {
             return {
                 ...state,
                 cells: newCells
+            };
+        }
+        case SAVE_PUZZLE: {
+            const newSudoku = state.cells.map(cell => cell.value);
+            return {
+                ...state,
+                sudoku: newSudoku
             };
         }
         case UPDATE_CELL_VALUE: {
@@ -329,7 +353,7 @@ export function sudoku(state = initialState, action) {
  */
 
 export function selectHasError(state, index) {
-    return state.cells[index].value !== state.solution[index];
+    return state.cells[index].value !== state.solution[index] && state.cells[index].value !== "";
 }
 
 export function selectHasObviousError(state, index) {
@@ -360,7 +384,7 @@ export const getSudokuEpic = action$ =>
                 // use mergeMap to dispatch multiple actions.
                 // (otherwise, could just use map and return the action itself, i.e.
                 // map(response => getSudokuSuccess(response)))
-                mergeMap(response => of(getSudokuSuccess(response), getSolution(response))),
+                mergeMap(response => of(getSudokuSuccess(response), getSolution())),
                 catchError(error => {
                     // eslint-disable-next-line no-console
                     console.log("Failed to GET sudoku, error: ", error);
@@ -375,7 +399,7 @@ export const getSudokuEpic = action$ =>
  * an ajax request to get the solution to the sudoku.
  *
  */
-export const getSolutionEpic = action$ =>
+export const getSolutionEpic = (action$, state$) =>
     action$.pipe(
         ofType(GET_SOLUTION),
         // eslint-disable-next-line no-unused-vars
@@ -388,7 +412,7 @@ export const getSolutionEpic = action$ =>
                     "Content-Type": "application/json"
                 },
                 body: {
-                    unsolvedSudoku: action.sudoku
+                    unsolvedSudoku: state$.value.sudoku.sudoku
                 }
             }).pipe(
                 pluck("response"),
@@ -400,4 +424,28 @@ export const getSolutionEpic = action$ =>
                 })
             )
         )
+    );
+
+/**
+ * Listen for TOGGLE_APP_MODE action. When found, check if
+ * app is in 'Solve' mode. If so, update sudoku state object with
+ * cells state object, and dispatch a GET_SOLUTION action.
+ *
+ * TODO: Is an Epic actually where this logic belongs? Probably not...
+ *
+ */
+export const enterAndValidatePuzzleEpic = (action$, state$) =>
+    action$.pipe(
+        ofType(TOGGLE_APP_MODE),
+        // eslint-disable-next-line no-unused-vars
+        mergeMap(() => {
+            if (state$.value.config.isInSolveMode) {
+                return of(savePuzzle(), getSolution());
+            }
+            return empty();
+        }),
+        catchError(error => {
+            console.log(error);
+            return empty();
+        })
     );

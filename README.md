@@ -51,7 +51,8 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
     -   Use a prebuilt component library for styling (`react-bootstrap`, `material-ui`, `semantic-ui`, etc.) or my own?
 -   Interactive tutorial, like what they have on `https://coolors.co`
 -   Deploy somewhere :)
--   Bug: When changing from a generated puzzle in Entry mode, solution in redux store should be invalidated.
+-   Bug: Don't perform an API request when toggling to Solve mode and there aren't any cells with a value
+-   Bug: Check Solution button implementation
 
 ## Installation and Use
 

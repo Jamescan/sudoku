@@ -1,14 +1,14 @@
 import { compose, createStore, combineReducers, applyMiddleware } from "redux";
 import { combineEpics, createEpicMiddleware } from "redux-observable";
 import { config } from "./ducks/config";
-import { getSolutionEpic, getSudokuEpic, sudoku } from "./ducks/sudoku";
+import { enterAndValidatePuzzleEpic, getSolutionEpic, getSudokuEpic, sudoku } from "./ducks/sudoku";
 
 export const rootReducer = combineReducers({
     config,
     sudoku
 });
 
-export const rootEpic = combineEpics(getSolutionEpic, getSudokuEpic);
+export const rootEpic = combineEpics(enterAndValidatePuzzleEpic, getSolutionEpic, getSudokuEpic);
 
 const epicMiddleware = createEpicMiddleware();
 
