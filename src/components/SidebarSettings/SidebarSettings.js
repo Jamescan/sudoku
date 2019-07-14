@@ -9,6 +9,7 @@ export function SidebarSettings(props) {
     const {
         checkValidSolution,
         clearAllPencilMarks,
+        getSudoku,
         isInSolveMode,
         isUsingPencilMarks,
         toggleEntryMethod,
@@ -17,6 +18,13 @@ export function SidebarSettings(props) {
     } = props;
     return (
         <div className={styles.sidebarSettingsWrapper}>
+            {
+                !isInSolveMode && (
+                    <SidebarItem title="">
+                        <button onClick={getSudoku}>Generate a New Sudoku</button>
+                    </SidebarItem>
+                ) 
+            }
             {isInSolveMode && (
                 <>
                     <SidebarItem title="Validation">

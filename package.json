@@ -2,6 +2,7 @@
     "name": "sudoku-project",
     "version": "0.1.0",
     "private": true,
+    "proxy": "http://localhost:4000",
     "dependencies": {
         "clsx": "^1.0.4",
         "prop-types": "^15.7.2",

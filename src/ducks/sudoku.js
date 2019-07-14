@@ -1,10 +1,15 @@
 import { ofType } from "redux-observable";
-import { mergeMap } from "rxjs/operators";
+import { map, mergeMap } from "rxjs/operators";
 import { of } from "rxjs";
+import { ajax } from "rxjs/ajax";
 
 /*
  * action types
  */
+
+export const GET_SUDOKU = "GET_SUDOKU";
+export const GET_SUDOKU_SUCCESS = "GET_SUDOKU_SUCCESS";
+export const GET_SUDOKU_FAILURE = "GET_SUDOKU_FAILURE";
 
 /* User enters a number into a cell for the first time, in Capture mode */
 export const ADD_CELL_VALUE = "ADD_CELL_VALUE";
@@ -44,6 +49,18 @@ export function clearAllCellValues() {
 
 export function clearAllPencilMarks() {
     return { type: CLEAR_ALL_PENCIL_MARKS };
+}
+
+export function getSudoku() {
+    return { type: GET_SUDOKU };
+}
+
+export function getSudokuSuccess(sudoku) {
+    return { type: GET_SUDOKU_SUCCESS, sudoku };
+}
+
+export function getSudokuFailure() {
+    return { type: GET_SUDOKU_FAILURE };
 }
 
 export function resetToOriginalCells() {
@@ -958,9 +975,15 @@ export function selectPencilMarks(state, index) {
 }
 
 // TODO
-export const checkValidSolutionEpic = action$ =>
+export const getSudokuEpic = action$ =>
     action$.pipe(
-        ofType(CHECK_VALID_SOLUTION),
+        ofType(GET_SUDOKU),
         // eslint-disable-next-line no-unused-vars
-        mergeMap(action => of(checkValidSolutionSuccess()))
+        mergeMap(action =>
+            // TODO: How does magic work? It recognizes this is not an absolute path automagically?
+            ajax.getJSON("/sudoku?difficulty=easy").pipe(
+                map(response => getSudokuSuccess(response))
+            )
+            // return of(getSudokuSuccess());
+        )
     );
