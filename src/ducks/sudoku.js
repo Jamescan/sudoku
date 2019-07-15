@@ -10,9 +10,15 @@ import { TOGGLE_APP_MODE } from "./config";
  * action types
  */
 
+/* API - Ajax for retrieving sudoku puzzles */
 export const GET_SUDOKU = "GET_SUDOKU";
 export const GET_SUDOKU_SUCCESS = "GET_SUDOKU_SUCCESS";
 export const GET_SUDOKU_FAILURE = "GET_SUDOKU_FAILURE";
+
+/* API - Ajax for retrieving solution to current sudoku puzzle */
+export const GET_SOLUTION = "GET_SOLUTION";
+export const GET_SOLUTION_SUCCESS = "GET_SOLUTION_SUCCESS";
+export const GET_SOLUTION_FAILURE = "GET_SOLUTION_FAILURE";
 
 /* User has performed input in Capture mode and toggles over into Solve mode */
 export const SAVE_PUZZLE = "SAVE_PUZZLE";
@@ -24,14 +30,10 @@ export const ADD_CELL_VALUE = "ADD_CELL_VALUE";
 export const UPDATE_CELL_VALUE = "UPDATE_CELL_VALUE";
 export const UPDATE_CELL_PENCIL_MARK = "UPDATE_CELL_PENCIL_MARK";
 
+/* Other user-initiated actions */
 export const CLEAR_ALL_CELL_VALUES = "CLEAR_ALL_CELL_VALUES";
 export const CLEAR_ALL_PENCIL_MARKS = "CLEAR_ALL_PENCIL_MARKS";
 export const RESET_TO_ORIGINAL_CELLS = "RESET_TO_ORIGINAL_CELLS";
-
-/* todo */
-export const GET_SOLUTION = "GET_SOLUTION";
-export const GET_SOLUTION_SUCCESS = "GET_SOLUTION_SUCCESS";
-export const GET_SOLUTION_FAILURE = "GET_SOLUTION_FAILURE";
 
 /*
  * action creators
@@ -245,7 +247,6 @@ export function sudoku(state = initialState, action) {
                 cells: newCells
             };
         }
-
         // TODO: This should perhaps have a better name. RESET_GRID?
         case CLEAR_ALL_CELL_VALUES: {
             const newSudoku = Array(81).fill("");
@@ -362,6 +363,10 @@ export function selectHasObviousError(state, index) {
 
 export function selectIsOriginalCell(state, index) {
     return state.cells[index].value === state.sudoku[index];
+}
+
+export function selectIsSolved(state) {
+    return state.cells.filter((cell, index) => cell.value !== state.solution[index]).length === 0;
 }
 
 export function selectPencilMarks(state, index) {

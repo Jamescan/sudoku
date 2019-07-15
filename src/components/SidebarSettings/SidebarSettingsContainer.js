@@ -5,11 +5,14 @@ import {
     toggleShowAllErrors,
     toggleShowObviousErrors
 } from "../../ducks/config";
-import { clearAllPencilMarks, getSudoku } from "../../ducks/sudoku";
+import { clearAllPencilMarks, getSudoku, selectIsSolved } from "../../ducks/sudoku";
 
-function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks } }) {
+function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks }, sudoku }) {
+    const isSolved = selectIsSolved(sudoku);
+
     return {
         isInSolveMode,
+        isSolved,
         isUsingPencilMarks
     };
 }

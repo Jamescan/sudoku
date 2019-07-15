@@ -10,6 +10,7 @@ export function SidebarSettings(props) {
         clearAllPencilMarks,
         getSudoku,
         isInSolveMode,
+        isSolved,
         isUsingPencilMarks,
         toggleEntryMethod,
         toggleShowAllErrors,
@@ -72,9 +73,13 @@ export function SidebarSettings(props) {
                                     title: "Clear All Pencil Marks"
                                 },
                                 {
-                                    // additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => alert("TODO"),
-                                    // isSelected: shouldHighlightIncorrectPencilMarks, // todo
+                                    handleClick: () => {
+                                        if (isSolved) {
+                                            alert("Looks good!");
+                                        } else {
+                                            alert("Not the solution.");
+                                        }
+                                    },
                                     title: "Check Solution"
                                 }
                             ]}
