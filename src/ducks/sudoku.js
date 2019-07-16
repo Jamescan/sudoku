@@ -5,6 +5,7 @@ import { ajax } from "rxjs/ajax";
 import { TOGGLE_APP_MODE } from "./config";
 
 // TODO: Cleanup isOriginalValue.
+// TODO: Split into sudoku duck and grid duck?
 
 /*
  * action types
@@ -442,9 +443,12 @@ export const getSolutionEpic = (action$, state$) =>
 export const enterAndValidatePuzzleEpic = (action$, state$) =>
     action$.pipe(
         ofType(TOGGLE_APP_MODE),
-        // eslint-disable-next-line no-unused-vars
         mergeMap(() => {
-            if (state$.value.config.isInSolveMode) {
+            const isAppInSolveMode = state$.value.config.isInSolveMode;
+            const existsAtLeastOneValueInCells =
+                state$.value.sudoku.cells.filter(cell => cell.value !== "").length > 0;
+
+            if (isAppInSolveMode && existsAtLeastOneValueInCells) {
                 return of(savePuzzle(), getSolution());
             }
             return empty();
