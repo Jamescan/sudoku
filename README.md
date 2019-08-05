@@ -1,17 +1,17 @@
 This project renders an interactive Sudoku grid UI for solving puzzles.
 
--   [Features](#Features)
-    -   [Current](#Current)
-    -   [Planned](#Planned)
--   [Installation and Use](#Installation-and-Use)
--   [Development Notes](#Development-Notes)
-    -   [API Integration](#API-Integration)
-    -   [Linting](#Linting)
-    -   [Styling](#Styling)
-        -   [CSS Modules](#CSS-Modules)
-        -   [Sass](#Sass)
-    -   [Testing](#Testing)
--   [Acknowledgements](#Acknowledgements)
+- [Features](#features)
+  - [Current](#current)
+  - [Planned](#planned)
+- [Installation and Use](#installation-and-use)
+- [Development Notes](#development-notes)
+  - [API Integration](#api-integration)
+  - [Linting](#linting)
+  - [Styling](#styling)
+    - [CSS Modules](#css-modules)
+    - [Sass](#sass)
+  - [Testing](#testing)
+- [Acknowledgements](#acknowledgements)
 
 ## Features
 
@@ -34,6 +34,8 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Generate puzzles of _different difficulty levels_ (from API)
 -   Should invoke API call to try and solve a captured puzzle once clicked into Solve mode
     -   If failed to find a unique solution, show an alert message.
+-   Add a "Save" button that will save the current state of the board in local storage / cookie / somehow so it will persist for the user.
+    -   Mostly just practice with data persistence. Writeup the pros & cons of local storage / cookie somewhere. 
 -   Accessibility improvements
     -   Fix disabled `eslint` rules
     -   Maybe a Skip Link to get to the Sidebar config settings
