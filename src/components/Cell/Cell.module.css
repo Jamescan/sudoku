@@ -32,6 +32,20 @@
     color: #4444f3e0;
 }
 
+.centralPencilMarks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.cornerPencilMarks {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 100%;
+}
+
 .valueWrapper {
     display: flex;
     justify-content: center;

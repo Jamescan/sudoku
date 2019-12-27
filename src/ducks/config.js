@@ -3,6 +3,7 @@
  */
 export const TOGGLE_APP_MODE = "TOGGLE_APP_MODE";
 export const TOGGLE_ENTRY_METHOD = "TOGGLE_ENTRY_METHOD";
+export const TOGGLE_PENCIL_MARK_METHOD = "TOGGLE_PENCIL_MARK_METHOD";
 export const TOGGLE_SHOW_ALL_ERRORS = "TOGGLE_SHOW_ALL_ERRORS";
 export const TOGGLE_SHOW_OBVIOUS_ERRORS = "TOGGLE_SHOW_OBVIOUS_ERRORS";
 
@@ -15,6 +16,10 @@ export function toggleAppMode() {
 
 export function toggleEntryMethod() {
     return { type: TOGGLE_ENTRY_METHOD };
+}
+
+export function togglePencilMarkMethod() {
+    return { type: TOGGLE_PENCIL_MARK_METHOD };
 }
 
 export function toggleShowAllErrors() {
@@ -30,7 +35,8 @@ const initialState = {
     isUsingPencilMarks: false,
     shouldShowAllErrors: false,
     shouldShowPencilMarks: false,
-    shouldShowObviousErrors: false
+    shouldShowObviousErrors: false,
+    pencilMarkMethod: "central" // ["central", "corner"]
 };
 
 /*
@@ -55,6 +61,13 @@ export function config(state = initialState, action) {
                 ...state,
                 isUsingPencilMarks: !state.isUsingPencilMarks
             };
+        }
+        case TOGGLE_PENCIL_MARK_METHOD: {
+            return {
+                ...state,
+                isUsingPencilMarks: true,
+                pencilMarkMethod: state.pencilMarkMethod === "central" ? "corner" : "central"
+            }
         }
         case TOGGLE_SHOW_ALL_ERRORS: {
             return {

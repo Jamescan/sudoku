@@ -9,7 +9,9 @@ import {
     updateCellValue,
     updateCellPencilMark
 } from "../../ducks/sudoku";
-import { toggleEntryMethod } from "../../ducks/config";
+import { toggleEntryMethod, togglePencilMarkMethod } from "../../ducks/config";
+
+// TODO: Split Cell into FixedCell and VariableCell or something.
 
 // mapStateToProps has root state as first argument, we destructure it
 function mapStateToProps(
@@ -17,6 +19,7 @@ function mapStateToProps(
         config: {
             isInSolveMode,
             isUsingPencilMarks,
+            pencilMarkMethod,
             shouldShowAllErrors,
             shouldShowPencilMarks,
             shouldShowObviousErrors
@@ -36,6 +39,7 @@ function mapStateToProps(
         isInSolveMode,
         isUsingPencilMarks,
         pencilMarks,
+        pencilMarkMethod,
         shouldHighlightError:
             (hasError && shouldShowAllErrors) || (hasObviousError && shouldShowObviousErrors),
         shouldShowPencilMarks
@@ -45,6 +49,7 @@ function mapStateToProps(
 const mapDispatchToProps = {
     addCellValue,
     toggleEntryMethod,
+    togglePencilMarkMethod,
     updateCellValue,
     updateCellPencilMark
 };

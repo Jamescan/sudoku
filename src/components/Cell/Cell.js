@@ -19,6 +19,7 @@ export class Cell extends React.PureComponent {
             index,
             isFixed,
             isUsingPencilMarks,
+            pencilMarkMethod: pencilMarkType,
             toggleEntryMethod,
             updateCellValue,
             updateCellPencilMark
@@ -28,12 +29,12 @@ export class Cell extends React.PureComponent {
         const userHasPressedAnArrowKey = Object.keys(ARROW_KEYS).includes(event.keyCode.toString());
         const userHasPressedADigit = validDigitInputs.includes(userInput);
 
-        if (userInput === "Delete" && !isFixed) {
+        if ((userInput === "Delete" || userInput === "Backspace") && !isFixed) {
             updateCellValue(index, "");
         } else if (userHasPressedADigit && !isUsingPencilMarks) {
             updateCellValue(index, userInput);
         } else if (userHasPressedADigit && isUsingPencilMarks) {
-            updateCellPencilMark(index, userInput);
+            updateCellPencilMark(index, userInput, pencilMarkType);
         }
         // TODO: Probably should have a more elegant implementation of keyboard shortcuts
         // at the very least, maybe this should be listening above Cell? SudokuGrid level?
@@ -64,12 +65,13 @@ export class Cell extends React.PureComponent {
             index,
             isInSolveMode,
             isUsingPencilMarks,
+            pencilMarkMethod: pencilMarkType,
             updateCellPencilMark,
             updateCellValue
         } = this.props;
 
         if (isUsingPencilMarks) {
-            updateCellPencilMark(index, number);
+            updateCellPencilMark(index, number, pencilMarkType);
         } else if (isInSolveMode) {
             updateCellValue(index, number);
         } else {
@@ -84,6 +86,7 @@ export class Cell extends React.PureComponent {
             isInSolveMode,
             isUsingPencilMarks,
             pencilMarks,
+            pencilMarkMethod,
             shouldHighlightError,
             shouldShowPencilMarks,
             value
@@ -97,6 +100,14 @@ export class Cell extends React.PureComponent {
             [styles.new]: !isFixed && isInSolveMode
         });
 
+        const innerCellStyles = clsx({
+            [styles.valueWrapper]: cellHasValue,
+            [styles.centralPencilMarks]: !cellHasValue && pencilMarkMethod === "central",
+            [styles.cornerPencilMarks]: !cellHasValue && pencilMarkMethod === "corner"
+        });
+
+        const pencilMarksToRender = pencilMarks[pencilMarkMethod].sort();
+
         return (
             // Users should be able to tab to each cell and input its value from the keyboard
             /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -107,16 +118,12 @@ export class Cell extends React.PureComponent {
                 tabIndex="0"
                 sudokuindex={index}
             >
-                {cellHasValue ? (
-                    <div className={styles.valueWrapper}>{value}</div>
-                ) : (
-                    <HoverGrid
-                        handleClick={clickedCellValue => this.handleMouseClick(clickedCellValue)}
-                        pencilMarks={shouldShowPencilMarks ? pencilMarks : []}
-                        shouldShowBigNumberOnHover={shouldShowBigNumberOnHover}
-                        shouldShowPencilMarks={shouldShowPencilMarks}
-                    />
-                )}
+                <div className={innerCellStyles}>
+                    {cellHasValue
+                        ? value
+                        : shouldShowPencilMarks &&
+                        pencilMarksToRender.map(pencilMark => <span>{pencilMark}</span>)}
+                </div>
             </div>
         );
     }
@@ -126,7 +133,10 @@ Cell.defaultProps = {
     isFixed: false, // false if cell value can be deleted
     isInSolveMode: false,
     isUsingPencilMarks: true,
-    pencilMarks: [],
+    pencilMarks: {
+        central: [],
+        corner: []
+    },
     shouldHighlightError: false,
     shouldShowPencilMarks: true,
     value: null
@@ -138,8 +148,10 @@ Cell.propTypes = {
     isFixed: PropTypes.bool,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
-    pencilMarks: PropTypes.arrayOf(PropTypes.string),
-    shouldHighlightError: PropTypes.bool,
+    pencilMarks: PropTypes.shape({
+        central: PropTypes.arrayOf(PropTypes.string),
+        corner: PropTypes.arrayOf(PropTypes.string)
+    }),    shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,
     toggleEntryMethod: PropTypes.func.isRequired,
     updateCellValue: PropTypes.func.isRequired,

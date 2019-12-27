@@ -89,8 +89,8 @@ export function updateCellValue(index, value) {
     return { type: UPDATE_CELL_VALUE, index, value };
 }
 
-export function updateCellPencilMark(index, pencilMark) {
-    return { type: UPDATE_CELL_PENCIL_MARK, index, pencilMark };
+export function updateCellPencilMark(index, pencilMark, pencilMarkType) {
+    return { type: UPDATE_CELL_PENCIL_MARK, index, pencilMark, pencilMarkType };
 }
 
 function getDefaultCellObject() {
@@ -98,7 +98,10 @@ function getDefaultCellObject() {
         hasError: false,
         hasObviousError: false,
         isOriginalValue: false,
-        pencilMarks: [],
+        pencilMarks: {
+            central: [],
+            corner: []
+        },
         value: ""
     };
 }
@@ -264,7 +267,10 @@ export function sudoku(state = initialState, action) {
         case CLEAR_ALL_PENCIL_MARKS: {
             const newCells = state.cells.map(cell => ({
                 ...cell,
-                pencilMarks: []
+                pencilMarks: {
+                    central: [],
+                    corner: []
+                }
             }));
 
             return {
@@ -322,19 +328,23 @@ export function sudoku(state = initialState, action) {
             };
         }
         case UPDATE_CELL_PENCIL_MARK: {
-            const { index, pencilMark: pencilMarkToUpdate } = action;
+            // TODO: Remove default value after refactoring action to have pencilMarkType.
+            const { index, pencilMark: pencilMarkToUpdate, pencilMarkType="central" } = action;
 
             const cellToUpdate = state.cells[index];
 
             // If the cellToUpdate contains the pencilMarkToUpdate, remove the pencilMarkToUpdate.
             // Otherwise, add it to the cellToUpdate's pencilMarks.
-            const updatedPencilMarks = cellToUpdate.pencilMarks.includes(pencilMarkToUpdate)
-                ? cellToUpdate.pencilMarks.filter(pencilMark => pencilMark !== pencilMarkToUpdate)
-                : [...cellToUpdate.pencilMarks, pencilMarkToUpdate];
+            const updatedPencilMarks = cellToUpdate.pencilMarks[pencilMarkType].includes(pencilMarkToUpdate)
+                ? cellToUpdate.pencilMarks[pencilMarkType].filter(pencilMark => pencilMark !== pencilMarkToUpdate)
+                : [...cellToUpdate.pencilMarks[pencilMarkType], pencilMarkToUpdate];
 
             const newCell = {
                 ...cellToUpdate,
-                pencilMarks: updatedPencilMarks
+                pencilMarks: {
+                    ...cellToUpdate.pencilMarks,
+                    [pencilMarkType]: updatedPencilMarks
+                }
             };
 
             const newCells = safelyUpdateArrayByIndex(state.cells, index, newCell);

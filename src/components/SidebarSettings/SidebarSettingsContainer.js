@@ -2,18 +2,20 @@ import { connect } from "react-redux";
 import { SidebarSettings } from "./SidebarSettings";
 import {
     toggleEntryMethod,
+    togglePencilMarkMethod,
     toggleShowAllErrors,
     toggleShowObviousErrors
 } from "../../ducks/config";
 import { clearAllPencilMarks, getSudoku, selectIsSolved } from "../../ducks/sudoku";
 
-function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks }, sudoku }) {
+function mapStateToProps({ config: { isInSolveMode, isUsingPencilMarks, pencilMarkMethod }, sudoku }) {
     const isSolved = selectIsSolved(sudoku);
 
     return {
         isInSolveMode,
         isSolved,
-        isUsingPencilMarks
+        isUsingPencilMarks,
+        pencilMarkMethod
     };
 }
 
@@ -21,6 +23,7 @@ const mapDispatchToProps = {
     clearAllPencilMarks,
     getSudoku,
     toggleEntryMethod,
+    togglePencilMarkMethod,
     toggleShowAllErrors,
     toggleShowObviousErrors
 };

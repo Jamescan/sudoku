@@ -12,7 +12,9 @@ export function SidebarSettings(props) {
         isInSolveMode,
         isSolved,
         isUsingPencilMarks,
+        pencilMarkMethod,
         toggleEntryMethod,
+        togglePencilMarkMethod,
         toggleShowAllErrors,
         toggleShowObviousErrors
     } = props;
@@ -45,6 +47,7 @@ export function SidebarSettings(props) {
                     </SidebarItem>
                     <SidebarItem title="Entry Method">
                         <ButtonGroup
+                            // TODO: This needs to be redone, logic is not sound.
                             buttons={[
                                 {
                                     additionalClassNames: styles.entryMethodButton,
@@ -54,10 +57,16 @@ export function SidebarSettings(props) {
                                 },
                                 {
                                     additionalClassNames: styles.entryMethodButton,
-                                    handleClick: toggleEntryMethod,
-                                    isSelected: isUsingPencilMarks,
-                                    title: "Little"
-                                }
+                                    handleClick: togglePencilMarkMethod,
+                                    isSelected: isUsingPencilMarks && pencilMarkMethod === "central",
+                                    title: "Central"
+                                },
+                                {
+                                    additionalClassNames: styles.entryMethodButton,
+                                    handleClick: togglePencilMarkMethod,
+                                    isSelected: isUsingPencilMarks && pencilMarkMethod === "corner",
+                                    title: "Corner"
+                                },
                             ]}
                         />
                     </SidebarItem>
