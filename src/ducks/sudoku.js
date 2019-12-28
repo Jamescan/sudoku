@@ -335,10 +335,13 @@ export function sudoku(state = initialState, action) {
 
             // If the cellToUpdate contains the pencilMarkToUpdate, remove the pencilMarkToUpdate.
             // Otherwise, add it to the cellToUpdate's pencilMarks.
+
             const updatedPencilMarks = cellToUpdate.pencilMarks[pencilMarkType].includes(pencilMarkToUpdate)
                 ? cellToUpdate.pencilMarks[pencilMarkType].filter(pencilMark => pencilMark !== pencilMarkToUpdate)
                 : [...cellToUpdate.pencilMarks[pencilMarkType], pencilMarkToUpdate];
 
+            updatedPencilMarks.sort();
+            
             const newCell = {
                 ...cellToUpdate,
                 pencilMarks: {

@@ -9,8 +9,7 @@
  *     However, we should not loop around from the first column to the last
  *     column, so we store a specialCaseColumnNumber of 0 (first column).
  */
-
-export const ARROW_KEYS = {
+export const ARROW_KEYS = Object.freeze({
     // Left arrow key
     37: {
         indexAdjustment: -1,
@@ -32,4 +31,16 @@ export const ARROW_KEYS = {
     40: {
         indexAdjustment: 9
     }
-};
+});
+
+/**
+ * Different ways numbers can be input into cells
+ * - Big: single-value entry
+ * - CENTRAL: pencil marks showing in the center of cell
+ * - CORNER: pencil marks showing on the outer edges of the cell
+ */
+export const ENTRY_METHODS = Object.freeze({
+    BIG: "big",
+    CENTRAL: "central",
+    CORNER: "corner"
+});

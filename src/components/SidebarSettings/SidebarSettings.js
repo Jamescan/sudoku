@@ -4,17 +4,19 @@ import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { CheckboxGroup } from "../CheckboxGroup/CheckboxGroup";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
 import styles from "./SidebarSettings.module.css";
+import { ENTRY_METHODS } from "../../constants";
+
+const { BIG, CENTRAL, CORNER } = ENTRY_METHODS;
 
 export function SidebarSettings(props) {
     const {
         clearAllPencilMarks,
+        entryMethod,
         getSudoku,
         isInSolveMode,
         isSolved,
         isUsingPencilMarks,
-        pencilMarkMethod,
-        toggleEntryMethod,
-        togglePencilMarkMethod,
+        setEntryMethod,
         toggleShowAllErrors,
         toggleShowObviousErrors
     } = props;
@@ -51,20 +53,20 @@ export function SidebarSettings(props) {
                             buttons={[
                                 {
                                     additionalClassNames: styles.entryMethodButton,
-                                    handleClick: toggleEntryMethod,
+                                    handleClick: () => setEntryMethod(BIG),
                                     isSelected: !isUsingPencilMarks,
                                     title: "Big"
                                 },
                                 {
                                     additionalClassNames: styles.entryMethodButton,
-                                    handleClick: togglePencilMarkMethod,
-                                    isSelected: isUsingPencilMarks && pencilMarkMethod === "central",
+                                    handleClick: () => setEntryMethod(CENTRAL),
+                                    isSelected: isUsingPencilMarks && entryMethod === CENTRAL,
                                     title: "Central"
                                 },
                                 {
                                     additionalClassNames: styles.entryMethodButton,
-                                    handleClick: togglePencilMarkMethod,
-                                    isSelected: isUsingPencilMarks && pencilMarkMethod === "corner",
+                                    handleClick: () => setEntryMethod(CORNER),
+                                    isSelected: isUsingPencilMarks && entryMethod === CORNER,
                                     title: "Corner"
                                 },
                             ]}
@@ -113,7 +115,6 @@ SidebarSettings.propTypes = {
     getSudoku: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
     isUsingPencilMarks: PropTypes.bool,
-    toggleEntryMethod: PropTypes.func.isRequired,
     toggleShowAllErrors: PropTypes.func.isRequired,
     toggleShowObviousErrors: PropTypes.func.isRequired
 };

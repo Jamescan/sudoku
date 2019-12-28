@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { ARROW_KEYS } from "../../constants/constants";
-import HoverGrid from "../HoverGrid/HoverGrid";
+import { ARROW_KEYS } from "../../constants";
 import styles from "./Cell.module.css";
 
+// TODO: This component is a beast.
 // TODO: Accessibility concerns with onClicks on divs, etc.
 export class Cell extends React.PureComponent {
     constructor(props) {
@@ -19,8 +19,7 @@ export class Cell extends React.PureComponent {
             index,
             isFixed,
             isUsingPencilMarks,
-            pencilMarkMethod: pencilMarkType,
-            toggleEntryMethod,
+            entryMethod: pencilMarkType,
             updateCellValue,
             updateCellPencilMark
         } = this.props;
@@ -39,7 +38,8 @@ export class Cell extends React.PureComponent {
         // TODO: Probably should have a more elegant implementation of keyboard shortcuts
         // at the very least, maybe this should be listening above Cell? SudokuGrid level?
         else if (userInput === "q") {
-            toggleEntryMethod();
+            // TODO: Implementation with new entryMethod logic.
+            //toggleEntryMethod();
         } else if (userHasPressedAnArrowKey) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
@@ -65,7 +65,7 @@ export class Cell extends React.PureComponent {
             index,
             isInSolveMode,
             isUsingPencilMarks,
-            pencilMarkMethod: pencilMarkType,
+            entryMethod: pencilMarkType,
             updateCellPencilMark,
             updateCellValue
         } = this.props;
@@ -84,15 +84,12 @@ export class Cell extends React.PureComponent {
             index,
             isFixed,
             isInSolveMode,
-            isUsingPencilMarks,
             pencilMarks,
-            pencilMarkMethod,
             shouldHighlightError,
             shouldShowPencilMarks,
             value
         } = this.props;
 
-        const shouldShowBigNumberOnHover = !isUsingPencilMarks;
         const cellHasValue = value !== "";
 
         const cellStyles = clsx(styles.cell, {
@@ -100,13 +97,7 @@ export class Cell extends React.PureComponent {
             [styles.new]: !isFixed && isInSolveMode
         });
 
-        const innerCellStyles = clsx({
-            [styles.valueWrapper]: cellHasValue,
-            [styles.centralPencilMarks]: !cellHasValue && pencilMarkMethod === "central",
-            [styles.cornerPencilMarks]: !cellHasValue && pencilMarkMethod === "corner"
-        });
-
-        const pencilMarksToRender = pencilMarks[pencilMarkMethod].sort();
+        const innerCellStyles = cellHasValue ? styles.valueWrapper : styles.pencilMarkRows;
 
         return (
             // Users should be able to tab to each cell and input its value from the keyboard
@@ -119,10 +110,14 @@ export class Cell extends React.PureComponent {
                 sudokuindex={index}
             >
                 <div className={innerCellStyles}>
-                    {cellHasValue
-                        ? value
-                        : shouldShowPencilMarks &&
-                        pencilMarksToRender.map(pencilMark => <span>{pencilMark}</span>)}
+                    {cellHasValue ? value :
+                        shouldShowPencilMarks && 
+                            <>
+                                <span className={styles.outerRow}>{pencilMarks['corner'].slice(0, 3).map(p => <span key={p}>{p}</span>)}</span>
+                                <span className={styles.middleRow}>{pencilMarks['central']}</span>
+                                <span className={styles.outerRow}>{pencilMarks['corner'].slice(3).map(p => <span key={p}>{p}</span>)}</span>
+                            </>
+                    }
                 </div>
             </div>
         );
@@ -153,7 +148,6 @@ Cell.propTypes = {
         corner: PropTypes.arrayOf(PropTypes.string)
     }),    shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,
-    toggleEntryMethod: PropTypes.func.isRequired,
     updateCellValue: PropTypes.func.isRequired,
     updateCellPencilMark: PropTypes.func.isRequired,
     value: PropTypes.string

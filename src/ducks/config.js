@@ -1,9 +1,12 @@
+import { ENTRY_METHODS } from "../constants";
+
+const { BIG, CORNER, CENTRAL } = ENTRY_METHODS;
+
 /*
  * action types
  */
+export const SET_ENTRY_METHOD = "SET_ENTRY_METHOD";
 export const TOGGLE_APP_MODE = "TOGGLE_APP_MODE";
-export const TOGGLE_ENTRY_METHOD = "TOGGLE_ENTRY_METHOD";
-export const TOGGLE_PENCIL_MARK_METHOD = "TOGGLE_PENCIL_MARK_METHOD";
 export const TOGGLE_SHOW_ALL_ERRORS = "TOGGLE_SHOW_ALL_ERRORS";
 export const TOGGLE_SHOW_OBVIOUS_ERRORS = "TOGGLE_SHOW_OBVIOUS_ERRORS";
 
@@ -14,12 +17,11 @@ export function toggleAppMode() {
     return { type: TOGGLE_APP_MODE };
 }
 
-export function toggleEntryMethod() {
-    return { type: TOGGLE_ENTRY_METHOD };
-}
-
-export function togglePencilMarkMethod() {
-    return { type: TOGGLE_PENCIL_MARK_METHOD };
+export function setEntryMethod(entryMethod) {
+    return {
+        type: SET_ENTRY_METHOD,
+        entryMethod
+    }
 }
 
 export function toggleShowAllErrors() {
@@ -31,12 +33,10 @@ export function toggleShowObviousErrors() {
 }
 
 const initialState = {
+    entryMethod: BIG,
     isInSolveMode: false, // false implies "Capture" Mode
-    isUsingPencilMarks: false,
     shouldShowAllErrors: false,
-    shouldShowPencilMarks: false,
     shouldShowObviousErrors: false,
-    pencilMarkMethod: "central" // ["central", "corner"]
 };
 
 /*
@@ -44,30 +44,17 @@ const initialState = {
  */
 export function config(state = initialState, action) {
     switch (action.type) {
+        case SET_ENTRY_METHOD: {
+            return {
+                ...state,
+                entryMethod: action.entryMethod,
+            }
+        }
         case TOGGLE_APP_MODE: {
-            // TODO: Clean up this logic... idea is to force isUsingPencilMarks to false
-            // whenever we toggle from Solve to Capture mode,
-            // since Capture mode never uses pencilMarks.
-            // Do similar for shouldShowPencilMarks.
             return {
                 ...state,
                 isInSolveMode: !state.isInSolveMode,
-                isUsingPencilMarks: state.isInSolveMode ? false : state.isUsingPencilMarks,
-                shouldShowPencilMarks: !state.isInSolveMode
             };
-        }
-        case TOGGLE_ENTRY_METHOD: {
-            return {
-                ...state,
-                isUsingPencilMarks: !state.isUsingPencilMarks
-            };
-        }
-        case TOGGLE_PENCIL_MARK_METHOD: {
-            return {
-                ...state,
-                isUsingPencilMarks: true,
-                pencilMarkMethod: state.pencilMarkMethod === "central" ? "corner" : "central"
-            }
         }
         case TOGGLE_SHOW_ALL_ERRORS: {
             return {
@@ -85,4 +72,17 @@ export function config(state = initialState, action) {
             return state;
         }
     }
+}
+
+/* selectors */
+export function selectIsUsingPencilMarks(state) {
+    if (!state.isInSolveMode) {
+        return false;
+    }
+
+    return state.entryMethod === CORNER || state.entryMethod === CENTRAL;
+}
+
+export function selectShouldShowPencilMarks(state) {
+    return state.isInSolveMode;
 }

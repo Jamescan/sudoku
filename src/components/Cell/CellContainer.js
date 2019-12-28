@@ -9,32 +9,21 @@ import {
     updateCellValue,
     updateCellPencilMark
 } from "../../ducks/sudoku";
-import { toggleEntryMethod, togglePencilMarkMethod } from "../../ducks/config";
+import { selectIsUsingPencilMarks, selectShouldShowPencilMarks } from "../../ducks/config";
 
 // TODO: Split Cell into FixedCell and VariableCell or something.
 
-// mapStateToProps has root state as first argument, we destructure it
-function mapStateToProps(
-    {
-        config: {
-            isInSolveMode,
-            isUsingPencilMarks,
-            pencilMarkMethod,
-            shouldShowAllErrors,
-            shouldShowPencilMarks,
-            shouldShowObviousErrors
-        },
-        sudoku
-    },
-    ownProps
-) {
+function mapStateToProps({ config, sudoku }, ownProps) {
+    const { entryMethod, isInSolveMode, pencilMarkMethod, shouldShowAllErrors, shouldShowObviousErrors } = config;
     const cellIndex = ownProps.index;
     const hasError = selectHasError(sudoku, cellIndex);
     const hasObviousError = selectHasObviousError(sudoku, cellIndex);
     const isOriginalCell = selectIsOriginalCell(sudoku, cellIndex);
     const pencilMarks = selectPencilMarks(sudoku, cellIndex);
+    const isUsingPencilMarks = selectIsUsingPencilMarks(config);
 
     return {
+        entryMethod,
         isFixed: isInSolveMode && isOriginalCell,
         isInSolveMode,
         isUsingPencilMarks,
@@ -42,14 +31,12 @@ function mapStateToProps(
         pencilMarkMethod,
         shouldHighlightError:
             (hasError && shouldShowAllErrors) || (hasObviousError && shouldShowObviousErrors),
-        shouldShowPencilMarks
+        shouldShowPencilMarks: selectShouldShowPencilMarks(config)
     };
 }
 
 const mapDispatchToProps = {
     addCellValue,
-    toggleEntryMethod,
-    togglePencilMarkMethod,
     updateCellValue,
     updateCellPencilMark
 };
