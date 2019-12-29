@@ -19,7 +19,8 @@ export class Cell extends React.PureComponent {
             index,
             isFixed,
             isUsingPencilMarks,
-            entryMethod: pencilMarkType,
+            entryMethod,
+            toggleEntryMethod,
             updateCellValue,
             updateCellPencilMark
         } = this.props;
@@ -33,13 +34,12 @@ export class Cell extends React.PureComponent {
         } else if (userHasPressedADigit && !isUsingPencilMarks) {
             updateCellValue(index, userInput);
         } else if (userHasPressedADigit && isUsingPencilMarks) {
-            updateCellPencilMark(index, userInput, pencilMarkType);
+            updateCellPencilMark(index, userInput, entryMethod);
         }
         // TODO: Probably should have a more elegant implementation of keyboard shortcuts
         // at the very least, maybe this should be listening above Cell? SudokuGrid level?
         else if (userInput === "q") {
-            // TODO: Implementation with new entryMethod logic.
-            //toggleEntryMethod();
+            toggleEntryMethod();
         } else if (userHasPressedAnArrowKey) {
             // querySelectorAll will return matching element nodes in document order,
             // so we can just use the index of the resulting list. We need not verify
@@ -110,14 +110,23 @@ export class Cell extends React.PureComponent {
                 sudokuindex={index}
             >
                 <div className={innerCellStyles}>
-                    {cellHasValue ? value :
-                        shouldShowPencilMarks && 
-                            <>
-                                <span className={styles.outerRow}>{pencilMarks['corner'].slice(0, 3).map(p => <span key={p}>{p}</span>)}</span>
-                                <span className={styles.middleRow}>{pencilMarks['central']}</span>
-                                <span className={styles.outerRow}>{pencilMarks['corner'].slice(3).map(p => <span key={p}>{p}</span>)}</span>
-                            </>
-                    }
+                    {cellHasValue
+                        ? value
+                        : shouldShowPencilMarks && (
+                              <>
+                                  <span className={styles.outerRow}>
+                                      {pencilMarks.corner.slice(0, 3).map(p => (
+                                          <span key={p}>{p}</span>
+                                      ))}
+                                  </span>
+                                  <span className={styles.middleRow}>{pencilMarks.central}</span>
+                                  <span className={styles.outerRow}>
+                                      {pencilMarks.corner.slice(3).map(p => (
+                                          <span key={p}>{p}</span>
+                                      ))}
+                                  </span>
+                              </>
+                          )}
                 </div>
             </div>
         );
@@ -139,6 +148,7 @@ Cell.defaultProps = {
 
 Cell.propTypes = {
     addCellValue: PropTypes.func.isRequired,
+    entryMethod: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     isFixed: PropTypes.bool,
     isInSolveMode: PropTypes.bool,
@@ -146,8 +156,10 @@ Cell.propTypes = {
     pencilMarks: PropTypes.shape({
         central: PropTypes.arrayOf(PropTypes.string),
         corner: PropTypes.arrayOf(PropTypes.string)
-    }),    shouldHighlightError: PropTypes.bool,
+    }),
+    shouldHighlightError: PropTypes.bool,
     shouldShowPencilMarks: PropTypes.bool,
+    toggleEntryMethod: PropTypes.func.isRequired,
     updateCellValue: PropTypes.func.isRequired,
     updateCellPencilMark: PropTypes.func.isRequired,
     value: PropTypes.string

@@ -7,6 +7,7 @@ const { BIG, CORNER, CENTRAL } = ENTRY_METHODS;
  */
 export const SET_ENTRY_METHOD = "SET_ENTRY_METHOD";
 export const TOGGLE_APP_MODE = "TOGGLE_APP_MODE";
+export const TOGGLE_ENTRY_METHOD = "TOGGLE_ENTRY_METHOD";
 export const TOGGLE_SHOW_ALL_ERRORS = "TOGGLE_SHOW_ALL_ERRORS";
 export const TOGGLE_SHOW_OBVIOUS_ERRORS = "TOGGLE_SHOW_OBVIOUS_ERRORS";
 
@@ -21,7 +22,13 @@ export function setEntryMethod(entryMethod) {
     return {
         type: SET_ENTRY_METHOD,
         entryMethod
-    }
+    };
+}
+
+export function toggleEntryMethod() {
+    return {
+        type: TOGGLE_ENTRY_METHOD
+    };
 }
 
 export function toggleShowAllErrors() {
@@ -36,7 +43,7 @@ const initialState = {
     entryMethod: BIG,
     isInSolveMode: false, // false implies "Capture" Mode
     shouldShowAllErrors: false,
-    shouldShowObviousErrors: false,
+    shouldShowObviousErrors: false
 };
 
 /*
@@ -47,13 +54,41 @@ export function config(state = initialState, action) {
         case SET_ENTRY_METHOD: {
             return {
                 ...state,
-                entryMethod: action.entryMethod,
-            }
+                entryMethod: action.entryMethod
+            };
         }
         case TOGGLE_APP_MODE: {
             return {
                 ...state,
-                isInSolveMode: !state.isInSolveMode,
+                isInSolveMode: !state.isInSolveMode
+            };
+        }
+        case TOGGLE_ENTRY_METHOD: {
+            // TODO: Elegant implementation
+            const currentEntryMethod = state.entryMethod;
+            let newEntryMethod;
+            switch (currentEntryMethod) {
+                case BIG: {
+                    newEntryMethod = CENTRAL;
+                    break;
+                }
+                case CENTRAL: {
+                    newEntryMethod = CORNER;
+                    break;
+                }
+                case CORNER: {
+                    newEntryMethod = BIG;
+                    break;
+                }
+                default: {
+                    // eslint-disable-next-line no-console
+                    console.error("Something is wrong.");
+                }
+            }
+
+            return {
+                ...state,
+                entryMethod: newEntryMethod
             };
         }
         case TOGGLE_SHOW_ALL_ERRORS: {

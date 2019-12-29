@@ -6,8 +6,6 @@ import { SidebarItem } from "../SidebarItem/SidebarItem";
 import styles from "./SidebarSettings.module.css";
 import { ENTRY_METHODS } from "../../constants";
 
-const { BIG, CENTRAL, CORNER } = ENTRY_METHODS;
-
 export function SidebarSettings(props) {
     const {
         clearAllPencilMarks,
@@ -15,15 +13,15 @@ export function SidebarSettings(props) {
         getSudoku,
         isInSolveMode,
         isSolved,
-        isUsingPencilMarks,
         setEntryMethod,
         toggleShowAllErrors,
         toggleShowObviousErrors
     } = props;
+
     return (
-        <div className={styles.sidebarSettingsWrapper}>
+        <aside className={styles.sidebarSettingsWrapper}>
             {!isInSolveMode && (
-                <SidebarItem title="">
+                <SidebarItem>
                     <button type="button" onClick={getSudoku}>
                         Generate a New Sudoku
                     </button>
@@ -49,34 +47,19 @@ export function SidebarSettings(props) {
                     </SidebarItem>
                     <SidebarItem title="Entry Method">
                         <ButtonGroup
-                            // TODO: This needs to be redone, logic is not sound.
-                            buttons={[
-                                {
-                                    additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => setEntryMethod(BIG),
-                                    isSelected: !isUsingPencilMarks,
-                                    title: "Big"
-                                },
-                                {
-                                    additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => setEntryMethod(CENTRAL),
-                                    isSelected: isUsingPencilMarks && entryMethod === CENTRAL,
-                                    title: "Central"
-                                },
-                                {
-                                    additionalClassNames: styles.entryMethodButton,
-                                    handleClick: () => setEntryMethod(CORNER),
-                                    isSelected: isUsingPencilMarks && entryMethod === CORNER,
-                                    title: "Corner"
-                                },
-                            ]}
+                            buttons={Object.values(ENTRY_METHODS).map(method => {
+                                return {
+                                    handleClick: () => setEntryMethod(method),
+                                    isSelected: entryMethod === method,
+                                    title: method.charAt(0).toUpperCase() + method.slice(1)
+                                };
+                            })}
                         />
                     </SidebarItem>
                     <SidebarItem title="Misc.">
                         <ButtonGroup
                             buttons={[
                                 {
-                                    // additionalClassNames: styles.entryMethodButton,
                                     handleClick: () => clearAllPencilMarks(),
 
                                     // "Clear All" can always be selected again (never disabled)
@@ -85,11 +68,8 @@ export function SidebarSettings(props) {
                                 },
                                 {
                                     handleClick: () => {
-                                        if (isSolved) {
-                                            alert("Looks good!");
-                                        } else {
-                                            alert("Not the solution.");
-                                        }
+                                        // eslint-disable-next-line
+                                        isSolved ? alert("Looks good") : alert("Not the solution.");
                                     },
                                     title: "Check Solution"
                                 }
@@ -101,20 +81,21 @@ export function SidebarSettings(props) {
                     </SidebarItem>
                 </>
             )}
-        </div>
+        </aside>
     );
 }
 
 SidebarSettings.defaultProps = {
-    isInSolveMode: false,
-    isUsingPencilMarks: false
+    isInSolveMode: false
 };
 
 SidebarSettings.propTypes = {
     clearAllPencilMarks: PropTypes.func.isRequired,
+    entryMethod: PropTypes.string.isRequired,
     getSudoku: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
-    isUsingPencilMarks: PropTypes.bool,
+    isSolved: PropTypes.bool.isRequired,
+    setEntryMethod: PropTypes.func.isRequired,
     toggleShowAllErrors: PropTypes.func.isRequired,
     toggleShowObviousErrors: PropTypes.func.isRequired
 };

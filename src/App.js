@@ -6,10 +6,10 @@ import SidebarSettings from "./components/SidebarSettings/SidebarSettingsContain
 
 export function App() {
     return (
-        <div className="app">
+        <main className="app">
             <PrimarySettings />
             <SudokuGrid />
             <SidebarSettings />
-        </div>
+        </main>
     );
 }

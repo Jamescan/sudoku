@@ -1,17 +1,18 @@
 This project renders an interactive Sudoku grid UI for solving puzzles.
 
-- [Features](#features)
-  - [Current](#current)
-  - [Planned](#planned)
-- [Installation and Use](#installation-and-use)
-- [Development Notes](#development-notes)
-  - [API Integration](#api-integration)
-  - [Linting](#linting)
-  - [Styling](#styling)
-    - [CSS Modules](#css-modules)
-    - [Sass](#sass)
-  - [Testing](#testing)
-- [Acknowledgements](#acknowledgements)
+-   [Features](#features)
+    -   [Current](#current)
+    -   [Planned](#planned)
+    -   [Removed](#removed)
+-   [Installation and Use](#installation-and-use)
+-   [Development Notes](#development-notes)
+    -   [API Integration](#api-integration)
+    -   [Linting](#linting)
+    -   [Styling](#styling)
+        -   [CSS Modules](#css-modules)
+        -   [Sass](#sass)
+    -   [Testing](#testing)
+-   [Acknowledgements](#acknowledgements)
 
 ## Features
 
@@ -19,9 +20,8 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 
 -   'Entry' and 'Solve' modes with behind-the-scenes solution storage
     -   Connects to `sudoku-api` for sudoku and solution generation
--   Easily input numbers by moving your mouse inside of each cell
-    -   The numbers 1 through 9 will appear as you move your mouse from the upper left to the lower right of a cell
 -   Pencil-marking notation (little numbers in cells)
+    -   Central and Corner pencil marks supported
     -   Clear all pencil marks via a button
 -   Input Validation
     -   For Obvious Mistakes (same number in a row / column / 3x3 block)
@@ -35,7 +35,7 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Should invoke API call to try and solve a captured puzzle once clicked into Solve mode
     -   If failed to find a unique solution, show an alert message.
 -   Add a "Save" button that will save the current state of the board in local storage / cookie / somehow so it will persist for the user.
-    -   Mostly just practice with data persistence. Writeup the pros & cons of local storage / cookie somewhere. 
+    -   Mostly just practice with data persistence. Writeup the pros & cons of local storage / cookie somewhere.
 -   Accessibility improvements
     -   Fix disabled `eslint` rules
     -   Maybe a Skip Link to get to the Sidebar config settings
@@ -44,8 +44,6 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
             -   Tabtrapping in the Modal
     -   See Frontend Masters [course](https://frontendmasters.com/courses/web-accessibility/)
 -   Ability to color code cells?
--   Ability to input _central_ pencil marks?
-    -   Is this even feasible? Central pencil marks will overlap with the `4,5,6` pencil marks in standard Snyder notation.
 -   Ability to highlight multiple cells and input values / pencil marks in them all at once
     -   This isn't useful for traditional sudoku, but is an interesting challenge nonetheless.
     -   Would need to check for the `CTRL` key in `handleKeyDown` and if found, "highlight" the cell. Probably need to track currently highlighted cells in redux. Highlighted cells can have special styling too.
@@ -53,6 +51,12 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
     -   Use a prebuilt component library for styling (`react-bootstrap`, `material-ui`, `semantic-ui`, etc.) or my own?
 -   Interactive tutorial, like what they have on `https://coolors.co`
 -   Deploy somewhere :)
+
+### Removed
+
+-   Easily input numbers by moving your mouse inside of each cell
+    -   The numbers 1 through 9 will appear as you move your mouse from the upper left to the lower right of a cell
+    -   Logic is in `HoverGrid` component, implementation removed in favor of new pencil marking features.
 
 ## Installation and Use
 
@@ -94,7 +98,7 @@ import "styleSheetName.css"
 
 // ...
 render() {
-    return <div className={"foo"}></div>
+    return <div className="foo"></div>
 }
 ```
 
@@ -110,4 +114,4 @@ The standard `npm test` will run the app's test suite. To get a coverage report,
 
 ## Acknowledgements
 
-The UI and features for this app take heavy inspiration from Duncan's SuDoku Solver, an execellent Sudoku solver available for Windows [here](http://www.littlegogs.com/).
+The UI and features for this app take inspiration from [Duncan's SuDoku Solver](http://www.littlegogs.com/) and Cracking the Cryptic's solver.

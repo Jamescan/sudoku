@@ -10,12 +10,10 @@ export function CheckboxGroup({ checkboxes, title }) {
                 {checkboxes.map(checkbox => {
                     const { id, handleSelection, label } = checkbox;
                     return (
-                        <div key={id}>
-                            <label htmlFor={id}>
-                                <input type="checkbox" id={id} onChange={() => handleSelection()} />
-                                {label}
-                            </label>
-                        </div>
+                        <label htmlFor={id} key={id}>
+                            <input type="checkbox" id={id} onChange={() => handleSelection()} />
+                            {label}
+                        </label>
                     );
                 })}
             </div>

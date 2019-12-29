@@ -329,19 +329,23 @@ export function sudoku(state = initialState, action) {
         }
         case UPDATE_CELL_PENCIL_MARK: {
             // TODO: Remove default value after refactoring action to have pencilMarkType.
-            const { index, pencilMark: pencilMarkToUpdate, pencilMarkType="central" } = action;
+            const { index, pencilMark: pencilMarkToUpdate, pencilMarkType = "central" } = action;
 
             const cellToUpdate = state.cells[index];
 
             // If the cellToUpdate contains the pencilMarkToUpdate, remove the pencilMarkToUpdate.
             // Otherwise, add it to the cellToUpdate's pencilMarks.
 
-            const updatedPencilMarks = cellToUpdate.pencilMarks[pencilMarkType].includes(pencilMarkToUpdate)
-                ? cellToUpdate.pencilMarks[pencilMarkType].filter(pencilMark => pencilMark !== pencilMarkToUpdate)
+            const updatedPencilMarks = cellToUpdate.pencilMarks[pencilMarkType].includes(
+                pencilMarkToUpdate
+            )
+                ? cellToUpdate.pencilMarks[pencilMarkType].filter(
+                      pencilMark => pencilMark !== pencilMarkToUpdate
+                  )
                 : [...cellToUpdate.pencilMarks[pencilMarkType], pencilMarkToUpdate];
 
             updatedPencilMarks.sort();
-            
+
             const newCell = {
                 ...cellToUpdate,
                 pencilMarks: {
@@ -438,7 +442,7 @@ export const getSolutionEpic = (action$, state$) =>
                 map(response => getSolutionSuccess(response)),
                 catchError(error => {
                     // eslint-disable-next-line no-console
-                    console.log("Failed to POST sudoku to get solution, error: ", error);
+                    console.error("Failed to POST sudoku to get solution, error: ", error);
                     return of(getSolutionFailure(error));
                 })
             )
@@ -467,7 +471,8 @@ export const enterAndValidatePuzzleEpic = (action$, state$) =>
             return empty();
         }),
         catchError(error => {
-            console.log(error);
+            // eslint-disable-next-line no-console
+            console.error(error);
             return empty();
         })
     );
