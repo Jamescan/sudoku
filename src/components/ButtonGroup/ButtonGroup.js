@@ -6,7 +6,7 @@ import styles from "./ButtonGroup.module.css";
 export function ButtonGroup({ buttons, title: label }) {
     return (
         <div className={styles.buttonGroupWrapper}>
-            <span>{label}</span>
+            {label && <span>{label}</span>}
             <div className={styles.buttonGroup}>
                 {buttons.map(button => {
                     const { additionalClassNames, handleClick, isSelected, title } = button;

@@ -1,7 +1,10 @@
 .settingsSelection {
     grid-area: headerCenter;
-    display: flex;
-    justify-content: center;
+
+    /* display: flex;
+    justify-content: center; */
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     width: 100%;
     margin-bottom: 1rem;
     margin-top: 1rem;
@@ -14,6 +17,24 @@
     font-size: 1.5rem;
 }
 
+.central {
+    grid-column: 2;
+}
+
+.right {
+    grid-column: 3;
+}
+
 .selected {
     border: 2px solid blue;
+}
+
+.sideButton {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
 }

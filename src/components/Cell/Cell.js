@@ -148,7 +148,7 @@ Cell.defaultProps = {
 
 Cell.propTypes = {
     addCellValue: PropTypes.func.isRequired,
-    entryMethod: PropTypes.func.isRequired,
+    entryMethod: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
     isFixed: PropTypes.bool,
     isInSolveMode: PropTypes.bool,

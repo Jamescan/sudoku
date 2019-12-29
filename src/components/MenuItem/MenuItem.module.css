@@ -6,11 +6,3 @@
     align-items: center;
     width: 100%;
 }
-
-.menuItemTitle {
-    flex: 0 0 30%;
-}
-
-.menuItemChildren {
-    justify-content: space-evenly;
-}

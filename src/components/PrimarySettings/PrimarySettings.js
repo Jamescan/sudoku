@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import DeleteIcon from "mdi-react/DeleteIcon";
+import UndoVariantIcon from "mdi-react/UndoVariantIcon";
 import { MenuItem } from "../MenuItem/MenuItem";
 import styles from "./PrimarySettings.module.css";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
@@ -8,7 +10,7 @@ export function PrimarySettings(props) {
     const { clearAllCellValues, isInSolveMode, resetToOriginalCells, toggleAppMode } = props;
     return (
         <div className={styles.settingsSelection}>
-            <MenuItem title="Mode">
+            <MenuItem title="Mode" additionalClassNames={styles.central}>
                 <ButtonGroup
                     buttons={[
                         {
@@ -23,13 +25,24 @@ export function PrimarySettings(props) {
                         }
                     ]}
                 />
-
+            </MenuItem>
+            <MenuItem additionalClassNames={styles.right}>
                 {isInSolveMode ? (
-                    <button type="button" onClick={resetToOriginalCells}>
+                    <button
+                        type="button"
+                        className={styles.sideButton}
+                        onClick={resetToOriginalCells}
+                    >
+                        <UndoVariantIcon size={50} aria-hidden />
                         Reset to Original Cells
                     </button>
                 ) : (
-                    <button type="button" onClick={clearAllCellValues}>
+                    <button
+                        type="button"
+                        className={styles.sideButton}
+                        onClick={clearAllCellValues}
+                    >
+                        <DeleteIcon size={50} aria-hidden />
                         Clear All Cells
                     </button>
                 )}
