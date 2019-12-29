@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "semantic-ui-react";
 import { MenuItem } from "../MenuItem/MenuItem";
 import styles from "./PrimarySettings.module.css";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
@@ -26,9 +25,13 @@ export function PrimarySettings(props) {
                 />
 
                 {isInSolveMode ? (
-                    <Button onClick={() => resetToOriginalCells()}>Reset to Original Cells</Button>
+                    <button type="button" onClick={resetToOriginalCells}>
+                        Reset to Original Cells
+                    </button>
                 ) : (
-                    <Button onClick={() => clearAllCellValues()}>Clear All Cells</Button>
+                    <button type="button" onClick={clearAllCellValues}>
+                        Clear All Cells
+                    </button>
                 )}
             </MenuItem>
         </div>
