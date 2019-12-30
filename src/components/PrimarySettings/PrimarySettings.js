@@ -2,14 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import DeleteIcon from "mdi-react/DeleteIcon";
 import UndoVariantIcon from "mdi-react/UndoVariantIcon";
-import { MenuItem } from "../MenuItem/MenuItem";
-import styles from "./PrimarySettings.module.css";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
+import { MenuItem } from "../MenuItem/MenuItem";
+import { Timer } from "../Timer/Timer";
+import styles from "./PrimarySettings.module.css";
 
 export function PrimarySettings(props) {
     const { clearAllCellValues, isInSolveMode, resetToOriginalCells, toggleAppMode } = props;
     return (
         <div className={styles.settingsSelection}>
+            {isInSolveMode && (
+                <MenuItem>
+                    <Timer />
+                </MenuItem>
+            )}
             <MenuItem title="Mode" additionalClassNames={styles.central}>
                 <ButtonGroup
                     buttons={[
