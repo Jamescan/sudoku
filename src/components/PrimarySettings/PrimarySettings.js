@@ -4,7 +4,7 @@ import DeleteIcon from "mdi-react/DeleteIcon";
 import UndoVariantIcon from "mdi-react/UndoVariantIcon";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { MenuItem } from "../MenuItem/MenuItem";
-import { Timer } from "../Timer/Timer";
+import { ConnectedTimer } from "../Timer/TimerContainer";
 import styles from "./PrimarySettings.module.css";
 
 export function PrimarySettings(props) {
@@ -13,7 +13,7 @@ export function PrimarySettings(props) {
         <div className={styles.settingsSelection}>
             {isInSolveMode && (
                 <MenuItem>
-                    <Timer />
+                    <ConnectedTimer />
                 </MenuItem>
             )}
             <MenuItem title="Mode" additionalClassNames={styles.central}>

@@ -10,9 +10,9 @@ import { clearAllCellValues, resetToOriginalCells } from "../../ducks/sudoku";
 
 function mapStateToProps({ config }) {
     const { isInSolveMode } = config;
-    
+
     const isUsingPencilMarks = selectIsUsingPencilMarks(config);
-    
+
     return {
         isInSolveMode,
         isUsingPencilMarks
