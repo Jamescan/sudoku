@@ -4,7 +4,9 @@
     "private": true,
     "proxy": "http://localhost:4000",
     "dependencies": {
+        "body-parser": "^1.19.0",
         "clsx": "^1.0.4",
+        "express": "^4.17.1",
         "mdi-react": "^6.5.0",
         "prop-types": "^15.7.2",
         "react": "^16.12.0",
@@ -14,7 +16,8 @@
         "redux": "^4.0.5",
         "redux-observable": "^1.2.0",
         "rxjs": "^6.5.4",
-        "rxjs-compat": "^6.5.4"
+        "rxjs-compat": "^6.5.4",
+        "sudoku-umd": "^1.0.1"
     },
     "scripts": {
         "start": "react-scripts start",

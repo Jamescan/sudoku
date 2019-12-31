@@ -400,8 +400,7 @@ export function selectPencilMarks(state, index) {
 export const getSudokuEpic = action$ =>
     action$.pipe(
         ofType(GET_SUDOKU),
-        // eslint-disable-next-line no-unused-vars
-        mergeMap(action =>
+        mergeMap(() =>
             // TODO: How does magic work? It recognizes this is not an absolute path automagically?
             ajax.getJSON("/sudoku?difficulty=easy").pipe(
                 // use mergeMap to dispatch multiple actions.
@@ -425,8 +424,7 @@ export const getSudokuEpic = action$ =>
 export const getSolutionEpic = (action$, state$) =>
     action$.pipe(
         ofType(GET_SOLUTION),
-        // eslint-disable-next-line no-unused-vars
-        mergeMap(action =>
+        mergeMap(() =>
             // TODO: How does magic work? It recognizes this is not an absolute path automagically?
             ajax({
                 url: "/sudoku",
