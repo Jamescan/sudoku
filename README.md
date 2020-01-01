@@ -26,12 +26,13 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
 -   Input Validation
     -   For Obvious Mistakes (same number in a row / column / 3x3 block)
     -   For All Mistakes (using the puzzle's solution.)
+-   Generate puzzles of different difficulty levels from API
 -   Accessibility
     -   Input into Sudoku Grid using only a keyboard
 
 ### Planned
 
--   Generate puzzles of _different difficulty levels_ (from API)
+-   Toast notifications for API error handling.
 -   Should invoke API call to try and solve a captured puzzle once clicked into Solve mode
     -   If failed to find a unique solution, show an alert message.
 -   Add a "Save" button that will save the current state of the board in local storage / cookie / somehow so it will persist for the user.
@@ -48,7 +49,6 @@ This project renders an interactive Sudoku grid UI for solving puzzles.
     -   This isn't useful for traditional sudoku, but is an interesting challenge nonetheless.
     -   Would need to check for the `CTRL` key in `handleKeyDown` and if found, "highlight" the cell. Probably need to track currently highlighted cells in redux. Highlighted cells can have special styling too.
 -   Consistent UI styling
-    -   Use a prebuilt component library for styling (`react-bootstrap`, `material-ui`, `semantic-ui`, etc.) or my own?
 -   Interactive tutorial, like what they have on `https://coolors.co`
 -   Deploy somewhere :)
 

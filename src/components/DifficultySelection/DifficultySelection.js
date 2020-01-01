@@ -17,12 +17,12 @@ export function DifficultySelection({ levels, onChange }) {
             <input
                 type="range"
                 list="tickmarks"
-                onChange={(e) => {
+                onChange={e => {
                     setCurrentSelection(e.target.value);
-                    onChange(e); 
+                    onChange(e);
                 }}
                 defaultValue={0}
-                max={DIFFICULTY_LEVELS[DIFFICULTY_LEVELS.length-1].value}
+                max={DIFFICULTY_LEVELS[DIFFICULTY_LEVELS.length - 1].value}
                 step={Math.floor(100 / levels.length)}
             />
 
@@ -31,14 +31,11 @@ export function DifficultySelection({ levels, onChange }) {
                     const shouldShowLabel = index === 0 || index === levels.length - 1;
 
                     return (
-                        <option
-                            value={value}
-                            label={shouldShowLabel ? label : null}
-                         />
+                        <option key={value} value={value} label={shouldShowLabel ? label : null} />
                     );
                 })}
             </datalist>
-            <span>{ currentLevel }</span>
+            <span className={styles.currentLevel}>{currentLevel}</span>
         </div>
     );
 }

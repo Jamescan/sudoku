@@ -33,9 +33,9 @@ export function SidebarSettings(props) {
                             onChange={({ target: { value } }) => {
                                 // FIXME: More elegant method?
                                 const level = DIFFICULTY_LEVELS.find(
-                                    level => Math.abs(level.value - value) < 2
+                                    difficulty => Math.abs(difficulty.value - value) < 2
                                 );
-                                setDifficulty(level.label);
+                                setDifficulty(level.name);
                             }}
                         />
                     </SidebarItem>

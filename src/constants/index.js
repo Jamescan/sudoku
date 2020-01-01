@@ -51,8 +51,12 @@ export const ENTRY_METHODS = Object.freeze({
 const levels = ["easy", "medium", "hard", "very-hard", "insane", "inhuman"];
 
 export const DIFFICULTY_LEVELS = levels.map((level, index) => {
+    // Capitalize first level, replace '-' with ' '.
+    const label = (level.charAt(0).toUpperCase() + level.substring(1)).replace(/-/g, " ");
+
     return {
-        label: level, // TODO: Differentiate label (shown in UI) and actual api value
+        label, // TODO: Differentiate label (shown in UI) and actual api value
+        name: level,
         value: Math.floor(100 / levels.length) * index
     };
 });

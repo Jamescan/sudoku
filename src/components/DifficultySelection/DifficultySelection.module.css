@@ -1,3 +1,7 @@
 .selectionWrapper {
     text-align: center;
 }
+
+.currentLevel {
+    display: block;
+}

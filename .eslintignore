@@ -1,1 +1,3 @@
 src/serviceWorker.js
+server.js
+build/*
