@@ -25,6 +25,9 @@ export function SidebarSettings(props) {
             {!isInSolveMode && (
                 <>
                     <SidebarItem>
+                        <button type="button" onClick={getSudoku} className={styles.generateButton}>
+                            Generate a New Sudoku
+                        </button>
                         <DifficultySelection
                             levels={DIFFICULTY_LEVELS}
                             onChange={({ target: { value } }) => {
@@ -35,11 +38,6 @@ export function SidebarSettings(props) {
                                 setDifficulty(level.label);
                             }}
                         />
-                    </SidebarItem>
-                    <SidebarItem>
-                        <button type="button" onClick={getSudoku}>
-                            Generate a New Sudoku
-                        </button>
                     </SidebarItem>
                 </>
             )}

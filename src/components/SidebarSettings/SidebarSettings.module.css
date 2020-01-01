@@ -14,3 +14,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.generateButton {
+    margin-bottom: 1rem;
+}

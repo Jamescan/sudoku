@@ -45,11 +45,14 @@ export const ENTRY_METHODS = Object.freeze({
     CORNER: "corner"
 });
 
+/**
+ * API sudoku difficulty levels
+ */
 const levels = ["easy", "medium", "hard", "very-hard", "insane", "inhuman"];
 
 export const DIFFICULTY_LEVELS = levels.map((level, index) => {
     return {
-        label: level,
+        label: level, // TODO: Differentiate label (shown in UI) and actual api value
         value: Math.floor(100 / levels.length) * index
     };
 });

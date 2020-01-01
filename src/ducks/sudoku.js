@@ -397,12 +397,12 @@ export function selectPencilMarks(state, index) {
  *
  * TODO: Implement difficulty functionality
  */
-export const getSudokuEpic = action$ =>
+export const getSudokuEpic = (action$, state$) =>
     action$.pipe(
         ofType(GET_SUDOKU),
         mergeMap(() =>
             // TODO: How does magic work? It recognizes this is not an absolute path automagically?
-            ajax.getJSON("/sudoku?difficulty=easy").pipe(
+            ajax.getJSON(`/sudoku?difficulty=${state$.value.config.difficulty}`).pipe(
                 // use mergeMap to dispatch multiple actions.
                 // (otherwise, could just use map and return the action itself, i.e.
                 // map(response => getSudokuSuccess(response)))
