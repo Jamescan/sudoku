@@ -1,7 +1,8 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var path = require("path");
-var app = express();
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
+
+const app = express();
 const sudoku = require("sudoku-umd");
 
 // Required for CRA deployment
@@ -14,8 +15,6 @@ app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json());
 
 app.get("/g/:sudokuGame", function(req, res) {
-    // Then you can use the value of the id with req.params.id
-    // So you use it to get the data from your database:
     console.log(req.params.sudokuGame);
     console.log({ res });
     res.redirect("/bar");
@@ -24,12 +23,12 @@ app.get("/g/:sudokuGame", function(req, res) {
 app.get("/sudoku", (request, response, next) => {
     const validDifficultyLevels = ["easy", "medium", "hard", "very-hard", "insane", "inhuman"];
 
-    const difficultyLevel = request.query.difficulty;
-    if (!validDifficultyLevels.includes(difficultyLevel)) {
-        throw new Error(`Invalid difficulty level provided. Received '${difficultyLevel}'`);
+    const { difficulty } = request.query;
+    if (!validDifficultyLevels.includes(difficulty)) {
+        throw new Error(`Invalid difficulty level provided. Received '${difficulty}'`);
     }
 
-    const sudokuPuzzle = sudoku.generate(difficultyLevel);
+    const sudokuPuzzle = sudoku.generate(difficulty);
     const normalizedSudoku = normalizeSudoku(sudokuPuzzle);
     response.json(normalizedSudoku);
 });
@@ -45,6 +44,7 @@ app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
+// PaaS places (e.g. Heroku, AWS) will use process.env.PORT when deploying, which is why it's here.
 app.listen(process.env.PORT || 4000);
 
 /**

@@ -1,10 +1,11 @@
-import { ENTRY_METHODS } from "../constants";
+import { DIFFICULTY_LEVELS, ENTRY_METHODS } from "../constants";
 
 const { BIG, CORNER, CENTRAL } = ENTRY_METHODS;
 
 /*
  * action types
  */
+export const SET_DIFFICULTY = "SET_DIFFICULTY";
 export const SET_ENTRY_METHOD = "SET_ENTRY_METHOD";
 export const TOGGLE_APP_MODE = "TOGGLE_APP_MODE";
 export const TOGGLE_ENTRY_METHOD = "TOGGLE_ENTRY_METHOD";
@@ -39,7 +40,15 @@ export function toggleShowObviousErrors() {
     return { type: TOGGLE_SHOW_OBVIOUS_ERRORS };
 }
 
+export function setDifficulty(level) {
+    return {
+        type: SET_DIFFICULTY,
+        level
+    };
+}
+
 const initialState = {
+    difficulty: DIFFICULTY_LEVELS[0].label, // FIXME: hardcoding
     entryMethod: BIG,
     isInSolveMode: false, // false implies "Capture" Mode
     shouldShowAllErrors: false,
@@ -101,6 +110,12 @@ export function config(state = initialState, action) {
             return {
                 ...state,
                 shouldShowObviousErrors: !state.shouldShowObviousErrors
+            };
+        }
+        case SET_DIFFICULTY: {
+            return {
+                ...state,
+                difficulty: action.level
             };
         }
         default: {

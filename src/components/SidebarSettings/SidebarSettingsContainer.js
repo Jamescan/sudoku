@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import { SidebarSettings } from "./SidebarSettings";
-import { setEntryMethod, toggleShowAllErrors, toggleShowObviousErrors } from "../../ducks/config";
+import {
+    setDifficulty,
+    setEntryMethod,
+    toggleShowAllErrors,
+    toggleShowObviousErrors
+} from "../../ducks/config";
 import { clearAllPencilMarks, getSudoku, selectIsSolved } from "../../ducks/sudoku";
 
 function mapStateToProps({ config, sudoku }) {
@@ -18,6 +23,7 @@ function mapStateToProps({ config, sudoku }) {
 const mapDispatchToProps = {
     clearAllPencilMarks,
     getSudoku,
+    setDifficulty,
     setEntryMethod,
     toggleShowAllErrors,
     toggleShowObviousErrors

@@ -1,0 +1,11 @@
+.tickmarks {
+    /* currently chrome defaults datalist's css to display: none */
+    display: flex;
+
+    position: relative;
+    top: -40px;
+}
+
+.level {
+    flex-basis: 50%;
+}

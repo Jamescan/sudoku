@@ -44,3 +44,12 @@ export const ENTRY_METHODS = Object.freeze({
     CENTRAL: "central",
     CORNER: "corner"
 });
+
+const levels = ["easy", "medium", "hard", "very-hard", "insane", "inhuman"];
+
+export const DIFFICULTY_LEVELS = levels.map((level, index) => {
+    return {
+        label: level,
+        value: Math.floor(100 / levels.length) * index
+    };
+});

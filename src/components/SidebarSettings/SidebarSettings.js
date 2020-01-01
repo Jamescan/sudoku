@@ -4,7 +4,8 @@ import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { CheckboxGroup } from "../CheckboxGroup/CheckboxGroup";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
 import styles from "./SidebarSettings.module.css";
-import { ENTRY_METHODS } from "../../constants";
+import { ENTRY_METHODS, DIFFICULTY_LEVELS } from "../../constants";
+import { DifficultySelection } from "../DifficultySelection/DifficultySelection";
 
 export function SidebarSettings(props) {
     const {
@@ -13,6 +14,7 @@ export function SidebarSettings(props) {
         getSudoku,
         isInSolveMode,
         isSolved,
+        setDifficulty,
         setEntryMethod,
         toggleShowAllErrors,
         toggleShowObviousErrors
@@ -21,11 +23,25 @@ export function SidebarSettings(props) {
     return (
         <aside className={styles.sidebarSettingsWrapper}>
             {!isInSolveMode && (
-                <SidebarItem>
-                    <button type="button" onClick={getSudoku}>
-                        Generate a New Sudoku
-                    </button>
-                </SidebarItem>
+                <>
+                    <SidebarItem>
+                        <DifficultySelection
+                            levels={DIFFICULTY_LEVELS}
+                            onChange={({ target: { value } }) => {
+                                // FIXME: More elegant method?
+                                const level = DIFFICULTY_LEVELS.find(
+                                    level => Math.abs(level.value - value) < 2
+                                );
+                                setDifficulty(level.label);
+                            }}
+                        />
+                    </SidebarItem>
+                    <SidebarItem>
+                        <button type="button" onClick={getSudoku}>
+                            Generate a New Sudoku
+                        </button>
+                    </SidebarItem>
+                </>
             )}
             {isInSolveMode && (
                 <>
@@ -95,6 +111,7 @@ SidebarSettings.propTypes = {
     getSudoku: PropTypes.func.isRequired,
     isInSolveMode: PropTypes.bool,
     isSolved: PropTypes.bool.isRequired,
+    setDifficulty: PropTypes.func.isRequired,
     setEntryMethod: PropTypes.func.isRequired,
     toggleShowAllErrors: PropTypes.func.isRequired,
     toggleShowObviousErrors: PropTypes.func.isRequired
