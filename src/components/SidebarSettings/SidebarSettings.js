@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ENTRY_METHODS, DIFFICULTY_LEVELS } from "../../constants";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { CheckboxGroup } from "../CheckboxGroup/CheckboxGroup";
+import { DifficultySelection } from "../DifficultySelection/DifficultySelection";
 import { SidebarItem } from "../SidebarItem/SidebarItem";
 import styles from "./SidebarSettings.module.css";
-import { ENTRY_METHODS, DIFFICULTY_LEVELS } from "../../constants";
-import { DifficultySelection } from "../DifficultySelection/DifficultySelection";
 
 export function SidebarSettings(props) {
     const {
@@ -23,23 +23,21 @@ export function SidebarSettings(props) {
     return (
         <aside className={styles.sidebarSettingsWrapper}>
             {!isInSolveMode && (
-                <>
-                    <SidebarItem>
-                        <button type="button" onClick={getSudoku} className={styles.generateButton}>
-                            Generate a New Sudoku
-                        </button>
-                        <DifficultySelection
-                            levels={DIFFICULTY_LEVELS}
-                            onChange={({ target: { value } }) => {
-                                // FIXME: More elegant method?
-                                const level = DIFFICULTY_LEVELS.find(
-                                    difficulty => Math.abs(difficulty.value - value) < 2
-                                );
-                                setDifficulty(level.name);
-                            }}
-                        />
-                    </SidebarItem>
-                </>
+                <SidebarItem>
+                    <button type="button" onClick={getSudoku} className={styles.generateButton}>
+                        Generate a New Sudoku
+                    </button>
+                    <DifficultySelection
+                        levels={DIFFICULTY_LEVELS}
+                        onChange={({ target: { value } }) => {
+                            // FIXME: More elegant method?
+                            const level = DIFFICULTY_LEVELS.find(
+                                difficulty => Math.abs(difficulty.value - value) < 2
+                            );
+                            setDifficulty(level.name);
+                        }}
+                    />
+                </SidebarItem>
             )}
             {isInSolveMode && (
                 <>

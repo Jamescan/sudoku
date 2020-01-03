@@ -9,14 +9,13 @@ import {
 import { clearAllPencilMarks, getSudoku, selectIsSolved } from "../../ducks/sudoku";
 
 function mapStateToProps({ config, sudoku }) {
-    const { entryMethod, isInSolveMode, pencilMarkMethod } = config;
+    const { entryMethod, isInSolveMode } = config;
     const isSolved = selectIsSolved(sudoku);
 
     return {
         entryMethod,
         isInSolveMode,
-        isSolved,
-        pencilMarkMethod
+        isSolved
     };
 }
 

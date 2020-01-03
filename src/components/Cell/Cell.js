@@ -50,11 +50,11 @@ export class Cell extends React.PureComponent {
             const cellToWhichToFocus = cells[index + indexAdjustment];
 
             if (
-                !arrowKey.specialCaseColumnNumber ||
-                index % 9 !== arrowKey.specialCaseColumnNumber
+                (arrowKey.specialCaseColumnNumber == null ||
+                    index % 9 !== arrowKey.specialCaseColumnNumber) &&
+                cellToWhichToFocus
             ) {
-                // eslint-disable-next-line no-unused-expressions
-                cellToWhichToFocus && cellToWhichToFocus.focus();
+                cellToWhichToFocus.focus();
             }
         }
     }

@@ -35,7 +35,7 @@ export const ARROW_KEYS = Object.freeze({
 
 /**
  * Different ways numbers can be input into cells
- * - Big: single-value entry
+ * - BIG: single-value entry
  * - CENTRAL: pencil marks showing in the center of cell
  * - CORNER: pencil marks showing on the outer edges of the cell
  */

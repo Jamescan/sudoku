@@ -9,7 +9,7 @@
 }
 
 .cell:nth-child(3n) {
-    border-right: 4px solid black;
+    border-right: 3px solid black;
 }
 
 .cell:nth-child(27n + 19),
@@ -21,7 +21,7 @@
 .cell:nth-child(27n + 25),
 .cell:nth-child(27n + 26),
 .cell:nth-child(27n + 27) {
-    border-bottom: 4px solid black;
+    border-bottom: 3px solid black;
 }
 
 .error {

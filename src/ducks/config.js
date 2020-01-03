@@ -48,7 +48,7 @@ export function setDifficulty(level) {
 }
 
 const initialState = {
-    difficulty: DIFFICULTY_LEVELS[0].label, // FIXME: hardcoding
+    difficulty: DIFFICULTY_LEVELS[0].name,
     entryMethod: BIG,
     isInSolveMode: false, // false implies "Capture" Mode
     shouldShowAllErrors: false,
